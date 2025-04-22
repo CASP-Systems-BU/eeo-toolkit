@@ -62,6 +62,7 @@ Each stage of the pipeline was built as an independent, reusable module, allowin
 
 ### **4.1 Requirements**
 
+- Ubuntu 22.04.5 LTS
 - Python ≥ 3.10.12
 - Dependencies listed in `requirements.txt`  
 - Offline OCR models downloaded and stored locally  
