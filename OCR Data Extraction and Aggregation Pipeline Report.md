@@ -2,7 +2,7 @@
 
 ## **1. Introduction**
 
-This report outlines the development and implementation of an OCR (Optical Character Recognition) pipeline for processing structured and semi-structured form data. The primary objective was to extract key data fields from scanned or digital forms and perform downstream aggregation and analysis.
+This report outlines the development and implementation of an OCR (Optical Character Recognition) pipeline for processing structured and semi-structured form data. The primary objective was to extract key data fields from scanned or digital forms and perform downstream aggregation and analysis. This is a compliance automation tool for processing EEO-1 and EEO-5 PDF reports as required by 141 of the Acts of 2024 (Massachusetts Salary Range Transparency Law). 
 
 ---
 
