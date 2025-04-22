@@ -20,19 +20,14 @@ The system processes batches of form documents (PDF or image-based) through the 
 6. **Aggregation & Analysis** – Groups, summarizes, and exports data for reporting. 
 
 
-### **2.2 OCR Engine Selection**
-
-We did some researches on 3 different OCR engines: Tesseract, Nougat and DocTR.
-
-### **2.3 Pipeline Components**
+### **2.2 Pipeline Components**
 
 | Component           | Technology Used            | Description                                    |
 |---------------------|-----------------------------|------------------------------------------------|
 | Image Preprocessing | OpenCV, PIL                 | Binarization, scaling, padding                |
 | OCR Engine          | DocTR / TrOCR / Tesseract   | Handwritten and printed text recognition       |
-| Postprocessing      | Custom Python scripts       | Field extraction, form segmentation            |
+| Postprocessing      | Custom Python scripts       | Field extraction, form segmentation, validation and correction            |
 | Data Aggregation    | pandas                      | CSV/JSON parsing, groupby, statistical summaries |
-| Validation          | Reference lookups, fuzzy matching | Ensures consistent location names and identifiers |
 
 ---
 
@@ -44,7 +39,14 @@ Given privacy constraints, the entire pipeline was designed to run in a secure, 
 
 ### **3.2 Choice of OCR Engine**
 
-Several OCR solutions were evaluated. Deep learning-based engines (e.g., TrOCR) outperformed traditional engines on handwritten inputs. However, fallback options like Tesseract were retained for robustness.
+3 different OCR solutions were evaluated: Tesseract, Nougat and DocTR.
+
+| OCR Engine           | Pros            | Cons                                    |
+|---------------------|-----------------------------|------------------------------------------------|
+| Tesseract | Light-weighted; support traditional (non-ML) OCR methods; predict fast | Can't distinguish the boarders of the form; less accurate; suffer from inputs with complex layout  |
+| Nougat |  |  |
+| DocTR |  |  |
+Deep learning-based engines (e.g., TrOCR) outperformed traditional engines on handwritten inputs. However, fallback options like Tesseract were retained for robustness.
 
 ### **3.3 Form-Specific Tuning**
 
@@ -60,46 +62,35 @@ Each stage of the pipeline was built as an independent, reusable module, allowin
 
 ### **4.1 Requirements**
 
-- Python ≥ 3.8  
+- Python ≥ 3.10.12
 - Dependencies listed in `requirements.txt`  
 - Offline OCR models downloaded and stored locally  
 
 ### **4.2 Steps**
 
-```bash
-# 1. Set up virtual environment
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-
-# 2. Place input PDFs in `input/` directory
-
-# 3. Run the pipeline
-python run_pipeline.py --input_dir input/ --output_dir output/ --log log.txt
-
-# 4. Output includes:
-#    - JSON files per form
-#    - Aggregated CSV tables
-#    - Logs for traceability
-```
-
+1. Clone the repo
+2. Create a new Python environment or use your existing environment:
+    ```shell
+    python3 -m venv myenv # Replace "myenv" with your env name
+    source myenv/bin/activate
+    ```
+3. Install the Python dependencies:
+    ```shell
+    pip install -r requirements.txt
+    ```
+3. Deactivate the environments:
+    ```shell
+    deactivate
+    ```
+    
 ### **4.3 Configuration**
 
 Parameters (e.g., page scaling, noise thresholds, model paths) can be edited in `config.yaml`.
 
 ---
 
-## **5. Evaluation**
 
-The pipeline was tested on a sample of **[X]** forms with varying quality and layout. Key findings:
-
-- Average field-level accuracy: **[e.g., 92.5%]**
-- Aggregation consistency across batches verified
-- OCR accuracy reduced on extremely faint or low-resolution scans
-
----
-
-## **6. Limitations and Challenges**
+## **5. Limitations and Challenges**
 
 - **Handwritten data variability** – Especially problematic with cursive or non-standard characters  
 - **Form layout shifts** – Misalignment between scanned templates required layout-aware logic  
@@ -107,7 +98,7 @@ The pipeline was tested on a sample of **[X]** forms with varying quality and la
 
 ---
 
-## **7. Future Work**
+## **6. Future Work**
 
 - Integrate a layout detection model for dynamic form segmentation  
 - Expand support for additional form types and formats  
@@ -116,6 +107,6 @@ The pipeline was tested on a sample of **[X]** forms with varying quality and la
 
 ---
 
-## **8. Conclusion**
+## **7. Conclusion**
 
 The pipeline successfully automates the extraction and aggregation of key information from structured and semi-structured forms. With modular components, offline support, and customizable validation, it forms a robust foundation for further enhancements.
