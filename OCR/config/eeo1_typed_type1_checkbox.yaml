@@ -1,0 +1,47 @@
+Employer Is Eligible to File: !!python/tuple
+  - 180
+  - 620
+  - 193
+  - 630
+
+Employer Is Not Eligible to File: !!python/tuple
+  - 539
+  - 620
+  - 552
+  - 630
+
+Employer No Longer in Business: !!python/tuple
+  - 934
+  - 620
+  - 947
+  - 630
+
+Single-Establishment Employer is Federal Contractor: !!python/tuple
+  - 202
+  - 724
+  - 215
+  - 734
+
+Multi-Establishment Employer is Federal Contractor: !!python/tuple
+  - 794
+  - 724
+  - 807
+  - 734
+
+Headquarters is Federal Contractor: !!python/tuple
+  - 361
+  - 766
+  - 374
+  - 776
+
+Non-Headquarters Establishment is Federal Contractor: !!python/tuple
+  - 789
+  - 766
+  - 802
+  - 776
+
+One or More Non-Headquarters Establishment is Federal Contractor: !!python/tuple
+  - 558
+  - 807
+  - 571
+  - 817

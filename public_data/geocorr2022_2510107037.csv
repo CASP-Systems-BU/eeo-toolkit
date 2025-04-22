@@ -1,0 +1,566 @@
+"zcta","county","CountyName","ZIPName","pop20","afact"
+"ZIP census tabulation area","County code","County name","ZIP Code name","Total population (2020 Census)","zcta-to-county allocation factor"
+" ","25001","Barnstable MA","[not in a ZCTA]",1,0.0769 
+" ","25023","Plymouth MA","[not in a ZCTA]",12,0.9231 
+"01001","25013","Hampden MA","Agawam, MA",16984,1 
+"01002","25011","Franklin MA","Amherst, MA",341,0.0124 
+"01002","25015","Hampshire MA","Amherst, MA",27217,0.9876 
+"01003","25015","Hampshire MA","Amherst, MA",13253,1 
+"01005","25027","Worcester MA","Barre, MA",4900,1 
+"01007","25015","Hampshire MA","Belchertown, MA",15423,1 
+"01008","25003","Berkshire MA","Blandford, MA",70,0.0532 
+"01008","25013","Hampden MA","Blandford, MA",1247,0.9468 
+"01009","25013","Hampden MA","Bondsville, MA (PO boxes)",980,1 
+"01010","25013","Hampden MA","Brimfield, MA",3694,0.9954 
+"01010","25027","Worcester MA","Brimfield, MA",17,0.0046 
+"01011","25013","Hampden MA","Chester, MA",1042,0.8676 
+"01011","25015","Hampshire MA","Chester, MA",159,0.1324 
+"01012","25015","Hampshire MA","Chesterfield, MA",519,1 
+"01013","25013","Hampden MA","Chicopee, MA",23656,1 
+"01020","25013","Hampden MA","Chicopee, MA",29781,1 
+"01022","25013","Hampden MA","Chicopee, MA",2158,1 
+"01026","25003","Berkshire MA","Cummington, MA",48,0.0475 
+"01026","25015","Hampshire MA","Cummington, MA",963,0.9525 
+"01027","25015","Hampshire MA","Easthampton, MA",17896,1 
+"01028","25013","Hampden MA","East Longmeadow, MA",16417,1 
+"01029","25003","Berkshire MA","East Otis, MA (PO boxes)",714,1 
+"01030","25013","Hampden MA","Feeding Hills, MA",11708,1 
+"01031","25027","Worcester MA","Gilbertville, MA",1406,1 
+"01032","25015","Hampshire MA","Goshen, MA",483,1 
+"01033","25015","Hampshire MA","Granby, MA",6092,1 
+"01034","25013","Hampden MA","Granville, MA",1977,1 
+"01035","25015","Hampshire MA","Hadley, MA",5325,1 
+"01036","25013","Hampden MA","Hampden, MA",4966,1 
+"01037","25027","Worcester MA","Hardwick, MA (PO boxes)",706,1 
+"01038","25015","Hampshire MA","Hatfield, MA",2522,1 
+"01039","25011","Franklin MA","Haydenville, MA",343,0.227 
+"01039","25015","Hampshire MA","Haydenville, MA",1168,0.773 
+"01040","25013","Hampden MA","Holyoke, MA",38238,1 
+"01050","25013","Hampden MA","Huntington, MA",322,0.1305 
+"01050","25015","Hampshire MA","Huntington, MA",2145,0.8695 
+"01053","25015","Hampshire MA","Leeds, MA",2031,1 
+"01054","25011","Franklin MA","Leverett, MA",1889,1 
+"01056","25013","Hampden MA","Ludlow, MA",21002,1 
+"01057","25013","Hampden MA","Monson, MA",8152,1 
+"01060","25015","Hampshire MA","Northampton, MA",14461,1 
+"01062","25015","Hampshire MA","Florence, MA",10910,1 
+"01063","25015","Hampshire MA","Northampton, MA",2106,1 
+"01066","25015","Hampshire MA","North Hatfield, MA (PO boxes)",215,1 
+"01068","25027","Worcester MA","Oakham, MA",1904,1 
+"01069","25013","Hampden MA","Palmer, MA",8412,0.9981 
+"01069","25015","Hampshire MA","Palmer, MA",16,0.0019 
+"01070","25003","Berkshire MA","Plainfield, MA",28,0.0485 
+"01070","25015","Hampshire MA","Plainfield, MA",549,0.9515 
+"01071","25013","Hampden MA","Russell, MA",1486,1 
+"01072","25011","Franklin MA","Shutesbury, MA",1366,1 
+"01073","25015","Hampshire MA","Southampton, MA",6224,1 
+"01074","25027","Worcester MA","South Barre, MA (PO boxes)",584,1 
+"01075","25015","Hampshire MA","South Hadley, MA",18168,1 
+"01077","25013","Hampden MA","Southwick, MA",9237,1 
+"01079","25013","Hampden MA","Thorndike, MA (PO boxes)",701,1 
+"01080","25013","Hampden MA","Three Rivers, MA",2400,1 
+"01081","25013","Hampden MA","Wales, MA",1684,1 
+"01082","25013","Hampden MA","Ware, MA",20,0.0019 
+"01082","25015","Hampshire MA","Ware, MA",10050,0.9513 
+"01082","25027","Worcester MA","Ware, MA",495,0.0469 
+"01083","25027","Worcester MA","Warren, MA (PO boxes)",2549,1 
+"01084","25015","Hampshire MA","West Chesterfield, MA",185,1 
+"01085","25013","Hampden MA","Westfield, MA",41529,1 
+"01088","25015","Hampshire MA","West Hatfield, MA",598,1 
+"01089","25013","Hampden MA","West Springfield, MA",28835,1 
+"01092","25027","Worcester MA","West Warren, MA (PO boxes)",1343,1 
+"01093","25011","Franklin MA","Whately, MA (PO boxes)",290,1 
+"01094","25027","Worcester MA","Wheelwright, MA (PO boxes)",60,1 
+"01095","25013","Hampden MA","Wilbraham, MA",14694,1 
+"01096","25011","Franklin MA","Williamsburg, MA",201,0.0801 
+"01096","25015","Hampshire MA","Williamsburg, MA",2308,0.9199 
+"01097","25013","Hampden MA","Woronoco, MA (PO boxes)",130,1 
+"01098","25015","Hampshire MA","Worthington, MA",1147,1 
+"01103","25013","Hampden MA","Springfield, MA",2545,1 
+"01104","25013","Hampden MA","Springfield, MA",23598,1 
+"01105","25013","Hampden MA","Springfield, MA",12051,1 
+"01106","25013","Hampden MA","Longmeadow, MA",16165,1 
+"01107","25013","Hampden MA","Springfield, MA",11252,1 
+"01108","25013","Hampden MA","Springfield, MA",27671,1 
+"01109","25013","Hampden MA","Springfield, MA",30968,1 
+"01118","25013","Hampden MA","Springfield, MA",14296,1 
+"01119","25013","Hampden MA","Springfield, MA",14393,1 
+"01128","25013","Hampden MA","Springfield, MA",2647,1 
+"01129","25013","Hampden MA","Springfield, MA",7024,1 
+"01151","25013","Hampden MA","Indian Orchard, MA",9150,1 
+"01201","25003","Berkshire MA","Pittsfield, MA",45494,1 
+"01220","25003","Berkshire MA","Adams, MA",8166,1 
+"01222","25003","Berkshire MA","Ashley Falls, MA",835,1 
+"01223","25003","Berkshire MA","Becket, MA",2420,0.9959 
+"01223","25013","Hampden MA","Becket, MA",10,0.0041 
+"01224","25003","Berkshire MA","Berkshire, MA",217,1 
+"01225","25003","Berkshire MA","Cheshire, MA",3258,1 
+"01226","25003","Berkshire MA","Dalton, MA",6324,1 
+"01229","25003","Berkshire MA","Glendale, MA (PO boxes)",189,1 
+"01230","25003","Berkshire MA","Great Barrington, MA",8907,1 
+"01235","25003","Berkshire MA","Hinsdale, MA",2733,1 
+"01236","25003","Berkshire MA","Housatonic, MA",1513,1 
+"01237","25003","Berkshire MA","Lanesborough, MA",2365,1 
+"01238","25003","Berkshire MA","Lee, MA",5722,1 
+"01240","25003","Berkshire MA","Lenox, MA",4692,1 
+"01242","25003","Berkshire MA","Lenox Dale, MA (PO boxes)",449,1 
+"01243","25015","Hampshire MA","Middlefield, MA (PO boxes)",175,1 
+"01244","25003","Berkshire MA","Mill River, MA (PO boxes)",287,1 
+"01245","25003","Berkshire MA","Monterey, MA",933,1 
+"01247","25003","Berkshire MA","North Adams, MA",15147,1 
+"01253","25003","Berkshire MA","Otis, MA",808,1 
+"01254","25003","Berkshire MA","Richmond, MA",946,1 
+"01255","25003","Berkshire MA","Sandisfield, MA",959,1 
+"01256","25003","Berkshire MA","Savoy, MA",645,1 
+"01257","25003","Berkshire MA","Sheffield, MA",2140,1 
+"01258","25003","Berkshire MA","South Egremont, MA (PO boxes)",160,1 
+"01259","25003","Berkshire MA","Southfield, MA",643,1 
+"01260","25003","Berkshire MA","South Lee, MA (PO boxes)",233,1 
+"01262","25003","Berkshire MA","Stockbridge, MA (PO boxes)",1758,1 
+"01264","25003","Berkshire MA","Tyringham, MA (PO boxes)",219,1 
+"01266","25003","Berkshire MA","West Stockbridge, MA",1208,1 
+"01267","25003","Berkshire MA","Williamstown, MA",7876,1 
+"01270","25003","Berkshire MA","Windsor, MA",755,1 
+"01301","25011","Franklin MA","Greenfield, MA",18042,1 
+"01330","25011","Franklin MA","Ashfield, MA",1500,1 
+"01331","25011","Franklin MA","Athol, MA",18,0.0013 
+"01331","25027","Worcester MA","Athol, MA",13638,0.9987 
+"01337","25011","Franklin MA","Bernardston, MA",2562,1 
+"01338","25011","Franklin MA","Buckland, MA",127,1 
+"01339","25011","Franklin MA","Charlemont, MA",1487,1 
+"01340","25011","Franklin MA","Colrain, MA",1803,1 
+"01341","25011","Franklin MA","Conway, MA",1539,1 
+"01342","25011","Franklin MA","Deerfield, MA",1538,1 
+"01343","25003","Berkshire MA","Drury, MA",165,1 
+"01344","25011","Franklin MA","Erving, MA",1665,1 
+"01346","25011","Franklin MA","Heath, MA",352,1 
+"01347","25011","Franklin MA","Lake Pleasant, MA (PO boxes)",204,1 
+"01349","25011","Franklin MA","Millers Falls, MA",827,1 
+"01350","25011","Franklin MA","Monroe Bridge, MA (PO boxes)",118,1 
+"01351","25011","Franklin MA","Montague, MA",2293,1 
+"01354","25011","Franklin MA","Gill, MA",1546,1 
+"01355","25011","Franklin MA","New Salem, MA",879,1 
+"01360","25011","Franklin MA","Northfield, MA",2871,1 
+"01364","25011","Franklin MA","Orange, MA",7665,1 
+"01366","25027","Worcester MA","Petersham, MA",1187,1 
+"01367","25011","Franklin MA","Rowe, MA",506,1 
+"01368","25027","Worcester MA","Royalston, MA",1283,1 
+"01370","25011","Franklin MA","Shelburne Falls, MA",3932,1 
+"01373","25011","Franklin MA","South Deerfield, MA",4526,1 
+"01375","25011","Franklin MA","Sunderland, MA",3639,1 
+"01376","25011","Franklin MA","Turners Falls, MA",5324,1 
+"01378","25011","Franklin MA","Warwick, MA",780,1 
+"01379","25011","Franklin MA","Wendell, MA",774,1 
+"01380","25011","Franklin MA","Wendell Depot, MA",82,1 
+"01420","25027","Worcester MA","Fitchburg, MA",41940,1 
+"01430","25027","Worcester MA","Ashburnham, MA",6303,1 
+"01431","25017","Middlesex MA","Ashby, MA",3193,1 
+"01432","25017","Middlesex MA","Ayer, MA",8221,1 
+"01434","25017","Middlesex MA","Devens, MA",262,0.1586 
+"01434","25027","Worcester MA","Devens, MA",1390,0.8414 
+"01436","25027","Worcester MA","Baldwinville, MA",3208,1 
+"01438","25027","Worcester MA","East Templeton, MA (PO boxes)",414,1 
+"01440","25027","Worcester MA","Gardner, MA",21577,1 
+"01450","25017","Middlesex MA","Groton, MA",11298,1 
+"01451","25027","Worcester MA","Harvard, MA",5461,1 
+"01452","25027","Worcester MA","Hubbardston, MA",4328,1 
+"01453","25027","Worcester MA","Leominster, MA",43752,1 
+"01460","25017","Middlesex MA","Littleton, MA",10141,1 
+"01462","25027","Worcester MA","Lunenburg, MA",11818,1 
+"01463","25017","Middlesex MA","Pepperell, MA",11621,1 
+"01464","25017","Middlesex MA","Shirley, MA",7427,1 
+"01468","25027","Worcester MA","Templeton, MA",4309,1 
+"01469","25017","Middlesex MA","Townsend, MA",7055,1 
+"01473","25027","Worcester MA","Westminster, MA",8213,1 
+"01474","25017","Middlesex MA","West Townsend, MA",2072,1 
+"01475","25027","Worcester MA","Winchendon, MA",10304,1 
+"01501","25027","Worcester MA","Auburn, MA",16731,1 
+"01503","25027","Worcester MA","Berlin, MA",3158,1 
+"01504","25027","Worcester MA","Blackstone, MA",9208,1 
+"01505","25027","Worcester MA","Boylston, MA",4849,1 
+"01506","25027","Worcester MA","Brookfield, MA",3439,1 
+"01507","25027","Worcester MA","Charlton, MA",13315,1 
+"01510","25027","Worcester MA","Clinton, MA",15428,1 
+"01515","25027","Worcester MA","East Brookfield, MA",2224,1 
+"01516","25027","Worcester MA","Douglas, MA",8962,1 
+"01518","25027","Worcester MA","Fiskdale, MA",3176,1 
+"01519","25027","Worcester MA","Grafton, MA",7254,1 
+"01520","25027","Worcester MA","Holden, MA",16394,1 
+"01521","25013","Hampden MA","Holland, MA",2603,1 
+"01522","25027","Worcester MA","Jefferson, MA",3464,1 
+"01523","25027","Worcester MA","Lancaster, MA",8377,1 
+"01524","25027","Worcester MA","Leicester, MA",6621,1 
+"01525","25027","Worcester MA","Linwood, MA (PO boxes)",73,1 
+"01527","25027","Worcester MA","Millbury, MA",13799,1 
+"01529","25027","Worcester MA","Millville, MA",3174,1 
+"01531","25027","Worcester MA","New Braintree, MA",996,1 
+"01532","25027","Worcester MA","Northborough, MA",15741,1 
+"01534","25027","Worcester MA","Northbridge, MA",6233,1 
+"01535","25027","Worcester MA","North Brookfield, MA",4735,1 
+"01536","25027","Worcester MA","North Grafton, MA",7514,1 
+"01537","25027","Worcester MA","North Oxford, MA",2141,1 
+"01540","25027","Worcester MA","Oxford, MA",11032,1 
+"01541","25027","Worcester MA","Princeton, MA",3495,1 
+"01542","25027","Worcester MA","Rochdale, MA",2366,1 
+"01543","25027","Worcester MA","Rutland, MA",9049,1 
+"01545","25027","Worcester MA","Shrewsbury, MA",38316,1 
+"01550","25027","Worcester MA","Southbridge, MA",17740,1 
+"01560","25027","Worcester MA","South Grafton, MA",4896,1 
+"01561","25027","Worcester MA","South Lancaster, MA (PO boxes)",64,1 
+"01562","25027","Worcester MA","Spencer, MA",11992,1 
+"01564","25027","Worcester MA","Sterling, MA",7985,1 
+"01566","25027","Worcester MA","Sturbridge, MA",6691,1 
+"01568","25027","Worcester MA","Upton, MA",7900,1 
+"01569","25027","Worcester MA","Uxbridge, MA",14193,1 
+"01570","25027","Worcester MA","Webster, MA",17776,1 
+"01571","25027","Worcester MA","Dudley, MA",11921,1 
+"01581","25027","Worcester MA","Westborough, MA",21567,1 
+"01583","25027","Worcester MA","West Boylston, MA",7652,1 
+"01585","25027","Worcester MA","West Brookfield, MA",4899,1 
+"01588","25027","Worcester MA","Whitinsville, MA",10106,1 
+"01590","25027","Worcester MA","Sutton, MA",9279,1 
+"01602","25027","Worcester MA","Worcester, MA",25382,1 
+"01603","25027","Worcester MA","Worcester, MA",22417,1 
+"01604","25027","Worcester MA","Worcester, MA",41301,1 
+"01605","25027","Worcester MA","Worcester, MA",29218,1 
+"01606","25027","Worcester MA","Worcester, MA",21651,1 
+"01607","25027","Worcester MA","Worcester, MA",9378,1 
+"01608","25027","Worcester MA","Worcester, MA",4996,1 
+"01609","25027","Worcester MA","Worcester, MA",23870,1 
+"01610","25027","Worcester MA","Worcester, MA",28717,1 
+"01611","25027","Worcester MA","Cherry Valley, MA",2277,1 
+"01612","25027","Worcester MA","Paxton, MA",5051,1 
+"01701","25017","Middlesex MA","Framingham, MA",33005,1 
+"01702","25017","Middlesex MA","Framingham, MA",39515,1 
+"01718","25017","Middlesex MA","Acton, MA",688,1 
+"01719","25017","Middlesex MA","Boxborough, MA",5506,1 
+"01720","25017","Middlesex MA","Acton, MA",23232,1 
+"01721","25017","Middlesex MA","Ashland, MA",18832,1 
+"01730","25017","Middlesex MA","Bedford, MA",14566,1 
+"01731","25017","Middlesex MA","Hanscom AFB, MA",1555,1 
+"01740","25027","Worcester MA","Bolton, MA",5665,1 
+"01741","25017","Middlesex MA","Carlisle, MA",5237,1 
+"01742","25017","Middlesex MA","Concord, MA",18545,1 
+"01745","25027","Worcester MA","Fayville, MA",433,1 
+"01746","25017","Middlesex MA","Holliston, MA",14996,1 
+"01747","25027","Worcester MA","Hopedale, MA",6017,1 
+"01748","25017","Middlesex MA","Hopkinton, MA",18758,1 
+"01749","25017","Middlesex MA","Hudson, MA",20092,1 
+"01752","25017","Middlesex MA","Marlborough, MA",41793,1 
+"01754","25017","Middlesex MA","Maynard, MA",10730,1 
+"01756","25027","Worcester MA","Mendon, MA",6228,1 
+"01757","25027","Worcester MA","Milford, MA",30479,1 
+"01760","25017","Middlesex MA","Natick, MA",36659,1 
+"01770","25017","Middlesex MA","Sherborn, MA",4401,1 
+"01772","25027","Worcester MA","Southborough, MA",10017,1 
+"01773","25017","Middlesex MA","Lincoln, MA",5651,1 
+"01775","25017","Middlesex MA","Stow, MA",7190,1 
+"01776","25017","Middlesex MA","Sudbury, MA",18934,1 
+"01778","25017","Middlesex MA","Wayland, MA",14132,1 
+"01801","25017","Middlesex MA","Woburn, MA",40891,1 
+"01803","25017","Middlesex MA","Burlington, MA",26074,1 
+"01810","25009","Essex MA","Andover, MA",35621,1 
+"01821","25017","Middlesex MA","Billerica, MA",30909,1 
+"01824","25017","Middlesex MA","Chelmsford, MA",26881,1 
+"01826","25009","Essex MA","Dracut, MA",111,0.0034 
+"01826","25017","Middlesex MA","Dracut, MA",32578,0.9966 
+"01827","25017","Middlesex MA","Dunstable, MA",3358,1 
+"01830","25009","Essex MA","Haverhill, MA",27553,1 
+"01832","25009","Essex MA","Haverhill, MA",25656,1 
+"01833","25009","Essex MA","Georgetown, MA",8410,1 
+"01834","25009","Essex MA","Groveland, MA",6752,1 
+"01835","25009","Essex MA","Haverhill, MA",14578,1 
+"01840","25009","Essex MA","Lawrence, MA",7121,1 
+"01841","25009","Essex MA","Lawrence, MA",53654,1 
+"01843","25009","Essex MA","Lawrence, MA",28346,1 
+"01844","25009","Essex MA","Methuen, MA",52970,1 
+"01845","25009","Essex MA","North Andover, MA",31855,1 
+"01850","25017","Middlesex MA","Lowell, MA",16670,1 
+"01851","25017","Middlesex MA","Lowell, MA",32691,1 
+"01852","25017","Middlesex MA","Lowell, MA",36708,1 
+"01854","25017","Middlesex MA","Lowell, MA",29561,1 
+"01860","25009","Essex MA","Merrimac, MA",6723,1 
+"01862","25017","Middlesex MA","North Billerica, MA",11430,1 
+"01863","25017","Middlesex MA","North Chelmsford, MA",9536,1 
+"01864","25017","Middlesex MA","North Reading, MA",15554,1 
+"01867","25017","Middlesex MA","Reading, MA",25522,1 
+"01876","25009","Essex MA","Tewksbury, MA",8,0.0003 
+"01876","25017","Middlesex MA","Tewksbury, MA",31097,0.9997 
+"01879","25017","Middlesex MA","Tyngsboro, MA",12368,1 
+"01880","25017","Middlesex MA","Wakefield, MA",27071,1 
+"01886","25017","Middlesex MA","Westford, MA",24618,1 
+"01887","25017","Middlesex MA","Wilmington, MA",23349,1 
+"01890","25017","Middlesex MA","Winchester, MA",22970,1 
+"01901","25009","Essex MA","Lynn, MA",2794,1 
+"01902","25009","Essex MA","Lynn, MA",50725,1 
+"01904","25009","Essex MA","Lynn, MA",19944,1 
+"01905","25009","Essex MA","Lynn, MA",27761,1 
+"01906","25009","Essex MA","Saugus, MA",28619,1 
+"01907","25009","Essex MA","Swampscott, MA",15148,1 
+"01908","25009","Essex MA","Nahant, MA",3334,1 
+"01913","25009","Essex MA","Amesbury, MA",17366,1 
+"01915","25009","Essex MA","Beverly, MA",42341,1 
+"01921","25009","Essex MA","Boxford, MA",8263,1 
+"01922","25009","Essex MA","Byfield, MA",3134,1 
+"01923","25009","Essex MA","Danvers, MA",27987,1 
+"01929","25009","Essex MA","Essex, MA",3618,1 
+"01930","25009","Essex MA","Gloucester, MA",29729,1 
+"01937","25009","Essex MA","Hathorne, MA (PO boxes)",100,1 
+"01938","25009","Essex MA","Ipswich, MA",13785,1 
+"01940","25009","Essex MA","Lynnfield, MA",13326,1 
+"01944","25009","Essex MA","Manchester, MA",5395,1 
+"01945","25009","Essex MA","Marblehead, MA",20462,1 
+"01949","25009","Essex MA","Middleton, MA",9779,1 
+"01950","25009","Essex MA","Newburyport, MA",18289,1 
+"01951","25009","Essex MA","Newbury, MA",3582,1 
+"01952","25009","Essex MA","Salisbury, MA",9236,1 
+"01960","25009","Essex MA","Peabody, MA",54155,1 
+"01965","25009","Essex MA","Prides Crossing, MA (PO boxes)",329,1 
+"01966","25009","Essex MA","Rockport, MA",6992,1 
+"01969","25009","Essex MA","Rowley, MA",6161,1 
+"01970","25009","Essex MA","Salem, MA",44451,1 
+"01982","25009","Essex MA","South Hamilton, MA",7618,1 
+"01983","25009","Essex MA","Topsfield, MA",6569,1 
+"01984","25009","Essex MA","Wenham, MA",4979,1 
+"01985","25009","Essex MA","West Newbury, MA",4500,1 
+"02019","25021","Norfolk MA","Bellingham, MA",16945,1 
+"02021","25021","Norfolk MA","Canton, MA",24370,1 
+"02025","25021","Norfolk MA","Cohasset, MA",8381,1 
+"02026","25021","Norfolk MA","Dedham, MA",25364,1 
+"02030","25021","Norfolk MA","Dover, MA",5923,1 
+"02032","25021","Norfolk MA","East Walpole, MA",4853,1 
+"02035","25021","Norfolk MA","Foxboro, MA",18618,1 
+"02038","25021","Norfolk MA","Franklin, MA",33261,1 
+"02043","25023","Plymouth MA","Hingham, MA",24272,1 
+"02045","25023","Plymouth MA","Hull, MA",10072,1 
+"02047","25023","Plymouth MA","Humarock, MA (PO boxes)",371,1 
+"02048","25005","Bristol MA","Mansfield, MA",23860,1 
+"02050","25023","Plymouth MA","Marshfield, MA",25956,1 
+"02052","25021","Norfolk MA","Medfield, MA",12799,1 
+"02053","25021","Norfolk MA","Medway, MA",13115,1 
+"02054","25021","Norfolk MA","Millis, MA",8460,1 
+"02056","25021","Norfolk MA","Norfolk, MA",11662,1 
+"02061","25023","Plymouth MA","Norwell, MA",11351,1 
+"02062","25021","Norfolk MA","Norwood, MA",31611,1 
+"02066","25023","Plymouth MA","Scituate, MA",18561,1 
+"02067","25021","Norfolk MA","Sharon, MA",18553,1 
+"02071","25021","Norfolk MA","South Walpole, MA",968,1 
+"02072","25021","Norfolk MA","Stoughton, MA",29281,1 
+"02081","25021","Norfolk MA","Walpole, MA",20584,1 
+"02090","25021","Norfolk MA","Westwood, MA",16266,1 
+"02093","25021","Norfolk MA","Wrentham, MA",12178,1 
+"02108","25025","Suffolk MA","Boston, MA",4228,1 
+"02109","25025","Suffolk MA","Boston, MA",3921,1 
+"02110","25025","Suffolk MA","Boston, MA",2921,1 
+"02111","25025","Suffolk MA","Boston, MA",9716,1 
+"02113","25025","Suffolk MA","Boston, MA",7126,1 
+"02114","25025","Suffolk MA","Boston, MA",14469,1 
+"02115","25025","Suffolk MA","Boston, MA",31604,1 
+"02116","25025","Suffolk MA","Boston, MA",23408,1 
+"02118","25025","Suffolk MA","Boston, MA",29073,1 
+"02119","25025","Suffolk MA","Roxbury, MA",29175,1 
+"02120","25025","Suffolk MA","Roxbury Crossing, MA",17578,1 
+"02121","25025","Suffolk MA","Dorchester, MA",28766,1 
+"02122","25025","Suffolk MA","Dorchester, MA",24385,1 
+"02124","25025","Suffolk MA","Dorchester Center, MA",50972,1 
+"02125","25025","Suffolk MA","Dorchester, MA",34926,1 
+"02126","25025","Suffolk MA","Mattapan, MA",22734,1 
+"02127","25025","Suffolk MA","South Boston, MA",37939,1 
+"02128","25025","Suffolk MA","East Boston, MA",43066,1 
+"02129","25025","Suffolk MA","Charlestown, MA",19120,1 
+"02130","25025","Suffolk MA","Jamaica Plain, MA",38284,1 
+"02131","25025","Suffolk MA","Roslindale, MA",30544,1 
+"02132","25025","Suffolk MA","West Roxbury, MA",27111,1 
+"02133","25025","Suffolk MA","Boston, MA",56,1 
+"02134","25025","Suffolk MA","Allston, MA",21707,1 
+"02135","25025","Suffolk MA","Brighton, MA",47232,1 
+"02136","25025","Suffolk MA","Hyde Park, MA",35102,1 
+"02138","25017","Middlesex MA","Cambridge, MA",37982,1 
+"02139","25017","Middlesex MA","Cambridge, MA",39525,1 
+"02140","25017","Middlesex MA","Cambridge, MA",21447,1 
+"02141","25017","Middlesex MA","Cambridge, MA",15130,1 
+"02142","25017","Middlesex MA","Cambridge, MA",4499,1 
+"02143","25017","Middlesex MA","Somerville, MA",26022,1 
+"02144","25017","Middlesex MA","Somerville, MA",25497,1 
+"02145","25017","Middlesex MA","Somerville, MA",27520,1 
+"02148","25017","Middlesex MA","Malden, MA",66274,1 
+"02149","25017","Middlesex MA","Everett, MA",49075,1 
+"02150","25025","Suffolk MA","Chelsea, MA",40721,1 
+"02151","25025","Suffolk MA","Revere, MA",62252,1 
+"02152","25025","Suffolk MA","Winthrop, MA",19316,1 
+"02155","25017","Middlesex MA","Medford, MA",61483,1 
+"02163","25025","Suffolk MA","Boston, MA",1391,1 
+"02169","25021","Norfolk MA","Quincy, MA",62140,1 
+"02170","25021","Norfolk MA","Quincy, MA",19950,1 
+"02171","25021","Norfolk MA","Quincy, MA",19539,1 
+"02176","25017","Middlesex MA","Melrose, MA",29817,1 
+"02180","25017","Middlesex MA","Stoneham, MA",23244,1 
+"02184","25021","Norfolk MA","Braintree, MA",39143,1 
+"02186","25021","Norfolk MA","Milton, MA",28637,1 
+"02188","25021","Norfolk MA","Weymouth, MA",15133,1 
+"02189","25021","Norfolk MA","East Weymouth, MA",15123,1 
+"02190","25021","Norfolk MA","South Weymouth, MA",18910,1 
+"02191","25021","Norfolk MA","North Weymouth, MA",8271,1 
+"02199","25025","Suffolk MA","Boston, MA",1574,1 
+"02205","25025","Suffolk MA","Boston, MA (PO boxes)",10,1 
+"02210","25025","Suffolk MA","Boston, MA",5808,1 
+"02215","25021","Norfolk MA","Boston, MA",33,0.0012 
+"02215","25025","Suffolk MA","Boston, MA",26893,0.9988 
+"02301","25023","Plymouth MA","Brockton, MA",69418,1 
+"02302","25023","Plymouth MA","Brockton, MA",36202,1 
+"02322","25021","Norfolk MA","Avon, MA",4777,1 
+"02324","25023","Plymouth MA","Bridgewater, MA",25676,1 
+"02325","25023","Plymouth MA","Bridgewater, MA",3025,1 
+"02330","25023","Plymouth MA","Carver, MA",11645,1 
+"02332","25023","Plymouth MA","Duxbury, MA",16090,1 
+"02333","25023","Plymouth MA","East Bridgewater, MA",14382,1 
+"02338","25023","Plymouth MA","Halifax, MA",7749,1 
+"02339","25023","Plymouth MA","Hanover, MA",14833,1 
+"02341","25023","Plymouth MA","Hanson, MA",10367,1 
+"02343","25021","Norfolk MA","Holbrook, MA",11364,1 
+"02346","25023","Plymouth MA","Middleboro, MA",24245,1 
+"02347","25023","Plymouth MA","Lakeville, MA",11523,1 
+"02350","25023","Plymouth MA","Monponsett, MA (PO boxes)",272,1 
+"02351","25023","Plymouth MA","Abington, MA",17085,1 
+"02356","25005","Bristol MA","North Easton, MA",12767,1 
+"02357","25005","Bristol MA","North Easton, MA",1906,1 
+"02359","25023","Plymouth MA","Pembroke, MA",18361,1 
+"02360","25023","Plymouth MA","Plymouth, MA",61134,1 
+"02364","25023","Plymouth MA","Kingston, MA",13708,1 
+"02366","25023","Plymouth MA","South Carver, MA (PO boxes)",83,1 
+"02367","25023","Plymouth MA","Plympton, MA",2930,1 
+"02368","25021","Norfolk MA","Randolph, MA",35025,1 
+"02370","25023","Plymouth MA","Rockland, MA",17803,1 
+"02375","25005","Bristol MA","South Easton, MA",10373,1 
+"02379","25023","Plymouth MA","West Bridgewater, MA",7697,1 
+"02382","25023","Plymouth MA","Whitman, MA",15121,1 
+"02420","25017","Middlesex MA","Lexington, MA",15502,1 
+"02421","25017","Middlesex MA","Lexington, MA",18950,1 
+"02445","25021","Norfolk MA","Brookline, MA",22215,0.9874 
+"02445","25025","Suffolk MA","Brookline, MA",284,0.0126 
+"02446","25021","Norfolk MA","Brookline, MA",31919,0.9988 
+"02446","25025","Suffolk MA","Brookline, MA",38,0.0012 
+"02451","25017","Middlesex MA","Waltham, MA",17953,1 
+"02452","25017","Middlesex MA","Waltham, MA",15340,1 
+"02453","25017","Middlesex MA","Waltham, MA",31854,1 
+"02457","25021","Norfolk MA","Babson Park, MA (PO boxes)",1560,1 
+"02458","25017","Middlesex MA","Newton, MA",12817,1 
+"02459","25017","Middlesex MA","Newton Center, MA",19017,1 
+"02460","25017","Middlesex MA","Newtonville, MA",9204,1 
+"02461","25017","Middlesex MA","Newton Highlands, MA",7430,1 
+"02462","25017","Middlesex MA","Newton Lower Falls, MA",1569,1 
+"02464","25017","Middlesex MA","Newton Upper Falls, MA",3193,1 
+"02465","25017","Middlesex MA","West Newton, MA",12415,1 
+"02466","25017","Middlesex MA","Auburndale, MA",8434,1 
+"02467","25017","Middlesex MA","Chestnut Hill, MA",9116,0.4029 
+"02467","25021","Norfolk MA","Chestnut Hill, MA",9024,0.3988 
+"02467","25025","Suffolk MA","Chestnut Hill, MA",4486,0.1983 
+"02468","25017","Middlesex MA","Waban, MA",5713,1 
+"02472","25017","Middlesex MA","Watertown, MA",35392,1 
+"02474","25017","Middlesex MA","Arlington, MA",28551,1 
+"02476","25017","Middlesex MA","Arlington, MA",17757,1 
+"02478","25017","Middlesex MA","Belmont, MA",27286,1 
+"02481","25021","Norfolk MA","Wellesley Hills, MA",17280,1 
+"02482","25021","Norfolk MA","Wellesley, MA",10710,1 
+"02492","25021","Norfolk MA","Needham, MA",21359,1 
+"02493","25017","Middlesex MA","Weston, MA",11851,1 
+"02494","25021","Norfolk MA","Needham Heights, MA",10732,1 
+"02532","25001","Barnstable MA","Buzzards Bay, MA",11372,0.848 
+"02532","25023","Plymouth MA","Buzzards Bay, MA",2039,0.152 
+"02534","25001","Barnstable MA","Cataumet, MA (PO boxes)",899,1 
+"02535","25007","Dukes MA","Chilmark, MA",1651,1 
+"02536","25001","Barnstable MA","East Falmouth, MA",19993,1 
+"02537","25001","Barnstable MA","East Sandwich, MA",6178,1 
+"02538","25023","Plymouth MA","East Wareham, MA",4428,1 
+"02539","25007","Dukes MA","Edgartown, MA",5168,1 
+"02540","25001","Barnstable MA","Falmouth, MA",8450,1 
+"02542","25001","Barnstable MA","Buzzards Bay, MA",793,1 
+"02543","25001","Barnstable MA","Woods Hole, MA",725,0.959 
+"02543","25007","Dukes MA","Woods Hole, MA",31,0.041 
+"02553","25001","Barnstable MA","Monument Beach, MA (PO boxes)",164,1 
+"02554","25019","Nantucket MA","Nantucket, MA",13517,1 
+"02556","25001","Barnstable MA","North Falmouth, MA",3338,1 
+"02557","25007","Dukes MA","Oak Bluffs, MA (PO boxes)",2372,1 
+"02558","25023","Plymouth MA","Onset, MA (PO boxes)",2178,1 
+"02559","25001","Barnstable MA","Pocasset, MA",3388,1 
+"02561","25001","Barnstable MA","Sagamore, MA (PO boxes)",712,1 
+"02562","25001","Barnstable MA","Sagamore Beach, MA",3204,1 
+"02563","25001","Barnstable MA","Sandwich, MA",10070,1 
+"02564","25019","Nantucket MA","Siasconset, MA (PO boxes)",703,1 
+"02568","25007","Dukes MA","Vineyard Haven, MA",8172,1 
+"02571","25023","Plymouth MA","Wareham, MA",10858,1 
+"02575","25007","Dukes MA","West Tisbury, MA (PO boxes)",3167,1 
+"02576","25023","Plymouth MA","West Wareham, MA",3957,1 
+"02584","25019","Nantucket MA","Nantucket, MA (PO boxes)",35,1 
+"02601","25001","Barnstable MA","Hyannis, MA",16487,1 
+"02630","25001","Barnstable MA","Barnstable, MA",1956,1 
+"02631","25001","Barnstable MA","Brewster, MA",10178,1 
+"02632","25001","Barnstable MA","Centerville, MA",11475,1 
+"02633","25001","Barnstable MA","Chatham, MA",4664,1 
+"02635","25001","Barnstable MA","Cotuit, MA",3632,1 
+"02637","25001","Barnstable MA","Cummaquid, MA (PO boxes)",267,1 
+"02638","25001","Barnstable MA","Dennis, MA",2968,1 
+"02639","25001","Barnstable MA","Dennis Port, MA",3238,1 
+"02641","25001","Barnstable MA","East Dennis, MA (PO boxes)",332,1 
+"02642","25001","Barnstable MA","Eastham, MA",5752,1 
+"02643","25001","Barnstable MA","East Orleans, MA (PO boxes)",13,1 
+"02644","25001","Barnstable MA","Forestdale, MA",3954,1 
+"02645","25001","Barnstable MA","Harwich, MA",10436,1 
+"02646","25001","Barnstable MA","Harwich Port, MA",1926,1 
+"02647","25001","Barnstable MA","Hyannis Port, MA (PO boxes)",136,1 
+"02648","25001","Barnstable MA","Marstons Mills, MA",7325,1 
+"02649","25001","Barnstable MA","Mashpee, MA",15060,1 
+"02650","25001","Barnstable MA","North Chatham, MA",829,1 
+"02652","25001","Barnstable MA","North Truro, MA (PO boxes)",1402,1 
+"02653","25001","Barnstable MA","Orleans, MA",6307,1 
+"02655","25001","Barnstable MA","Osterville, MA",3591,1 
+"02657","25001","Barnstable MA","Provincetown, MA",3664,1 
+"02659","25001","Barnstable MA","South Chatham, MA",1100,1 
+"02660","25001","Barnstable MA","South Dennis, MA",6662,1 
+"02663","25001","Barnstable MA","South Wellfleet, MA (PO boxes)",257,1 
+"02664","25001","Barnstable MA","South Yarmouth, MA",9935,1 
+"02666","25001","Barnstable MA","Truro, MA (PO boxes)",1052,1 
+"02667","25001","Barnstable MA","Wellfleet, MA",3309,1 
+"02668","25001","Barnstable MA","West Barnstable, MA",3222,1 
+"02670","25001","Barnstable MA","West Dennis, MA",1463,1 
+"02671","25001","Barnstable MA","West Harwich, MA",1216,1 
+"02672","25001","Barnstable MA","West Hyannisport, MA (PO boxes)",297,1 
+"02673","25001","Barnstable MA","West Yarmouth, MA",8892,1 
+"02675","25001","Barnstable MA","Yarmouth Port, MA",6712,1 
+"02702","25005","Bristol MA","Assonet, MA",4267,1 
+"02703","25005","Bristol MA","Attleboro, MA",46389,1 
+"02713","25007","Dukes MA","Cuttyhunk, MA (PO boxes)",39,1 
+"02715","25005","Bristol MA","Dighton, MA",4036,1 
+"02717","25005","Bristol MA","East Freetown, MA",4951,1 
+"02718","25005","Bristol MA","East Taunton, MA",6882,1 
+"02719","25005","Bristol MA","Fairhaven, MA",15924,1 
+"02720","25005","Bristol MA","Fall River, MA",31209,1 
+"02721","25005","Bristol MA","Fall River, MA",28075,1 
+"02723","25005","Bristol MA","Fall River, MA",16084,1 
+"02724","25005","Bristol MA","Fall River, MA",18050,1 
+"02725","25005","Bristol MA","Somerset, MA",2632,1 
+"02726","25005","Bristol MA","Somerset, MA",15671,1 
+"02738","25023","Plymouth MA","Marion, MA",5347,1 
+"02739","25023","Plymouth MA","Mattapoisett, MA",6508,1 
+"02740","25005","Bristol MA","New Bedford, MA",45166,1 
+"02743","25005","Bristol MA","Acushnet, MA",10434,1 
+"02744","25005","Bristol MA","New Bedford, MA",13055,1 
+"02745","25005","Bristol MA","New Bedford, MA",25336,1 
+"02746","25005","Bristol MA","New Bedford, MA",17355,1 
+"02747","25005","Bristol MA","North Dartmouth, MA",22326,1 
+"02748","25005","Bristol MA","South Dartmouth, MA",11888,1 
+"02760","25005","Bristol MA","North Attleboro, MA",28716,1 
+"02762","25021","Norfolk MA","Plainville, MA",9945,1 
+"02763","25005","Bristol MA","Attleboro Falls, MA",2118,1 
+"02764","25005","Bristol MA","North Dighton, MA",4081,1 
+"02766","25005","Bristol MA","Norton, MA",19202,1 
+"02767","25005","Bristol MA","Raynham, MA",15376,1 
+"02769","25005","Bristol MA","Rehoboth, MA",12521,1 
+"02770","25023","Plymouth MA","Rochester, MA",5560,1 
+"02771","25005","Bristol MA","Seekonk, MA",15512,1 
+"02777","25005","Bristol MA","Swansea, MA",17133,1 
+"02779","25005","Bristol MA","Berkley, MA",6764,1 
+"02780","25005","Bristol MA","Taunton, MA",52299,1 
+"02790","25005","Bristol MA","Westport, MA",16458,1 
+"02791","25005","Bristol MA","Westport Point, MA (PO boxes)",312,1 
+"02861","25005","Bristol MA","Pawtucket, RI",72,1 
