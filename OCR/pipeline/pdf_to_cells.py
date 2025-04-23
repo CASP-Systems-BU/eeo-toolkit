@@ -6,13 +6,16 @@ from utilities.load_config import load_cell_coordination_config
 from utilities.dir_helper import create_dir_if_not_exists
 from logger.logger import Logger
 
+
 def get_files_in_directory(directory, extension=".pdf"):
     if not os.path.exists(directory):
         raise FileNotFoundError(f"The directory {directory} does not exist.")
     return [f for f in os.listdir(directory) if f.lower().endswith(extension)]
 
+
 def file_exists(path: str) -> bool:
     return os.path.exists(path)
+
 
 def gen_cell(
     page, fields, key, output_folder, filename, section, scale_factor=3, padding=45
@@ -50,7 +53,9 @@ def gen_cell(
     file_logger.info(f"Cropped PDF with padding saved to {out_path}")
 
 
-def split_section(page: fitz.Page, section: str, filename: str, output_folder: str, key_map: dict):
+def split_section(
+    page: fitz.Page, section: str, filename: str, output_folder: str, key_map: dict
+):
     file_logger.info(f"Splitting Section {section} of the PDF...")
     fields = key_map[section]
 
@@ -58,20 +63,26 @@ def split_section(page: fitz.Page, section: str, filename: str, output_folder: s
         gen_cell(page, fields, key, output_folder, filename, section)
 
 
-def pdf_to_cells(pdf_path: str, form_config: str, section_config: Dict, page_num_ls: List[int], log_dir: str = "../logs"):
-    
+def pdf_to_cells(
+    pdf_path: str,
+    form_config: str,
+    section_config: Dict,
+    page_num_ls: List[int],
+    log_dir: str = "../logs",
+):
+
     filename = os.path.splitext(os.path.basename(pdf_path))[0]
     filename_no_ext = os.path.splitext(filename)[0]
     file_dir = os.path.dirname(pdf_path)
-    
+
     key_map = load_cell_coordination_config(form_config)
-    
+
     global file_logger
     file_logger = Logger(
         log_file_path=f"{log_dir}/{filename_no_ext}.log",
         prefix="PDF_TO_CELLS",
     )
-    
+
     create_dir_if_not_exists(log_dir)
 
     if key_map == {}:
@@ -81,7 +92,7 @@ def pdf_to_cells(pdf_path: str, form_config: str, section_config: Dict, page_num
     if not file_exists(pdf_path):
         file_logger.error(f"File {pdf_path} does not exist.")
         return
-    
+
     # PRASE 1: Split PDF into sections
     out_dir = os.path.join(file_dir, "cells")
     os.makedirs(out_dir, exist_ok=True)

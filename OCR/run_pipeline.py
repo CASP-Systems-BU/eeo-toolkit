@@ -6,10 +6,11 @@ then outputs results as JSON files.
 
 import os
 import shutil
-from OCR.pipeline.split_pages import process_pdf
-from OCR.pipeline.pdf_to_cells import pdf_to_cells
-from OCR.pipeline.cells_to_contents import extract_contents
-from OCR.utilities.dir_helper import create_dir_if_not_exists, get_files_in_directory
+from ocr.pipeline.split_pages import process_pdf
+from ocr.pipeline.pdf_to_cells import pdf_to_cells
+from ocr.pipeline.cells_to_contents import extract_contents
+from ocr.utilities.dir_helper import create_dir_if_not_exists, get_files_in_directory
+
 from doctr.models import ocr_predictor
 from utilities.load_config import load_table_config, load_section_config
 

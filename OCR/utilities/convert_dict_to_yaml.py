@@ -2,7 +2,7 @@ import os
 import yaml
 from typing import Dict
 
-from OCR.utilities.dir_helper import is_file_or_dir_exist
+from ocr.utilities.dir_helper import is_file_or_dir_exist
 
 def convert_dict_to_config_yaml(kv_dict: str, out_file: str) -> Dict:
     """

@@ -18,7 +18,6 @@ A compliance automation tool for processing **EEO-1** and **EEO-5** PDF reports 
       - [2.2 Deduplication](#22-deduplication)
       - [2.3 Layer Rendering Fix](#23-layer-rendering-fix)
     - [3. Run OCR Pipeline](#3-run-ocr-pipeline)
-    - [4. Data Aggregation](#4-data-aggregation)
   - [Folder Structure](#folder-structure)
   - [Configuration File Schemas](#configuration-file-schemas)
   - [Logging](#logging)
@@ -132,14 +131,6 @@ python3 ocr/run_pipeline.py
 ```
 
 This generates `<formname>_result.json` files under `../files/results`.
-
-### 4. Data Aggregation
-
-> **TODO**: Implement and document scripts for:
->
-> - Summarizing total headcount by demographic
-> - Calculating pay band distributions
-> - Exporting aggregated CSV/Excel reports via Pandas
 
 ---
 
