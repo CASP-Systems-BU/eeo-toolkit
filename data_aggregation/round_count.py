@@ -3,7 +3,7 @@ import pandas as pd
 
 input_folder = "/Users/rekkles/Downloads/eeo5_contingency_tables_dp"
 output_folder = "/Users/rekkles/Downloads/eeo5_contingency_tables_dp"
-threshold = 50
+threshold = 0
 for filename in os.listdir(input_folder):
     if filename.endswith(".csv"):
         filepath = os.path.join(input_folder, filename)

@@ -1,12 +1,18 @@
+"""
+This script processes a collection of JSON files containing tabular EEO data,
+extracts structured fields along with metadata, and compiles all records into
+a single aggregated pandas DataFrame. It handles duplicate job category entries
+by grouping and summing numeric fields. This is especially useful for converting
+scanned and OCR-processed form outputs into a structured tabular format for analysis.
+"""
+
 import os
 import json
 import glob
-
 import pandas as pd
 
+# Import predefined constants for expected columns and job categories
 from const import COLUMN_NAMES, JOB_CATEGORIES
-
-
 
 def json_to_df(path: str):
     """
@@ -28,14 +34,14 @@ def json_to_df(path: str):
         with open(file_path, "r") as f:
             record = json.load(f)
 
-        # Extract the main table from JSON and convert it to DataFrame
+        # Extract the main table from JSON and convert it to a DataFrame
         df_table = pd.DataFrame(record["table"], columns=COLUMN_NAMES)
         print(df_table)
 
-        # Add job category label to each row
+        # Add job category labels to each row in the DataFrame
         df_table["JobCategory"] = JOB_CATEGORIES
 
-        # Populate metadata columns from JSON record
+        # Append identifying and contextual metadata from the JSON record
         df_table["City"] = record["city"]
         df_table["State"] = record["state"]
         df_table["Headquarter State"] = record["headquarter_state"]
@@ -47,7 +53,7 @@ def json_to_df(path: str):
         df_table["filename"] = record["filename"]
         df_table["Year"] = record["reporting_year"]
 
-        # Group to remove duplicate rows for same job category in same file
+        # Group by unique identifiers to remove duplicates and sum numeric columns
         group_df = df_table.groupby(
             [
                 "State", "City", "Headquarter State", "Headquarter City", "NAICS", "Year",
@@ -56,14 +62,13 @@ def json_to_df(path: str):
             as_index=False
         ).sum(numeric_only=True)
 
-        # Aggregate with previous data
+        # Aggregate this record's data into the running DataFrame
         if agg_df.empty:
             agg_df = group_df
         else:
-            # Align indexes for addition
+            # Align by index and sum up matching rows
             agg_df = agg_df.set_index(group_df.columns[:-1])
             group_df = group_df.set_index(group_df.columns[:-1])
             agg_df = agg_df.add(group_df, fill_value=0).reset_index()
 
     return agg_df
-
