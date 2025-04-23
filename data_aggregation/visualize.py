@@ -2,7 +2,7 @@ import os.path
 
 import pandas as pd
 import matplotlib.pyplot as plt
-from OCR.utils.dir_helper import get_files_in_directory
+from OCR.utilities.dir_helper import get_files_in_directory
 csv_path = "/home/node0/Documents/csv_output/eeo1_contingency_tables/three_way"
 csv_files = get_files_in_directory(csv_path, extension="csv")
 for csv_file in csv_files:

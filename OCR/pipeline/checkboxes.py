@@ -6,7 +6,7 @@ import json
 import os
 
 
-from utils.load_config import load_cell_coordination_config
+from utilities.load_config import load_cell_coordination_config
 
 def is_rectangle_dark(image, top_left, bottom_right, threshold):
     x1, y1 = top_left

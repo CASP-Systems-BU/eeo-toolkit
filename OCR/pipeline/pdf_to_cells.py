@@ -2,8 +2,8 @@ import os
 from typing import Dict, List
 import fitz
 
-from utils.load_config import load_cell_coordination_config
-from utils.dir_helper import create_dir_if_not_exists
+from utilities.load_config import load_cell_coordination_config
+from utilities.dir_helper import create_dir_if_not_exists
 from logger.logger import Logger
 
 def get_files_in_directory(directory, extension=".pdf"):

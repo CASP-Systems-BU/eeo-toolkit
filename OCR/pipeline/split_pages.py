@@ -4,9 +4,9 @@ import fitz
 import numpy as np
 from PIL import Image
 from difflib import SequenceMatcher
-from utils.load_config import load_cell_coordination_config
+from utilities.load_config import load_cell_coordination_config
 from logger.logger import Logger
-from utils.dir_helper import create_dir_if_not_exists
+from utilities.dir_helper import create_dir_if_not_exists
 
 def detect_outer_edges_in_pdf(page, scale_factor=1):
     """Detect edges and return the bounding box of content."""

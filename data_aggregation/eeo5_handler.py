@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 import json
-from OCR.utils.dir_helper import get_files_in_directory
+from OCR.utilities.dir_helper import get_files_in_directory
 from const import EEO5_COLUMN_NAMES, EEO5_TABLE_A_ROW_NAMES, EEO5_TABLE_B_ROW_NAMES, EEO5_TABLE_C_ROW_NAMES
 json_input_dir = "/home/node0/Documents/eeo5_json_corrected/filtered"
 output_dir = "/home/node0/Documents/eeo5_json_corrected/filtered"
