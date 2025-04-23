@@ -14,7 +14,7 @@ if __name__ == "__main__":
     # generate aggregation
     input_dir = "/home/node0/Documents/eeo1_json"
     output_dir = f"{input_dir}/../csv_output"
-    agg_df = json_to_df(input_dir, YearType.CURRENT)
+    agg_df = json_to_df(input_dir)
     agg_df['zip code'] = agg_df['zip code'].astype(str)
     agg_df['HQ zip code'] = agg_df['HQ zip code'].astype(str)
     agg_df.to_csv(os.path.join(output_dir, "aggregation.csv"))
