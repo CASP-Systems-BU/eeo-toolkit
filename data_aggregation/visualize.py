@@ -13,7 +13,7 @@ Each chart is saved as a PNG file named after the corresponding contingency dime
 import os.path
 import pandas as pd
 import matplotlib.pyplot as plt
-from OCR.utils.dir_helper import get_files_in_directory
+from OCR.utilities.dir_helper import get_files_in_directory
 
 # Path to the folder containing contingency table CSVs
 csv_path = "/home/node0/Documents/csv_output/eeo1_contingency_tables/three_way"
