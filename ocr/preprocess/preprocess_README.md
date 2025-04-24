@@ -44,6 +44,12 @@ python classify.py
 ### Step 3: Re-render PDFs with Layout Fixes (Optional)
 Fix formatting issues in PDF forms by printing them via a headless Firefox session.
 
+Before:
+![File Example With Render Problem](render_problem_1.png)
+
+After:
+![File Example Without Render Problem](render_problem_0.png)
+
 ```bash
 python re_render_pdf.py
 ```
