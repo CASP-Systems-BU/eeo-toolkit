@@ -20,6 +20,12 @@ import os
 import re
 from typing import List
 
+# Input/output paths
+# json_input_dir = "/home/node0/Documents/eeo5_json_corrected/raw_json"
+# json_output_dir = "/home/node0/Documents/eeo5_json_corrected/filtered"
+json_input_dir = input("Enter the input JSON directory: ")
+json_output_dir = input("Enter the output JSON directory: ")
+
 
 def get_all_json_files(path: str) -> List[str]:
     """
@@ -44,8 +50,7 @@ def get_extracted_str(content):
 
 
 # Input/output directories
-json_input_dir = "/home/node0/Documents/eeo5_json_corrected/raw_json"
-json_output_dir = "/home/node0/Documents/eeo5_json_corrected/filtered"
+
 json_files = get_all_json_files(json_input_dir)
 
 # Field indices based on EEO-5 JSON structure

@@ -23,6 +23,12 @@ import re
 from typing import List
 from rapidfuzz import fuzz
 
+# Input/output paths
+# json_input_dir = "/home/node0/Documents/project/data/valid_submissions/typed/type2/results"
+# json_output_dir = "/home/node0/Documents/project/data/valid_submissions/typed/type2/filtered"
+json_input_dir = input("Enter the input JSON directory: ")
+json_output_dir = input("Enter the output JSON directory: ")
+
 
 def get_all_json_files(path: str) -> List[str]:
     """
@@ -71,9 +77,7 @@ CONSOLIDATED_REPORT = "CONSOLIDATED REPORT"
 naics_map = {}
 ma_zip_set = set()
 
-# Input/output paths
-json_input_dir = "/home/node0/Documents/project/data/valid_submissions/typed/type2/results"
-json_output_dir = "/home/node0/Documents/project/data/valid_submissions/typed/type2/filtered"
+
 json_files = get_all_json_files(json_input_dir)
 
 # Load Massachusetts ZIP codes

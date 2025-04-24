@@ -32,6 +32,8 @@ from rapidfuzz import process, fuzz
 from ..utilities.table_validator import column_validator, row_validator_with_correction
 from typing import Dict, Tuple, List
 
+json_input_dir = "../../files/batch_1/results"  # MODIFY ME: Input directory for JSON files
+
 
 def write_to_log(path: str, message: str) -> None:
     """Append a message to a log file."""
@@ -108,7 +110,6 @@ def get_all_json_files(path: str) -> List[str]:
 
 
 # Setup and load data
-json_input_dir = "../../files/batch_1/results"
 json_files = get_all_json_files(json_input_dir)
 city_state_csv = "../../config/uscities.csv"
 reference_data = load_city_state_reference(city_state_csv)
