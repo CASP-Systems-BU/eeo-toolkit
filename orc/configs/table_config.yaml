@@ -1,0 +1,26 @@
+# schema:
+# form_type:
+#   `part`:
+#   - `row_num`
+#   - `col_num`
+
+eeo1: !!python/tuple
+    - 12
+    - 15
+
+eeo5:
+  a1: !!python/tuple
+    - 10
+    - 15
+  a2: !!python/tuple
+    - 1
+    - 15
+  a3: !!python/tuple
+    - 8
+    - 15
+  b: !!python/tuple
+    - 3
+    - 15
+  c: !!python/tuple
+    - 6
+    - 15

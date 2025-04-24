@@ -1,0 +1,23 @@
+Local Public School: !!python/tuple
+  - 117
+  - 830
+  - 136
+  - 848
+
+Special Regional Agency: !!python/tuple
+  - 400
+  - 827
+  - 420
+  - 845
+
+State Education Agency: !!python/tuple
+  - 721
+  - 828
+  - 740
+  - 845
+
+Other: !!python/tuple
+  - 1065
+  - 827
+  - 1084
+  - 845
