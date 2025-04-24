@@ -14,8 +14,8 @@ Key Features:
 - Utility to update the grand total cell when intermediate sums are valid
 """
 
-import pandas as pd
 from typing import List, Tuple
+import pandas as pd
 
 
 def table_validator(
@@ -54,11 +54,11 @@ def column_validator(form_type: str, data: List[List[int]]) -> List[bool]:
 
     for col in df.columns:
         if form_type == "eeo1":
-            total = df.loc[0:h-3, col].sum()
-            target = df.loc[h-2, col]
+            total = df.loc[0 : h - 3, col].sum()
+            target = df.loc[h - 2, col]
         elif form_type == "eeo5":
-            total = df.loc[0:h-2, col].sum()
-            target = df.loc[h-1, col]
+            total = df.loc[0 : h - 2, col].sum()
+            target = df.loc[h - 1, col]
         else:
             continue
 
@@ -87,8 +87,8 @@ def row_validator_with_correction(
     h, w = len(data), len(data[0])
 
     for row_index in df.index:
-        total = df.loc[row_index, 0:w-2].sum()
-        target = df.loc[row_index, w-1]
+        total = df.loc[row_index, 0 : w - 2].sum()
+        target = df.loc[row_index, w - 1]
 
         if total == target:
             isValid[int(row_index)] = True
@@ -100,8 +100,10 @@ def row_validator_with_correction(
                 low_conf_index = low_conf_indices[0]
 
                 # Try correcting the low-confidence value
-                if low_conf_index != w-1:
-                    rest_sum = sum(data[row_index][:-1]) - data[row_index][low_conf_index]
+                if low_conf_index != w - 1:
+                    rest_sum = (
+                        sum(data[row_index][:-1]) - data[row_index][low_conf_index]
+                    )
                     new_value = data[row_index][-1] - rest_sum
                     data[row_index][low_conf_index] = new_value
                 else:
@@ -146,8 +148,8 @@ def update_total(data: List[List[int]]) -> bool:
     """
     df = pd.DataFrame(data)
     h, w = len(data), len(data[0])
-    sum1 = df.iloc[0:h-3, -1].sum()
-    sum2 = df.iloc[h-2, 0:w-1].sum()
+    sum1 = df.iloc[0 : h - 3, -1].sum()
+    sum2 = df.iloc[h - 2, 0 : w - 1].sum()
 
     if sum1 == sum2:
         data[-2][-1] = sum1

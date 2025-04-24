@@ -24,7 +24,11 @@ def get_all_json_files(path: str) -> List[str]:
     """
     Recursively collect all JSON files under the specified path.
     """
-    dirs = [os.path.join(path, d) for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))]
+    dirs = [
+        os.path.join(path, d)
+        for d in os.listdir(path)
+        if os.path.isdir(os.path.join(path, d))
+    ]
     dirs.append(path)
     json_files = []
     for d in dirs:
@@ -48,7 +52,7 @@ def cal_eeo1_margin_diff(input_dir):
         whole_total = table[-2][-1]
 
         # Row and column sums exclude total row/column
-        row_sum = sum(row[-1] for i, row in enumerate(table) if i < len(table)-2)
+        row_sum = sum(row[-1] for i, row in enumerate(table) if i < len(table) - 2)
         col_sum = sum(table[-2][:-1])
 
         diff = 0
