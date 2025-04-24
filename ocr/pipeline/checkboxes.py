@@ -1,3 +1,10 @@
+"""
+Module: extract_checkboxes.py
+
+Extracts checkbox states from EEO-1 and EEO-5 PDF forms, renders ROI debug images,
+and writes consolidated results to JSON files.
+"""
+
 import cv2
 import numpy as np
 import fitz
@@ -10,6 +17,18 @@ from utilities.load_config import load_cell_coordination_config
 
 
 def is_rectangle_dark(image, top_left, bottom_right, threshold):
+    """
+    Determine if a rectangular region in the image is "dark" (i.e., mostly filled).
+
+    Args:
+        image (ndarray): RGB image array.
+        top_left (tuple): (x1, y1) coordinates of the top-left corner of the rectangle.
+        bottom_right (tuple): (x2, y2) coordinates of the bottom-right corner.
+        threshold (float): Fraction of the maximum possible pixel sum below which the region is considered dark.
+
+    Returns:
+        bool: True if region pixel sum <= threshold * max_possible_sum, else False.
+    """
     x1, y1 = top_left
     x2, y2 = bottom_right
     roi = image[y1:y2, x1:x2]
@@ -28,6 +47,16 @@ def is_rectangle_dark(image, top_left, bottom_right, threshold):
 def extract_from_checkbox(
     form_type, input_folder, output_folder, file_name, checkbox_config
 ):
+    """
+    Extract checkbox states from a single PDF form page and append results to JSON.
+
+    Args:
+        form_type (str): Either "eeo1" or "eeo5" to determine JSON structure.
+        input_folder (str): Path containing the PDF file.
+        output_folder (str): Path to write the result JSON.
+        file_name (str): PDF filename to process.
+        checkbox_config (str): Path to config mapping checkbox keys to coordinates.
+    """
     zoom = 3
     directory = os.path.join(input_folder, file_name)
     doc = fitz.open(directory)
@@ -67,6 +96,14 @@ def extract_from_checkbox(
 
 
 def extract_checkboxes(input_folder, output_folder, checkbox_config):
+    """
+    Process all PDF files in the input folder, extracting checkboxes for each.
+
+    Args:
+        input_folder (str): Directory containing PDF files.
+        output_folder (str): Directory to save JSON results.
+        checkbox_config (str): Config file path for checkbox coordinates.
+    """
     for file in os.listdir(input_folder):
         if file.endswith(".pdf"):
             filename = os.path.basename(file)
@@ -76,6 +113,15 @@ def extract_checkboxes(input_folder, output_folder, checkbox_config):
 
 
 def debug_checkbox(input_folder, file_name, checkbox_config):
+    """
+    Render an image with ROI rectangles drawn around each checkbox for debugging.
+    Use for debugging purposes only.
+
+    Args:
+        input_folder (str): Directory containing the PDF file.
+        file_name (str): PDF filename.
+        checkbox_config (str): Config file path for checkbox credentials.
+    """
     zoom = 3
     directory = os.path.join(input_folder, file_name)
     doc = fitz.open(directory)

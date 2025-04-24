@@ -20,7 +20,7 @@ from doctr.io import DocumentFile
 from ocr.utilities.dir_helper import create_dir_if_not_exists
 from ocr.logger.logger import Logger
 from ocr.utilities.table_validator import table_validator, update_total
-from ocr.pipeline.checkboxes import extract_from_checkbox, debug_checkbox
+from ocr.pipeline.checkboxes import extract_from_checkbox
 from ocr.utilities.dir_helper import get_files_in_directory
 
 CONFIDENCE_THRESHOLD = 0.8  # Minimum confidence to accept an OCR digit

@@ -1,3 +1,11 @@
+"""
+Module: pdf_to_cells.py
+
+Splits PDF forms into individual cell PDFs based on predefined coordinates,
+applies padding around each cell, and logs processing steps. Includes utilities
+for file discovery and existence checks.
+"""
+
 import os
 from typing import Dict, List
 import fitz
@@ -8,18 +16,44 @@ from logger.logger import Logger
 
 
 def get_files_in_directory(directory, extension=".pdf"):
+    """
+    Return a list of files in 'directory' matching the given 'extension'.
+
+    Raises:
+        FileNotFoundError: If the specified directory does not exist.
+    """
     if not os.path.exists(directory):
         raise FileNotFoundError(f"The directory {directory} does not exist.")
     return [f for f in os.listdir(directory) if f.lower().endswith(extension)]
 
 
 def file_exists(path: str) -> bool:
+    """
+    Check whether a file exists at the given path.
+
+    Returns:
+        bool: True if the file exists, False otherwise.
+    """
     return os.path.exists(path)
 
 
 def gen_cell(
     page, fields, key, output_folder, filename, section, scale_factor=3, padding=45
 ):
+    """
+    Crop a region specified by 'fields[key]' from 'page', add padding,
+    and save as a new PDF cell file.
+
+    Args:
+        page (fitz.Page): PDF page object.
+        fields (dict): Mapping of cell keys to fitz.Rect coordinates.
+        key (str): The specific cell key to crop.
+        output_folder (str): Directory to save cropped cell PDFs.
+        filename (str): Base filename without extension.
+        section (str): Section identifier for naming.
+        scale_factor (int): Zoom factor for rendering.
+        padding (int): Padding (in pixels) around the cropped region.
+    """
     new_doc = fitz.open()
 
     rect = fields[key]
@@ -56,6 +90,16 @@ def gen_cell(
 def split_section(
     page: fitz.Page, section: str, filename: str, output_folder: str, key_map: dict
 ):
+    """
+    Split a PDF page into multiple cell PDFs for a given section.
+
+    Args:
+        page (fitz.Page): PDF page object.
+        section (str): Section identifier.
+        filename (str): Base filename.
+        output_folder (str): Directory for saving cell PDFs.
+        key_map (dict): Mapping of all sections to their field coordinates.
+    """
     file_logger.info(f"Splitting Section {section} of the PDF...")
     fields = key_map[section]
 
@@ -70,7 +114,16 @@ def pdf_to_cells(
     page_num_ls: List[int],
     log_dir: str = "../logs",
 ):
+    """
+    Orchestrate the splitting of a PDF into individual cell PDFs.
 
+    Args:
+        pdf_path (str): Path to input PDF file.
+        form_config (str): Config mapping sections to cell coordinates.
+        section_config (Dict[int, List[str]]): Mapping of page indices to section lists.
+        page_num_ls (List[int]): Page indices to process.
+        log_dir (str): Directory for log files.
+    """
     filename = os.path.splitext(os.path.basename(pdf_path))[0]
     filename_no_ext = os.path.splitext(filename)[0]
     file_dir = os.path.dirname(pdf_path)
