@@ -22,12 +22,12 @@ The system processes batches of form documents (PDF or image-based) through the 
 
 ### **2.2 Pipeline Components**
 
-| Component           | Technology Used            | Description                                    |
-|---------------------|-----------------------------|------------------------------------------------|
-| Image Preprocessing | OpenCV, PIL                 | Binarization, scaling, padding                |
-| OCR Engine          | DocTR / TrOCR / Tesseract   | Handwritten and printed text recognition       |
-| Postprocessing      | Custom Python scripts       | Field extraction, form segmentation, validation and correction            |
-| Data Aggregation    | pandas                      | CSV/JSON parsing, groupby, statistical summaries |
+| Component           | Technology Used           | Description                                                    |
+| ------------------- | ------------------------- | -------------------------------------------------------------- |
+| Image Preprocessing | OpenCV, PIL               | Binarization, scaling, padding                                 |
+| OCR Engine          | DocTR / TrOCR / Tesseract | Handwritten and printed text recognition                       |
+| Postprocessing      | Custom Python scripts     | Field extraction, form segmentation, validation and correction |
+| Data Aggregation    | pandas                    | CSV/JSON parsing, groupby, statistical summaries               |
 
 ---
 
@@ -41,11 +41,11 @@ Given privacy constraints, the entire pipeline was designed to run in a secure, 
 
 3 different OCR solutions were evaluated: Tesseract, Nougat and DocTR.
 
-| OCR Engine           | Pros            | Cons                                    |
-|---------------------|-----------------------------|------------------------------------------------|
-| Tesseract | Light-weighted; support traditional (non-ML) OCR methods; predict fast | Can't distinguish the boarders of the form; less accurate; suffer from inputs with complex layout  |
-| Nougat |  |  |
-| DocTR |  |  |
+| OCR Engine | Pros                                                                                                                          | Cons                                                                                              |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Tesseract  | Light-weighted; support traditional (non-ML) OCR methods; predict fast                                                        | Can't distinguish the boarders of the form; less accurate; suffer from inputs with complex layout |
+| Nougat     | High accuracy on scientific documents                                                                                         | Heavy dependencies and large model footprint; Require self-training                               |
+| DocTR      | Exceptional accuracy across varied document types; preserves complex layouts (tables, columns); built-in multilingual support | No handwriting recognition; less language coverage than Tesseract                                 |
 Deep learning-based engines (e.g., TrOCR) outperformed traditional engines on handwritten inputs. However, fallback options like Tesseract were retained for robustness.
 
 ### **3.3 Form-Specific Tuning**
