@@ -63,3 +63,7 @@ python eeo5_filter.py
 - `eeo1_filter.py` filters based on Massachusetts relevance using ZIP/state fields.
 - `eeo5_filter.py` handles structured education form parsing including checkboxes.
 - All scripts expect input OCR JSONs in a consistent format as produced by the document parser.
+
+---
+
+## Warning

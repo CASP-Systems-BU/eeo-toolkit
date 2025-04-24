@@ -16,6 +16,11 @@ Key Features:
 - Validates tables using domain-specific row/column checks
 - Fixes OCR errors in city/state fields using fuzzy matching and U.S. reference data
 - Generates a validation summary log with counts and filenames of problematic files
+
+---
+
+Warning:
+- This script now only supports EEO-1 forms. EEO-5 forms are not supported.
 """
 
 import csv
