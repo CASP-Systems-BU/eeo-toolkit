@@ -113,7 +113,7 @@ python3 ocr/preprocess/deduplicate.py --dir ./sorted_pdfs
 Apply rendering corrections for PDF layers that misalign text and forms:
 
 ```bash
-python3 ocr/preprocess/process_pdf.py --input-dir ./sorted_pdfs --output-dir ./fixed_pdfs
+python3 ocr/preprocess/re_render_pdf.py --input-dir ./sorted_pdfs --output-dir ./fixed_pdfs
 ```
 
 ### 3. Run OCR Pipeline
