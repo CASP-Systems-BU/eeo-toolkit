@@ -10,6 +10,7 @@ A compliance automation tool for processing **EEO-1** and **EEO-5** PDF reports 
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Technical Stack](#technical-stack)
+  - [Pipeline Architecture](#pipeline-architecture)
   - [Installation](#installation)
   - [Usage](#usage)
     - [1. Configure Layout \& Checkbox YAML](#1-configure-layout--checkbox-yaml)
@@ -44,13 +45,15 @@ A compliance automation tool for processing **EEO-1** and **EEO-5** PDF reports 
 
 ---
 
+## Pipeline Architecture
+
+![image](./architecture.png)
+
+---
+
 ## Installation
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/yourorg/eeo-ocr-pipeline.git
-   cd eeo-ocr-pipeline
-   ```
+1. **Clone the repository**
 2. **Create and activate a virtual environment**:
    ```bash
    python3 -m venv venv

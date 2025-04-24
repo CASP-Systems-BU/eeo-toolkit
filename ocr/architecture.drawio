@@ -1,0 +1,181 @@
+<mxfile host="65bd71144e">
+    <diagram id="4MxS0wlBOE9UWXQ0Mjfp" name="Page-1">
+        <mxGraphModel dx="1565" dy="1074" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1200" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="3" style="edgeStyle=none;html=1;" parent="1" source="2" target="4" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="520" y="330" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="2" value="Client" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+                    <mxGeometry x="290" y="310" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" style="edgeStyle=none;html=1;" parent="1" source="4" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="840" y="340" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="440" y="190" width="240" height="300" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="PDF files" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="350" y="310" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="" style="edgeStyle=none;html=1;" parent="1" source="7" target="12" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="830" y="190" width="370" height="300" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Preprocessing&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="515" y="160" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="Pipeline" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=16;" parent="1" vertex="1">
+                    <mxGeometry x="967.5" y="160" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Raw Valid PDF files" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="700" y="310" width="110" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" value="" style="edgeStyle=none;html=1;" parent="1" source="11" target="16" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="split_pages" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="955" y="230" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="" style="whiteSpace=wrap;html=1;rounded=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+                    <mxGeometry x="1320" y="190" width="380" height="300" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Postprocessing&lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="1465" y="160" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="Crop outer white space of PDFs" style="dashed=0;html=1;fillColor=#F0F2F5;strokeColor=none;align=center;rounded=1;arcSize=10;fontColor=#596780;fontStyle=1;fontSize=11;shadow=0" parent="1" vertex="1">
+                    <mxGeometry x="930" y="270" width="170" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="" style="edgeStyle=none;html=1;" parent="1" source="16" target="23" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="pdf_to_cells" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="955" y="325" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="Crop PDF into cells based on layout config" style="dashed=0;html=1;fillColor=#F0F2F5;strokeColor=none;align=center;rounded=1;arcSize=10;fontColor=#596780;fontStyle=1;fontSize=11;shadow=0" parent="1" vertex="1">
+                    <mxGeometry x="900" y="360" width="230" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="single PDF page" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="960" y="290" width="100" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="cells_to_contents" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="955" y="420" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" value="cells" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="985" y="380" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="Extract text content to json" style="dashed=0;html=1;fillColor=#F0F2F5;strokeColor=none;align=center;rounded=1;arcSize=10;fontColor=#596780;fontStyle=1;fontSize=11;shadow=0" parent="1" vertex="1">
+                    <mxGeometry x="930" y="460" width="165" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="32" value="" style="curved=1;endArrow=classic;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="11" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="820" y="340" as="sourcePoint"/>
+                        <mxPoint x="870" y="290" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="870" y="340"/>
+                            <mxPoint x="850" y="180"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="35" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;single PDF file&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="820" y="280" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" value="" style="curved=1;endArrow=classic;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="23" target="7" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="1090" y="430" as="sourcePoint"/>
+                        <mxPoint x="1140" y="380" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1150" y="470"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="37" value="JSON output file" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="1075" y="390" width="90" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" style="edgeStyle=none;html=1;" parent="1" source="38" target="39" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" value="deduplicate" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="220" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" style="edgeStyle=none;html=1;" parent="1" source="39" target="40" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" value="classify" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="325" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" value="process_pdf" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="1" vertex="1">
+                    <mxGeometry x="500" y="420" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="46" value="Remove dup submission" style="dashed=0;html=1;fillColor=#F0F2F5;strokeColor=none;align=center;rounded=1;arcSize=10;fontColor=#596780;fontStyle=1;fontSize=11;shadow=0" parent="1" vertex="1">
+                    <mxGeometry x="492.5" y="260" width="135" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="" style="curved=1;endArrow=classic;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" target="38" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="440" y="340" as="sourcePoint"/>
+                        <mxPoint x="490" y="290" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="490" y="340"/>
+                            <mxPoint x="450" y="190"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="48" value="Classify by file extension" style="dashed=0;html=1;fillColor=#F0F2F5;strokeColor=none;align=center;rounded=1;arcSize=10;fontColor=#596780;fontStyle=1;fontSize=11;shadow=0" parent="1" vertex="1">
+                    <mxGeometry x="492.5" y="360" width="135" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="50" value="" style="curved=1;endArrow=classic;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="40" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="630" y="390" as="sourcePoint"/>
+                        <mxPoint x="680" y="340" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="650" y="480"/>
+                            <mxPoint x="670" y="370"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="51" value="Classify by file extension" style="dashed=0;html=1;fillColor=#F0F2F5;strokeColor=none;align=center;rounded=1;arcSize=10;fontColor=#596780;fontStyle=1;fontSize=11;shadow=0" parent="1" vertex="1">
+                    <mxGeometry x="492.5" y="460" width="135" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="52" value="eeo1_filter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="1560" y="230" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;eeo5_filter&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="1560" y="410" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="54" value="json_validator" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+                    <mxGeometry x="1370" y="325" width="120" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="55" style="edgeStyle=entityRelationEdgeStyle;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="54" target="52">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="57" style="edgeStyle=entityRelationEdgeStyle;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="54" target="53">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" style="html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="12" target="54">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1280" y="460" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="59" value="Convert JSON to CSV outputs" style="dashed=0;html=1;fillColor=#F0F2F5;strokeColor=none;align=center;rounded=1;arcSize=10;fontColor=#596780;fontStyle=1;fontSize=11;shadow=0" vertex="1" parent="1">
+                    <mxGeometry x="1510" y="270" width="180" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" value="JSON files" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+                    <mxGeometry x="1230" y="310" width="60" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="61" value="Convert JSON to CSV outputs" style="dashed=0;html=1;fillColor=#F0F2F5;strokeColor=none;align=center;rounded=1;arcSize=10;fontColor=#596780;fontStyle=1;fontSize=11;shadow=0" vertex="1" parent="1">
+                    <mxGeometry x="1510" y="450" width="180" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="Validate and correct JSON results" style="dashed=0;html=1;fillColor=#F0F2F5;strokeColor=none;align=center;rounded=1;arcSize=10;fontColor=#596780;fontStyle=1;fontSize=11;shadow=0" vertex="1" parent="1">
+                    <mxGeometry x="1330" y="360" width="200" height="20" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
