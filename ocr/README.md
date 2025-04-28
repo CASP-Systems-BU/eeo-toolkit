@@ -23,6 +23,7 @@ A compliance automation tool for processing **EEO-1** and **EEO-5** PDF reports 
   - [Configuration File Schemas](#configuration-file-schemas)
   - [Logging](#logging)
   - [Troubleshooting](#troubleshooting)
+  - [Future Steps](#future-steps)
 
 ---
 
@@ -72,6 +73,9 @@ A compliance automation tool for processing **EEO-1** and **EEO-5** PDF reports 
 
 ## Usage
 
+> [!CAUTION]
+> The current version of the OCR pipeline only supports the official standard EEO forms from the state government. Any third-party and customized forms are not supported.
+
 ### 1. Configure Layout & Checkbox YAML
 
 - The pipeline relies on coordinate maps for each cell and checkbox region. Ensure the following files are present under `OCR/config`:
@@ -85,13 +89,19 @@ A compliance automation tool for processing **EEO-1** and **EEO-5** PDF reports 
     - `eeo5_typed.yaml`
     - `eeo5_typed_checkbox.yaml`
 
-> **Tip**: To calibrate new layouts, use the GUI utility:
+> [!TIP]
+> To calibrate new layouts, use the GUI utility:
 >
 > ```bash
 > python3 ocr/visualization/get_location.py
 > ```
 >
-> and click cell corners to export YAML tuples.
+> and click cell corners to get the coordination.
+
+> [!NOTE]
+> The coordination for EEO-1 forms are the coordication after the white-space-cutting, while that for EEO-5 forms are the original.
+> It is because the EEO-5 forms we received did not have the shifting and scaling issues, while many EEO-1 forms does. We leave the room for you to go with either ways.
+
 
 ### 2. Pre-Processing (Optional)
 
@@ -144,12 +154,13 @@ This generates `<formname>_result.json` files under `../files/results`.
 │   ├── config/           # YAML for cell & checkbox layouts
 │   ├── pipeline/         # ocr split, cell extraction, JSON conversion
 │   ├── preprocess/       # classify, dedupe, rendering scripts
-│   └── visualization/    # GUI tools (coord extraction, JSON viewer)
+│   ├── postprocess/      # validation and summary
+│   ├── visualization/    # GUI tools (coord extraction, JSON viewer)
+│   └── README.md             # This documentation
 ├── utils/                # Config loading helpers
 ├── run_pipeline.py       # Main entrypoint
 ├── organize_results.py   # Post-run file organization
-├── requirements.txt
-└── README.md             # This documentation
+└── requirements.txt
 ```
 
 ---
@@ -192,3 +203,8 @@ All pipeline logs are stored under `logs/` with filenames `<formname>.log`. Uses
 - **Missing files?** Ensure intermediate `tmp/` directory is cleared after each run by `run_pipeline.py`.
 
 Feel free to raise issues or submit pull requests for missing aggregation features!
+
+---
+
+## Future Steps
+
