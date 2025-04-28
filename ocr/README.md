@@ -4,51 +4,12 @@ A compliance automation tool for processing **EEO-1** and **EEO-5** PDF reports 
 
 ---
 
-## Table of Contents
-
-- [OCR Pipeline for EEO PDF Files](#ocr-pipeline-for-eeo-pdf-files)
-  - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-  - [Technical Stack](#technical-stack)
-  - [Pipeline Architecture](#pipeline-architecture)
-  - [Installation](#installation)
-  - [Usage](#usage)
-    - [1. Configure Layout \& Checkbox YAML](#1-configure-layout--checkbox-yaml)
-    - [2. Pre-Processing (Optional)](#2-pre-processing-optional)
-      - [2.1 Classification](#21-classification)
-      - [2.2 Deduplication](#22-deduplication)
-      - [2.3 Layer Rendering Fix](#23-layer-rendering-fix)
-    - [3. Run OCR Pipeline](#3-run-ocr-pipeline)
-  - [Folder Structure](#folder-structure)
-  - [Configuration File Schemas](#configuration-file-schemas)
-  - [Logging](#logging)
-  - [Troubleshooting](#troubleshooting)
-  - [Future Steps](#future-steps)
-
----
-
 ## Features
 
 - **PDF-to-JSON Conversion**: End-to-end OCR pipeline for digitizing EEO reports.
 - **Data Aggregation**: Workforce statistics extraction and summary via Pandas.
 - **Form Layout Configuration**: YAML-based cell and checkbox layouts for EEO-1, and EEO-5.
 - **Modular Pipeline**: The whole pipeline is divided into the preprocessing, ocr pipeline, and postprocessing parts, each is easily pluggable .
-
----
-
-## Technical Stack
-
-- **Language**: Python 3.8+
-- **OCR Engine**: [DocTR](https://github.com/mindee/doctr)
-- **Data Aggregation**: Pandas
-- **Visualization**: Matplotlib
-- **GUI Tools**: Tkinter for coordinate extraction and JSON viewer scripts
-
----
-
-## Pipeline Architecture
-
-![image](./architecture.png)
 
 ---
 
@@ -199,10 +160,3 @@ All pipeline logs are stored under `logs/` with filenames `<formname>.log`. Uses
 - **No OCR output?** Verify `det_arch` and `reco_arch` in `run_pipeline.py` match installed DocTR models.
 - **Invalid table sums?** Adjust `table_config.yaml` cell coordinates or increase `CONFIDENCE_THRESHOLD`.
 - **Missing files?** Ensure intermediate `tmp/` directory is cleared after each run by `run_pipeline.py`.
-
-Feel free to raise issues or submit pull requests for missing aggregation features!
-
----
-
-## Future Steps
-
