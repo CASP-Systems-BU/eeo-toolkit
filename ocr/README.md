@@ -156,11 +156,9 @@ This generates `<formname>_result.json` files under `../files/results`.
 │   ├── preprocess/       # classify, dedupe, rendering scripts
 │   ├── postprocess/      # validation and summary
 │   ├── visualization/    # GUI tools (coord extraction, JSON viewer)
-│   └── README.md             # This documentation
-├── utils/                # Config loading helpers
-├── run_pipeline.py       # Main entrypoint
-├── organize_results.py   # Post-run file organization
-└── requirements.txt
+│   ├── utilities/        # Helper functions
+│   └── README.md         # This documentation
+└── ...
 ```
 
 ---
