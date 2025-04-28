@@ -1,4 +1,4 @@
-# OCR Pipeline for EEO-1 and EEO-5 PDF Files
+# OCR Pipeline for EEO PDF Files
 
 A compliance automation tool for processing **EEO-1** and **EEO-5** PDF reports as required by *Section 141 of the Massachusetts Salary Range Transparency Law (2024)*. Converts typed and scanned PDF documents into structured JSON data with automated OCR processing and workforce statistics aggregation.
 
@@ -6,7 +6,7 @@ A compliance automation tool for processing **EEO-1** and **EEO-5** PDF reports 
 
 ## Table of Contents
 
-- [OCR Pipeline for EEO-1 and EEO-5 PDF Files](#ocr-pipeline-for-eeo-1-and-eeo-5-pdf-files)
+- [OCR Pipeline for EEO PDF Files](#ocr-pipeline-for-eeo-pdf-files)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Technical Stack](#technical-stack)
@@ -29,9 +29,9 @@ A compliance automation tool for processing **EEO-1** and **EEO-5** PDF reports 
 ## Features
 
 - **PDF-to-JSON Conversion**: End-to-end OCR pipeline for digitizing EEO reports.
-- **Data Aggregation**: Workforce statistics extraction and summary via Pandas (TODO: flesh out aggregation scripts).
-- **Form Layout Configuration**: YAML-based cell and checkbox layouts for EEO-1 Type 1 & 2, and EEO-5.
-- **Modular Preprocessing**: Classification, deduplication, and layer rendering fixes.
+- **Data Aggregation**: Workforce statistics extraction and summary via Pandas.
+- **Form Layout Configuration**: YAML-based cell and checkbox layouts for EEO-1, and EEO-5.
+- **Modular Pipeline**: The whole pipeline is divided into the preprocessing, ocr pipeline, and postprocessing parts, each is easily pluggable .
 
 ---
 
@@ -40,7 +40,7 @@ A compliance automation tool for processing **EEO-1** and **EEO-5** PDF reports 
 - **Language**: Python 3.8+
 - **OCR Engine**: [DocTR](https://github.com/mindee/doctr)
 - **Data Aggregation**: Pandas
-- **Visualization**: Matplotlib (future)
+- **Visualization**: Matplotlib
 - **GUI Tools**: Tkinter for coordinate extraction and JSON viewer scripts
 
 ---
@@ -100,7 +100,7 @@ A compliance automation tool for processing **EEO-1** and **EEO-5** PDF reports 
 Use `ocr/preprocess/classify.py` to separate EEO-1 vs. EEO-5 PDFs.
 
 ```bash
-python3 ocr/preprocess/classify.py --input-dir ./raw_pdfs --output-dir ./sorted_pdfs
+python3 ocr/preprocess/classify.py
 ```
 
 #### 2.2 Deduplication
@@ -108,7 +108,7 @@ python3 ocr/preprocess/classify.py --input-dir ./raw_pdfs --output-dir ./sorted_
 Identify and remove duplicate forms based on file hashes:
 
 ```bash
-python3 ocr/preprocess/deduplicate.py --dir ./sorted_pdfs
+python3 ocr/preprocess/deduplicate.py
 ```
 
 #### 2.3 Layer Rendering Fix
@@ -116,7 +116,7 @@ python3 ocr/preprocess/deduplicate.py --dir ./sorted_pdfs
 Apply rendering corrections for PDF layers that misalign text and forms:
 
 ```bash
-python3 ocr/preprocess/re_render_pdf.py --input-dir ./sorted_pdfs --output-dir ./fixed_pdfs
+python3 ocr/preprocess/re_render_pdf.py
 ```
 
 ### 3. Run OCR Pipeline
