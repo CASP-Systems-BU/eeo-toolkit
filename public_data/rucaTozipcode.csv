@@ -1,0 +1,683 @@
+ZIP_CODE,STATE,ZIP_TYPE,RUCA1,RUCA2
+00158,MA,Zip Code Area,10,10.0
+01001,MA,Zip Code Area,1,1.0
+01002,MA,Zip Code Area,1,1.0
+01003,MA,Zip Code Area,1,1.0
+01004,MA,Post Office or large volume customer,1,1.0
+01005,MA,Zip Code Area,2,2.0
+01007,MA,Zip Code Area,1,1.0
+01008,MA,Zip Code Area,2,2.0
+01009,MA,Post Office or large volume customer,1,1.0
+01010,MA,Zip Code Area,2,2.1
+01011,MA,Zip Code Area,2,2.0
+01012,MA,Zip Code Area,2,2.0
+01013,MA,Zip Code Area,1,1.0
+01014,MA,Post Office or large volume customer,1,1.0
+01020,MA,Zip Code Area,1,1.0
+01021,MA,Post Office or large volume customer,1,1.0
+01022,MA,Zip Code Area,1,1.0
+01026,MA,Zip Code Area,2,2.0
+01027,MA,Zip Code Area,1,1.0
+01028,MA,Zip Code Area,1,1.0
+01029,MA,Post Office or large volume customer,10,10.0
+01030,MA,Zip Code Area,1,1.0
+01031,MA,Zip Code Area,3,3.0
+01032,MA,Zip Code Area,2,2.0
+01033,MA,Zip Code Area,1,1.0
+01034,MA,Zip Code Area,2,2.0
+01035,MA,Zip Code Area,1,1.0
+01036,MA,Zip Code Area,1,1.0
+01037,MA,Zip Code Area,3,3.0
+01038,MA,Zip Code Area,2,2.0
+01039,MA,Zip Code Area,2,2.0
+01040,MA,Zip Code Area,1,1.0
+01041,MA,Post Office or large volume customer,1,1.0
+01050,MA,Zip Code Area,2,2.0
+01053,MA,Zip Code Area,1,1.0
+01054,MA,Zip Code Area,2,2.0
+01056,MA,Zip Code Area,1,1.0
+01057,MA,Zip Code Area,2,2.0
+01059,MA,Post Office or large volume customer,1,1.0
+01060,MA,Zip Code Area,1,1.0
+01061,MA,Post Office or large volume customer,1,1.0
+01062,MA,Zip Code Area,1,1.0
+01063,MA,Zip Code Area,1,1.0
+01066,MA,Zip Code Area,2,2.0
+01068,MA,Zip Code Area,2,2.0
+01069,MA,Zip Code Area,1,1.0
+01070,MA,Zip Code Area,2,2.0
+01071,MA,Zip Code Area,2,2.0
+01072,MA,Zip Code Area,2,2.0
+01073,MA,Zip Code Area,2,2.0
+01074,MA,Zip Code Area,2,2.0
+01075,MA,Zip Code Area,1,1.0
+01077,MA,Zip Code Area,1,1.0
+01079,MA,Post Office or large volume customer,1,1.0
+01080,MA,Zip Code Area,1,1.0
+01081,MA,Zip Code Area,2,2.0
+01082,MA,Zip Code Area,2,2.0
+01083,MA,Zip Code Area,2,2.0
+01084,MA,Zip Code Area,2,2.0
+01085,MA,Zip Code Area,1,1.0
+01086,MA,Post Office or large volume customer,1,1.0
+01088,MA,Zip Code Area,2,2.0
+01089,MA,Zip Code Area,1,1.0
+01090,MA,Post Office or large volume customer,1,1.0
+01092,MA,Zip Code Area,2,2.0
+01093,MA,Post Office or large volume customer,2,2.0
+01094,MA,Post Office or large volume customer,3,3.0
+01095,MA,Zip Code Area,1,1.0
+01096,MA,Zip Code Area,2,2.0
+01097,MA,Post Office or large volume customer,2,2.0
+01098,MA,Zip Code Area,2,2.0
+01101,MA,Post Office or large volume customer,1,1.0
+01102,MA,Post Office or large volume customer,1,1.0
+01103,MA,Zip Code Area,1,1.0
+01104,MA,Zip Code Area,1,1.0
+01105,MA,Zip Code Area,1,1.0
+01106,MA,Zip Code Area,1,1.0
+01107,MA,Zip Code Area,1,1.0
+01108,MA,Zip Code Area,1,1.0
+01109,MA,Zip Code Area,1,1.0
+01111,MA,Post Office or large volume customer,1,1.0
+01115,MA,Post Office or large volume customer,1,1.0
+01116,MA,Post Office or large volume customer,1,1.0
+01118,MA,Zip Code Area,1,1.0
+01119,MA,Zip Code Area,1,1.0
+01128,MA,Zip Code Area,1,1.0
+01129,MA,Zip Code Area,1,1.0
+01138,MA,Post Office or large volume customer,1,1.0
+01139,MA,Post Office or large volume customer,1,1.0
+01144,MA,Post Office or large volume customer,1,1.0
+01151,MA,Zip Code Area,1,1.0
+01152,MA,Post Office or large volume customer,1,1.0
+01199,MA,Post Office or large volume customer,1,1.0
+01201,MA,Zip Code Area,1,1.0
+01202,MA,Post Office or large volume customer,1,1.0
+01203,MA,Post Office or large volume customer,1,1.0
+01220,MA,Zip Code Area,1,1.0
+01222,MA,Zip Code Area,10,10.0
+01223,MA,Zip Code Area,2,2.0
+01224,MA,Zip Code Area,1,1.0
+01225,MA,Zip Code Area,1,1.0
+01226,MA,Zip Code Area,1,1.0
+01227,MA,Post Office or large volume customer,1,1.0
+01229,MA,Post Office or large volume customer,10,10.0
+01230,MA,Zip Code Area,7,7.0
+01235,MA,Zip Code Area,2,2.0
+01236,MA,Zip Code Area,7,7.0
+01237,MA,Zip Code Area,1,1.0
+01238,MA,Zip Code Area,7,7.0
+01240,MA,Zip Code Area,7,7.0
+01242,MA,Zip Code Area,7,7.0
+01243,MA,Zip Code Area,2,2.0
+01244,MA,Post Office or large volume customer,10,10.0
+01245,MA,Zip Code Area,10,10.0
+01247,MA,Zip Code Area,4,4.0
+01252,MA,Post Office or large volume customer,10,10.0
+01253,MA,Zip Code Area,10,10.0
+01254,MA,Zip Code Area,2,2.0
+01255,MA,Zip Code Area,10,10.0
+01256,MA,Zip Code Area,2,2.0
+01257,MA,Zip Code Area,10,10.0
+01258,MA,Zip Code Area,10,10.0
+01259,MA,Zip Code Area,10,10.0
+01260,MA,Post Office or large volume customer,7,7.0
+01262,MA,Zip Code Area,10,10.0
+01263,MA,Post Office or large volume customer,10,10.0
+01264,MA,Zip Code Area,10,10.0
+01266,MA,Zip Code Area,10,10.0
+01267,MA,Zip Code Area,4,4.0
+01270,MA,Zip Code Area,2,2.0
+01301,MA,Zip Code Area,4,4.0
+01302,MA,Post Office or large volume customer,4,4.0
+01330,MA,Zip Code Area,2,2.0
+01331,MA,Zip Code Area,4,4.0
+01337,MA,Zip Code Area,5,5.0
+01338,MA,Zip Code Area,10,10.0
+01339,MA,Zip Code Area,6,6.0
+01340,MA,Zip Code Area,6,6.0
+01341,MA,Zip Code Area,2,2.0
+01342,MA,Zip Code Area,2,2.0
+01343,MA,Zip Code Area,2,2.0
+01344,MA,Zip Code Area,6,6.0
+01346,MA,Zip Code Area,6,6.0
+01347,MA,Post Office or large volume customer,4,4.0
+01349,MA,Zip Code Area,4,4.0
+01350,MA,Zip Code Area,6,6.0
+01351,MA,Zip Code Area,4,4.0
+01354,MA,Zip Code Area,5,5.0
+01355,MA,Zip Code Area,2,2.0
+01360,MA,Zip Code Area,5,5.0
+01364,MA,Zip Code Area,4,4.0
+01366,MA,Zip Code Area,3,3.0
+01367,MA,Zip Code Area,6,6.0
+01368,MA,Zip Code Area,1,1.0
+01370,MA,Zip Code Area,10,10.0
+01373,MA,Zip Code Area,2,2.0
+01375,MA,Zip Code Area,2,2.0
+01376,MA,Zip Code Area,4,4.0
+01378,MA,Zip Code Area,6,6.0
+01379,MA,Zip Code Area,6,6.0
+01380,MA,Post Office or large volume customer,6,6.0
+01420,MA,Zip Code Area,1,1.0
+01430,MA,Zip Code Area,2,2.0
+01431,MA,Zip Code Area,2,2.0
+01432,MA,Zip Code Area,1,1.0
+01434,MA,Zip Code Area,2,2.0
+01436,MA,Zip Code Area,1,1.0
+01438,MA,Post Office or large volume customer,1,1.0
+01440,MA,Zip Code Area,1,1.0
+01441,MA,Post Office or large volume customer,1,1.0
+01450,MA,Zip Code Area,1,1.0
+01451,MA,Zip Code Area,2,2.0
+01452,MA,Zip Code Area,2,2.0
+01453,MA,Zip Code Area,1,1.0
+01460,MA,Zip Code Area,1,1.0
+01462,MA,Zip Code Area,1,1.0
+01463,MA,Zip Code Area,1,1.0
+01464,MA,Zip Code Area,1,1.0
+01467,MA,Post Office or large volume customer,2,2.0
+01468,MA,Zip Code Area,1,1.0
+01469,MA,Zip Code Area,1,1.0
+01470,MA,Post Office or large volume customer,1,1.0
+01471,MA,Post Office or large volume customer,1,1.0
+01472,MA,Post Office or large volume customer,1,1.0
+01473,MA,Zip Code Area,1,1.0
+01474,MA,Zip Code Area,1,1.0
+01475,MA,Zip Code Area,1,1.0
+01501,MA,Zip Code Area,1,1.0
+01503,MA,Zip Code Area,1,1.0
+01504,MA,Zip Code Area,1,1.0
+01505,MA,Zip Code Area,1,1.0
+01506,MA,Zip Code Area,2,2.0
+01507,MA,Zip Code Area,2,2.0
+01508,MA,Post Office or large volume customer,1,1.0
+01509,MA,Post Office or large volume customer,1,1.0
+01510,MA,Zip Code Area,1,1.0
+01515,MA,Zip Code Area,2,2.0
+01516,MA,Zip Code Area,1,1.0
+01518,MA,Zip Code Area,1,1.0
+01519,MA,Zip Code Area,1,1.0
+01520,MA,Zip Code Area,1,1.0
+01521,MA,Zip Code Area,2,2.0
+01522,MA,Zip Code Area,1,1.0
+01523,MA,Zip Code Area,1,1.0
+01524,MA,Zip Code Area,1,1.0
+01525,MA,Post Office or large volume customer,1,1.0
+01526,MA,Post Office or large volume customer,1,1.0
+01527,MA,Zip Code Area,1,1.0
+01529,MA,Zip Code Area,1,1.0
+01531,MA,Zip Code Area,3,3.0
+01532,MA,Zip Code Area,1,1.0
+01534,MA,Zip Code Area,1,1.0
+01535,MA,Zip Code Area,2,2.0
+01536,MA,Zip Code Area,1,1.0
+01537,MA,Zip Code Area,1,1.0
+01538,MA,Post Office or large volume customer,1,1.0
+01540,MA,Zip Code Area,1,1.0
+01541,MA,Zip Code Area,2,2.0
+01542,MA,Zip Code Area,1,1.0
+01543,MA,Zip Code Area,1,1.0
+01545,MA,Zip Code Area,1,1.0
+01546,MA,Post Office or large volume customer,1,1.0
+01550,MA,Zip Code Area,1,1.0
+01560,MA,Zip Code Area,1,1.0
+01561,MA,Post Office or large volume customer,1,1.0
+01562,MA,Zip Code Area,1,1.0
+01564,MA,Zip Code Area,1,1.0
+01566,MA,Zip Code Area,1,1.0
+01568,MA,Zip Code Area,1,1.0
+01569,MA,Zip Code Area,1,1.0
+01570,MA,Zip Code Area,1,1.0
+01571,MA,Zip Code Area,1,1.0
+01581,MA,Zip Code Area,1,1.0
+01583,MA,Zip Code Area,1,1.0
+01585,MA,Zip Code Area,2,2.0
+01586,MA,Post Office or large volume customer,1,1.0
+01588,MA,Zip Code Area,1,1.0
+01590,MA,Zip Code Area,1,1.0
+01601,MA,Post Office or large volume customer,1,1.0
+01602,MA,Zip Code Area,1,1.0
+01603,MA,Zip Code Area,1,1.0
+01604,MA,Zip Code Area,1,1.0
+01605,MA,Zip Code Area,1,1.0
+01606,MA,Zip Code Area,1,1.0
+01607,MA,Zip Code Area,1,1.0
+01608,MA,Zip Code Area,1,1.0
+01609,MA,Zip Code Area,1,1.0
+01610,MA,Zip Code Area,1,1.0
+01611,MA,Zip Code Area,1,1.0
+01612,MA,Zip Code Area,1,1.0
+01613,MA,Post Office or large volume customer,1,1.0
+01614,MA,Post Office or large volume customer,1,1.0
+01615,MA,Post Office or large volume customer,1,1.0
+01653,MA,Post Office or large volume customer,1,1.0
+01655,MA,Post Office or large volume customer,1,1.0
+01701,MA,Zip Code Area,1,1.0
+01702,MA,Zip Code Area,1,1.0
+01703,MA,Post Office or large volume customer,1,1.0
+01704,MA,Post Office or large volume customer,1,1.0
+01705,MA,Post Office or large volume customer,1,1.0
+01718,MA,Zip Code Area,1,1.0
+01719,MA,Zip Code Area,1,1.0
+01720,MA,Zip Code Area,1,1.0
+01721,MA,Zip Code Area,1,1.0
+01730,MA,Zip Code Area,1,1.0
+01731,MA,Zip Code Area,1,1.0
+01740,MA,Zip Code Area,2,2.0
+01741,MA,Zip Code Area,2,2.0
+01742,MA,Zip Code Area,1,1.0
+01745,MA,Zip Code Area,1,1.0
+01746,MA,Zip Code Area,1,1.0
+01747,MA,Zip Code Area,1,1.0
+01748,MA,Zip Code Area,1,1.0
+01749,MA,Zip Code Area,1,1.0
+01752,MA,Zip Code Area,1,1.0
+01754,MA,Zip Code Area,1,1.0
+01756,MA,Zip Code Area,1,1.0
+01757,MA,Zip Code Area,1,1.0
+01760,MA,Zip Code Area,1,1.0
+01770,MA,Zip Code Area,1,1.0
+01772,MA,Zip Code Area,1,1.0
+01773,MA,Zip Code Area,1,1.0
+01775,MA,Zip Code Area,1,1.0
+01776,MA,Zip Code Area,1,1.0
+01778,MA,Zip Code Area,1,1.0
+01784,MA,Post Office or large volume customer,1,1.0
+01801,MA,Zip Code Area,1,1.0
+01803,MA,Zip Code Area,1,1.0
+01805,MA,Post Office or large volume customer,1,1.0
+01810,MA,Zip Code Area,1,1.0
+01812,MA,Post Office or large volume customer,1,1.0
+01813,MA,Post Office or large volume customer,1,1.0
+01815,MA,Post Office or large volume customer,1,1.0
+01821,MA,Zip Code Area,1,1.0
+01822,MA,Post Office or large volume customer,1,1.0
+01824,MA,Zip Code Area,1,1.0
+01826,MA,Zip Code Area,1,1.0
+01827,MA,Zip Code Area,2,2.0
+01830,MA,Zip Code Area,1,1.0
+01831,MA,Post Office or large volume customer,1,1.0
+01832,MA,Zip Code Area,1,1.0
+01833,MA,Zip Code Area,1,1.0
+01834,MA,Zip Code Area,1,1.0
+01835,MA,Zip Code Area,1,1.0
+01840,MA,Zip Code Area,1,1.0
+01841,MA,Zip Code Area,1,1.0
+01842,MA,Post Office or large volume customer,1,1.0
+01843,MA,Zip Code Area,1,1.0
+01844,MA,Zip Code Area,1,1.0
+01845,MA,Zip Code Area,1,1.0
+01850,MA,Zip Code Area,1,1.0
+01851,MA,Zip Code Area,1,1.0
+01852,MA,Zip Code Area,1,1.0
+01853,MA,Post Office or large volume customer,1,1.0
+01854,MA,Zip Code Area,1,1.0
+01860,MA,Zip Code Area,1,1.0
+01862,MA,Zip Code Area,1,1.0
+01863,MA,Zip Code Area,1,1.0
+01864,MA,Zip Code Area,1,1.0
+01865,MA,Post Office or large volume customer,1,1.0
+01866,MA,Post Office or large volume customer,1,1.0
+01867,MA,Zip Code Area,1,1.0
+01876,MA,Zip Code Area,1,1.0
+01879,MA,Zip Code Area,1,1.0
+01880,MA,Zip Code Area,1,1.0
+01885,MA,Post Office or large volume customer,1,1.0
+01886,MA,Zip Code Area,1,1.0
+01887,MA,Zip Code Area,1,1.0
+01888,MA,Post Office or large volume customer,1,1.0
+01889,MA,Post Office or large volume customer,1,1.0
+01890,MA,Zip Code Area,1,1.0
+01899,MA,Post Office or large volume customer,1,1.0
+01901,MA,Zip Code Area,1,1.0
+01902,MA,Zip Code Area,1,1.0
+01903,MA,Post Office or large volume customer,1,1.0
+01904,MA,Zip Code Area,1,1.0
+01905,MA,Zip Code Area,1,1.0
+01906,MA,Zip Code Area,1,1.0
+01907,MA,Zip Code Area,1,1.0
+01908,MA,Zip Code Area,1,1.0
+01910,MA,Post Office or large volume customer,1,1.0
+01913,MA,Zip Code Area,1,1.0
+01915,MA,Zip Code Area,1,1.0
+01921,MA,Zip Code Area,1,1.0
+01922,MA,Zip Code Area,1,1.0
+01923,MA,Zip Code Area,1,1.0
+01929,MA,Zip Code Area,1,1.0
+01930,MA,Zip Code Area,1,1.0
+01931,MA,Post Office or large volume customer,1,1.0
+01936,MA,Post Office or large volume customer,1,1.0
+01937,MA,Post Office or large volume customer,1,1.0
+01938,MA,Zip Code Area,1,1.0
+01940,MA,Zip Code Area,1,1.0
+01944,MA,Zip Code Area,1,1.0
+01945,MA,Zip Code Area,1,1.0
+01949,MA,Zip Code Area,1,1.0
+01950,MA,Zip Code Area,1,1.0
+01951,MA,Zip Code Area,1,1.0
+01952,MA,Zip Code Area,1,1.0
+01960,MA,Zip Code Area,1,1.0
+01961,MA,Post Office or large volume customer,1,1.0
+01965,MA,Post Office or large volume customer,1,1.0
+01966,MA,Zip Code Area,1,1.0
+01969,MA,Zip Code Area,1,1.0
+01970,MA,Zip Code Area,1,1.0
+01971,MA,Post Office or large volume customer,1,1.0
+01982,MA,Zip Code Area,1,1.0
+01983,MA,Zip Code Area,1,1.0
+01984,MA,Zip Code Area,1,1.0
+01985,MA,Zip Code Area,1,1.0
+02018,MA,Post Office or large volume customer,1,1.0
+02019,MA,Zip Code Area,1,1.0
+02020,MA,Post Office or large volume customer,1,1.0
+02021,MA,Zip Code Area,1,1.0
+02025,MA,Zip Code Area,1,1.0
+02026,MA,Zip Code Area,1,1.0
+02027,MA,Post Office or large volume customer,1,1.0
+02030,MA,Zip Code Area,1,1.0
+02032,MA,Zip Code Area,1,1.0
+02035,MA,Zip Code Area,1,1.0
+02038,MA,Zip Code Area,1,1.0
+02040,MA,Post Office or large volume customer,1,1.0
+02041,MA,Post Office or large volume customer,1,1.0
+02043,MA,Zip Code Area,1,1.0
+02044,MA,Post Office or large volume customer,1,1.0
+02045,MA,Zip Code Area,1,1.0
+02047,MA,Post Office or large volume customer,1,1.0
+02048,MA,Zip Code Area,1,1.0
+02050,MA,Zip Code Area,1,1.0
+02051,MA,Post Office or large volume customer,1,1.0
+02052,MA,Zip Code Area,1,1.0
+02053,MA,Zip Code Area,1,1.0
+02054,MA,Zip Code Area,1,1.0
+02055,MA,Post Office or large volume customer,1,1.0
+02056,MA,Zip Code Area,1,1.0
+02059,MA,Post Office or large volume customer,1,1.0
+02060,MA,Post Office or large volume customer,1,1.0
+02061,MA,Zip Code Area,1,1.0
+02062,MA,Zip Code Area,1,1.0
+02065,MA,Post Office or large volume customer,1,1.0
+02066,MA,Zip Code Area,1,1.0
+02067,MA,Zip Code Area,1,1.0
+02070,MA,Post Office or large volume customer,1,1.0
+02071,MA,Zip Code Area,1,1.0
+02072,MA,Zip Code Area,1,1.0
+02081,MA,Zip Code Area,1,1.0
+02090,MA,Zip Code Area,1,1.0
+02093,MA,Zip Code Area,1,1.0
+02108,MA,Zip Code Area,99,99.0
+02109,MA,Zip Code Area,1,1.0
+02110,MA,Zip Code Area,1,1.0
+02111,MA,Zip Code Area,1,1.0
+02112,MA,Post Office or large volume customer,1,1.0
+02113,MA,Zip Code Area,1,1.0
+02114,MA,Zip Code Area,1,1.0
+02115,MA,Zip Code Area,1,1.0
+02116,MA,Zip Code Area,1,1.0
+02117,MA,Post Office or large volume customer,1,1.0
+02118,MA,Zip Code Area,1,1.0
+02119,MA,Zip Code Area,1,1.0
+02120,MA,Zip Code Area,1,1.0
+02121,MA,Zip Code Area,1,1.0
+02122,MA,Zip Code Area,1,1.0
+02123,MA,Post Office or large volume customer,1,1.0
+02124,MA,Zip Code Area,1,1.0
+02125,MA,Zip Code Area,1,1.0
+02126,MA,Zip Code Area,1,1.0
+02127,MA,Zip Code Area,1,1.0
+02128,MA,Zip Code Area,1,1.0
+02129,MA,Zip Code Area,1,1.0
+02130,MA,Zip Code Area,1,1.0
+02131,MA,Zip Code Area,1,1.0
+02132,MA,Zip Code Area,1,1.0
+02133,MA,Post Office or large volume customer,1,1.0
+02134,MA,Zip Code Area,1,1.0
+02135,MA,Zip Code Area,1,1.0
+02136,MA,Zip Code Area,1,1.0
+02137,MA,Post Office or large volume customer,1,1.0
+02138,MA,Zip Code Area,1,1.0
+02139,MA,Zip Code Area,1,1.0
+02140,MA,Zip Code Area,1,1.0
+02141,MA,Zip Code Area,1,1.0
+02142,MA,Zip Code Area,1,1.0
+02143,MA,Zip Code Area,1,1.0
+02144,MA,Zip Code Area,1,1.0
+02145,MA,Zip Code Area,1,1.0
+02148,MA,Zip Code Area,1,1.0
+02149,MA,Zip Code Area,1,1.0
+02150,MA,Zip Code Area,1,1.0
+02151,MA,Zip Code Area,1,1.0
+02152,MA,Zip Code Area,1,1.0
+02153,MA,Zip Code Area,1,1.0
+02155,MA,Zip Code Area,1,1.0
+02156,MA,Post Office or large volume customer,1,1.0
+02163,MA,Zip Code Area,1,1.0
+02169,MA,Zip Code Area,1,1.0
+02170,MA,Zip Code Area,1,1.0
+02171,MA,Zip Code Area,1,1.0
+02176,MA,Zip Code Area,1,1.0
+02180,MA,Zip Code Area,1,1.0
+02184,MA,Zip Code Area,1,1.0
+02185,MA,Post Office or large volume customer,1,1.0
+02186,MA,Zip Code Area,1,1.0
+02187,MA,Post Office or large volume customer,1,1.0
+02188,MA,Zip Code Area,1,1.0
+02189,MA,Zip Code Area,1,1.0
+02190,MA,Zip Code Area,1,1.0
+02191,MA,Zip Code Area,1,1.0
+02196,MA,Post Office or large volume customer,1,1.0
+02199,MA,Zip Code Area,1,1.0
+02201,MA,Post Office or large volume customer,1,1.0
+02203,MA,Post Office or large volume customer,1,1.0
+02204,MA,Post Office or large volume customer,1,1.0
+02205,MA,Post Office or large volume customer,1,1.0
+02206,MA,Post Office or large volume customer,1,1.0
+02210,MA,Zip Code Area,1,1.0
+02211,MA,Post Office or large volume customer,1,1.0
+02212,MA,Post Office or large volume customer,1,1.0
+02215,MA,Zip Code Area,1,1.0
+02217,MA,Post Office or large volume customer,1,1.0
+02222,MA,Post Office or large volume customer,1,1.0
+02238,MA,Post Office or large volume customer,1,1.0
+02241,MA,Post Office or large volume customer,1,1.0
+02266,MA,Post Office or large volume customer,1,1.0
+02269,MA,Post Office or large volume customer,1,1.0
+02283,MA,Post Office or large volume customer,1,1.0
+02284,MA,Post Office or large volume customer,1,1.0
+02293,MA,Post Office or large volume customer,1,1.0
+02297,MA,Post Office or large volume customer,1,1.0
+02298,MA,Post Office or large volume customer,1,1.0
+02301,MA,Zip Code Area,1,1.0
+02302,MA,Zip Code Area,1,1.0
+02303,MA,Post Office or large volume customer,1,1.0
+02304,MA,Post Office or large volume customer,1,1.0
+02305,MA,Post Office or large volume customer,1,1.0
+02322,MA,Zip Code Area,1,1.0
+02324,MA,Zip Code Area,1,1.0
+02325,MA,Zip Code Area,1,1.0
+02327,MA,Post Office or large volume customer,1,1.0
+02330,MA,Zip Code Area,1,1.0
+02331,MA,Post Office or large volume customer,1,1.0
+02332,MA,Zip Code Area,1,1.0
+02333,MA,Zip Code Area,1,1.0
+02334,MA,Post Office or large volume customer,1,1.0
+02337,MA,Post Office or large volume customer,1,1.0
+02338,MA,Zip Code Area,1,1.0
+02339,MA,Zip Code Area,1,1.0
+02341,MA,Zip Code Area,1,1.0
+02343,MA,Zip Code Area,1,1.0
+02344,MA,Post Office or large volume customer,1,1.0
+02345,MA,Post Office or large volume customer,1,1.0
+02346,MA,Zip Code Area,1,1.0
+02347,MA,Zip Code Area,1,1.0
+02348,MA,Post Office or large volume customer,1,1.0
+02349,MA,Post Office or large volume customer,1,1.0
+02350,MA,Post Office or large volume customer,1,1.0
+02351,MA,Zip Code Area,1,1.0
+02355,MA,Post Office or large volume customer,1,1.0
+02356,MA,Zip Code Area,1,1.0
+02357,MA,Post Office or large volume customer,1,1.0
+02358,MA,Post Office or large volume customer,1,1.0
+02359,MA,Zip Code Area,1,1.0
+02360,MA,Zip Code Area,1,1.0
+02361,MA,Post Office or large volume customer,1,1.0
+02362,MA,Post Office or large volume customer,1,1.0
+02364,MA,Zip Code Area,1,1.0
+02366,MA,Post Office or large volume customer,1,1.0
+02367,MA,Zip Code Area,2,2.0
+02368,MA,Zip Code Area,1,1.0
+02370,MA,Zip Code Area,1,1.0
+02375,MA,Zip Code Area,1,1.0
+02379,MA,Zip Code Area,1,1.0
+02381,MA,Post Office or large volume customer,1,1.0
+02382,MA,Zip Code Area,1,1.0
+02420,MA,Zip Code Area,1,1.0
+02421,MA,Zip Code Area,1,1.0
+02445,MA,Zip Code Area,1,1.0
+02446,MA,Zip Code Area,1,1.0
+02447,MA,Post Office or large volume customer,1,1.0
+02451,MA,Zip Code Area,1,1.0
+02452,MA,Zip Code Area,1,1.0
+02453,MA,Zip Code Area,1,1.0
+02454,MA,Post Office or large volume customer,1,1.0
+02455,MA,Post Office or large volume customer,1,1.0
+02456,MA,Post Office or large volume customer,1,1.0
+02457,MA,Post Office or large volume customer,1,1.0
+02458,MA,Zip Code Area,1,1.0
+02459,MA,Zip Code Area,1,1.0
+02460,MA,Zip Code Area,1,1.0
+02461,MA,Zip Code Area,1,1.0
+02462,MA,Zip Code Area,1,1.0
+02464,MA,Zip Code Area,1,1.0
+02465,MA,Zip Code Area,1,1.0
+02466,MA,Zip Code Area,1,1.0
+02467,MA,Zip Code Area,1,1.0
+02468,MA,Zip Code Area,1,1.0
+02471,MA,Post Office or large volume customer,1,1.0
+02472,MA,Zip Code Area,1,1.0
+02474,MA,Zip Code Area,1,1.0
+02475,MA,Post Office or large volume customer,1,1.0
+02476,MA,Zip Code Area,1,1.0
+02477,MA,Post Office or large volume customer,1,1.0
+02478,MA,Zip Code Area,1,1.0
+02479,MA,Post Office or large volume customer,1,1.0
+02481,MA,Zip Code Area,1,1.0
+02482,MA,Zip Code Area,1,1.0
+02492,MA,Zip Code Area,1,1.0
+02493,MA,Zip Code Area,1,1.0
+02494,MA,Zip Code Area,1,1.0
+02495,MA,Post Office or large volume customer,1,1.0
+02532,MA,Zip Code Area,1,1.0
+02534,MA,Post Office or large volume customer,1,1.0
+02535,MA,Zip Code Area,10,10.0
+02536,MA,Zip Code Area,1,1.0
+02537,MA,Zip Code Area,1,1.0
+02538,MA,Zip Code Area,1,1.0
+02539,MA,Zip Code Area,4,4.0
+02540,MA,Zip Code Area,1,1.0
+02541,MA,Post Office or large volume customer,1,1.0
+02542,MA,Zip Code Area,1,1.0
+02543,MA,Zip Code Area,1,1.0
+02552,MA,Post Office or large volume customer,10,10.0
+02553,MA,Post Office or large volume customer,1,1.0
+02554,MA,Zip Code Area,7,7.0
+02556,MA,Zip Code Area,1,1.0
+02557,MA,Zip Code Area,4,4.0
+02558,MA,Post Office or large volume customer,1,1.0
+02559,MA,Zip Code Area,1,1.0
+02561,MA,Post Office or large volume customer,1,1.0
+02562,MA,Zip Code Area,1,1.0
+02563,MA,Zip Code Area,1,1.0
+02564,MA,Post Office or large volume customer,8,8.0
+02568,MA,Zip Code Area,4,4.0
+02571,MA,Zip Code Area,1,1.0
+02574,MA,Post Office or large volume customer,1,1.0
+02575,MA,Zip Code Area,10,10.0
+02576,MA,Zip Code Area,1,1.0
+02584,MA,Post Office or large volume customer,7,7.0
+02601,MA,Zip Code Area,1,1.0
+02630,MA,Zip Code Area,1,1.0
+02631,MA,Zip Code Area,1,1.0
+02632,MA,Zip Code Area,1,1.0
+02633,MA,Zip Code Area,1,1.0
+02634,MA,Post Office or large volume customer,1,1.0
+02635,MA,Zip Code Area,1,1.0
+02637,MA,Zip Code Area,1,1.0
+02638,MA,Zip Code Area,1,1.0
+02639,MA,Zip Code Area,1,1.0
+02641,MA,Post Office or large volume customer,1,1.0
+02642,MA,Zip Code Area,1,1.0
+02643,MA,Post Office or large volume customer,1,1.0
+02644,MA,Zip Code Area,1,1.0
+02645,MA,Zip Code Area,1,1.0
+02646,MA,Zip Code Area,1,1.0
+02647,MA,Post Office or large volume customer,1,1.0
+02648,MA,Zip Code Area,1,1.0
+02649,MA,Zip Code Area,1,1.0
+02650,MA,Zip Code Area,1,1.0
+02651,MA,Post Office or large volume customer,1,1.0
+02652,MA,Zip Code Area,10,10.3
+02653,MA,Zip Code Area,1,1.0
+02655,MA,Zip Code Area,1,1.0
+02657,MA,Zip Code Area,7,7.0
+02659,MA,Zip Code Area,1,1.0
+02660,MA,Zip Code Area,1,1.0
+02661,MA,Post Office or large volume customer,1,1.0
+02662,MA,Post Office or large volume customer,1,1.0
+02663,MA,Post Office or large volume customer,10,10.0
+02664,MA,Zip Code Area,1,1.0
+02666,MA,Zip Code Area,10,10.3
+02667,MA,Zip Code Area,10,10.0
+02668,MA,Zip Code Area,1,1.0
+02669,MA,Post Office or large volume customer,1,1.0
+02670,MA,Zip Code Area,1,1.0
+02671,MA,Zip Code Area,1,1.0
+02672,MA,Post Office or large volume customer,1,1.0
+02673,MA,Zip Code Area,1,1.0
+02675,MA,Zip Code Area,1,1.0
+02702,MA,Zip Code Area,1,1.0
+02703,MA,Zip Code Area,1,1.0
+02712,MA,Post Office or large volume customer,1,1.0
+02713,MA,Zip Code Area,10,10.0
+02714,MA,Post Office or large volume customer,1,1.0
+02715,MA,Zip Code Area,1,1.0
+02717,MA,Zip Code Area,1,1.0
+02718,MA,Zip Code Area,1,1.0
+02719,MA,Zip Code Area,1,1.0
+02720,MA,Zip Code Area,1,1.0
+02721,MA,Zip Code Area,1,1.0
+02722,MA,Post Office or large volume customer,1,1.0
+02723,MA,Zip Code Area,1,1.0
+02724,MA,Zip Code Area,1,1.0
+02725,MA,Zip Code Area,1,1.0
+02726,MA,Zip Code Area,1,1.0
+02738,MA,Zip Code Area,1,1.0
+02739,MA,Zip Code Area,1,1.0
+02740,MA,Zip Code Area,1,1.0
+02741,MA,Post Office or large volume customer,1,1.0
+02742,MA,Post Office or large volume customer,1,1.0
+02743,MA,Zip Code Area,1,1.0
+02744,MA,Zip Code Area,1,1.0
+02745,MA,Zip Code Area,1,1.0
+02746,MA,Zip Code Area,1,1.0
+02747,MA,Zip Code Area,1,1.0
+02748,MA,Zip Code Area,1,1.0
+02760,MA,Zip Code Area,1,1.0
+02761,MA,Post Office or large volume customer,1,1.0
+02762,MA,Zip Code Area,1,1.0
+02763,MA,Zip Code Area,1,1.0
+02764,MA,Zip Code Area,1,1.0
+02766,MA,Zip Code Area,1,1.0
+02767,MA,Zip Code Area,1,1.0
+02768,MA,Post Office or large volume customer,1,1.0
+02769,MA,Zip Code Area,2,2.0
+02770,MA,Zip Code Area,3,3.0
+02771,MA,Zip Code Area,1,1.0
+02777,MA,Zip Code Area,1,1.0
+02779,MA,Zip Code Area,1,1.0
+02780,MA,Zip Code Area,1,1.0
+02790,MA,Zip Code Area,1,1.0
+02791,MA,Post Office or large volume customer,3,3.0
+05501,MA,Post Office or large volume customer,1,1.0
