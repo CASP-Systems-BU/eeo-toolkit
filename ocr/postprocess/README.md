@@ -37,6 +37,10 @@ Performs text confidence checks, table validation, and city/state correction usi
 python json_validator.py
 ```
 
+Output files:
+- Files with city/state corrections and table structure validation
+- Summary log highlighting invalid or low-confidence files
+
 ### Step 2: Filter EEO-1 Forms
 > [!NOTE]
 >`eeo1_filter.py` filters based on Massachusetts relevance using ZIP/state fields.
@@ -45,6 +49,8 @@ Keeps only non-consolidated reports relevant to Massachusetts.
 ```bash
 python eeo1_filter.py
 ```
+Output files:
+- Filtered EEO-1 JSON files for Massachusetts (MA) only with standardized fields
 
 ### Step 3: Filter EEO-5 Forms
 > [!NOTE]
@@ -54,13 +60,5 @@ Extracts structured metadata including location, checkbox status, and form table
 ```bash
 python eeo5_filter.py
 ```
-
-### Output
-
-- Filtered, cleaned JSON files with standardized fields
-- Reports with city/state corrections and table structure validation
-- Summary log highlighting invalid or low-confidence files
-- Ready for downstream aggregation into contingency tables
-- Split the outputs
-
----
+Output files:
+- Filtered EEO-5 JSON files with standardized fields
