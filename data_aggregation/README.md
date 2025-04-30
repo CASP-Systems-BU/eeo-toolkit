@@ -1,31 +1,25 @@
 
-# Data Aggregation and Privacy-Preserving Contingency Tables
+# Data Aggregation and Differentially Private Contingency Tables
 
-This subdirectory contains scripts for parsing, processing, and aggregating structured EEO-1 and EEO-5 form data into various levels of contingency tables, with support for differential privacy, visualization, and ZIP-to-county mapping.
+This directory contains scripts for parsing, processing, aggregating, visualizing and anonymizing structured EEO-1 and EEO-5 form data.
 
 ---
 
 ## Overview
 
-### Purpose
-This pipeline processes EEO-1 and EEO-5 form data to:
+The scripts process EEO-1 and EEO-5 form data to:
 
 - Normalize and flatten JSON files
 - Enrich with NAICS and county-level data
 - Generate 3-way, 2-way, and 1-way contingency tables
 - Apply Laplace noise for differential privacy (ε = 1/21)
-- Enforce suppression thresholds (e.g., counts < 50 → 0)
 - Visualize results in multi-panel bar charts
 
-### Output
-- `aggregation.csv`, `join_with_county.csv`: Raw + enriched data
-- `*_contingency.csv`: 1-way, 2-way, 3-way tables (DP-protected)
-- `.png`: Visualization for each contingency table
 
 ---
 
 ## How to Use
-Remember to set the input and output directories for each script as needed.
+Read the paths from parameters.
 ### Step 1: Aggregate JSON to CSV
 ```bash
 python eeo1_handler.py
@@ -38,15 +32,16 @@ python eeo1_melt.py
 python eeo5_melt.py
 ```
 
-### Step 3: Suppress Low Counts
-```bash
-python round_count.py
-```
-
-### Step 4: Visualize Contingency Tables
+### Step 3: Visualize Contingency Tables
 ```bash
 python visualize.py
 ```
+
+The scripts will generate the following outputs:
+- `aggregation.csv`, `join_with_county.csv`: Raw + enriched data
+- `*_contingency.csv`: 1-way, 2-way, 3-way tables
+- `.png`: Pie charts for each contingency table
+
 
 ---
 
@@ -55,6 +50,7 @@ python visualize.py
 The same as the project requirements.
 
 ---
+
 
 ## Notes
 
