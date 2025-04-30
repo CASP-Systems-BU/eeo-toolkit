@@ -21,13 +21,14 @@ The repository contains scripts that converts typed and scanned PDF documents in
 ---
 
 ## Installation
-Link to the main readme
-## Usage
+[Requirements](../README.md#31-requirements)
+
+## How to Use
 
 > [!CAUTION]
 > The current version of the OCR pipeline only supports the official standard EEO forms. Any third-party and customized forms are not supported.
 
-## Configure the Pipeline
+### Configure the Pipeline
 
 - The pipeline relies on coordinate maps for each cell and checkbox region. Make sure the following files are present under `OCR/config`:
   - **EEO-1 Type1**:
@@ -77,9 +78,9 @@ checkbox_field: !!python/tuple
 > The EEO-5 forms do not have scaling issues and do not require the white-space-cutting.
 > In case there are form alignment issues, you may want to trim white margins before fetching the coordinates.
 
-## Running the Pipeline
+### Running the Pipeline
 
-### 1. Pre-Processing (Optional)
+#### 1. Pre-Processing (Optional)
 
 #### 1.1 Classification
 
@@ -105,7 +106,7 @@ Apply rendering corrections for PDF layers that misalign text and forms:
 python3 ocr/preprocess/re_render_pdf.py
 ```
 
-### 2. Run OCR Tool
+#### 2. Run OCR Tool
 
 Edit `run_pipeline.py` to set:
 
