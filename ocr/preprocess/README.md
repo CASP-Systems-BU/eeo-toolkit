@@ -33,6 +33,8 @@ Remove exact duplicate files based on content hash.
 ```bash
 python deduplicate.py
 ```
+Output files:
+- Only one retained copy per duplicate group
 
 ### Step 2: Classify Files by Type
 Organize files into folders by extension and separate out unsupported types.
@@ -41,31 +43,29 @@ Organize files into folders by extension and separate out unsupported types.
 python classify.py
 ```
 
+Output files:
+- Organized folders by file type (e.g., `pdf/`, `xlsx/`, `No_Extension/`)
+
 ### Step 3: Re-render PDFs with Layout Fixes (Optional)
 > [!NOTE]
 > `re_render_pdf.py` assumes Firefox profile access and a configured environment for headless PDF printing.  
 > The Firefox browser is restarted periodically in `re_render_pdf.py` to prevent crashes during batch processing.
 
-Fix formatting issues in PDF forms by printing them via a headless Firefox session.
-See example below:
-
-Note: squeze
-
-
-Before:
-![File Example With Render Problem](render_problem_1.png)
-
-After:
-![File Example Without Render Problem](render_problem_0.png)
-
 ```bash
 python re_render_pdf.py
 ```
 
-### Output
-
-- Only one retained copy per duplicate group
-- Organized folders by file type (e.g., `pdf/`, `xlsx/`, `No_Extension/`)
+Output files:
 - Re-rendered and corrected PDF documents
-- Comprehensive logs for actions taken
+
+Fix formatting issues in PDF forms by printing them via a headless Firefox session.
+See example below:
+
+
+Before:  
+<img src="render_problem_1.png" alt="File Example With Render Problem" width="500"/>
+
+After:  
+<img src="render_problem_0.png" alt="File Example With Render Problem Fixed" width="500"/>
+
 ---
