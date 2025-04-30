@@ -29,7 +29,7 @@ Remember to modify the paths in the scripts to point to your input and output di
 
 
 ### Step 1: Validate and Correct EEO-1 JSONs
-> [!NOTE]  
+> [!NOTE]
 > `json_validator.py` corrects misread city/state fields, validates form content for EEO-1s, and logs summary reports.
 
 Performs text confidence checks, table validation, and city/state correction using fuzzy matching.
@@ -38,7 +38,7 @@ python json_validator.py
 ```
 
 ### Step 2: Filter EEO-1 Forms
-> [!NOTE]  
+> [!NOTE]
 >`eeo1_filter.py` filters based on Massachusetts relevance using ZIP/state fields.
 
 Keeps only non-consolidated reports relevant to Massachusetts.
@@ -47,7 +47,7 @@ python eeo1_filter.py
 ```
 
 ### Step 3: Filter EEO-5 Forms
-> [!NOTE]  
+> [!NOTE]
 > `eeo5_filter.py` handles structured education form parsing including checkboxes.
 
 Extracts structured metadata including location, checkbox status, and form tables.

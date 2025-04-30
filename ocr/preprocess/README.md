@@ -42,7 +42,7 @@ python classify.py
 ```
 
 ### Step 3: Re-render PDFs with Layout Fixes (Optional)
-> [!NOTE]  
+> [!NOTE]
 > `re_render_pdf.py` assumes Firefox profile access and a configured environment for headless PDF printing.  
 > The Firefox browser is restarted periodically in `re_render_pdf.py` to prevent crashes during batch processing.
 
