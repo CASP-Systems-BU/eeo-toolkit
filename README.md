@@ -1,5 +1,13 @@
 # **README**
-# Add names and links
+
+## Author
+**Jida Li**: https://github.com/jidalii
+
+**Haodong Xu**: https://github.com/chuckhxu
+
+**Rohit Vemparala**: https://github.com/RVKarmani
+
+
 ## **1. Introduction**
 
 This is a library for processing scanned or digital EEO-1 and EEO-5 PDF reports as required by 141 of the Acts of 2024 (Massachusetts Salary Range Transparency Law).
@@ -37,7 +45,7 @@ Each component is built as an independent, reusable module, facilitating extensi
 
 ---
 
-## **3. How to Run the Pipeline**
+## **3. How to Use**
 
 ### **3.1 Requirements**
 
@@ -77,12 +85,13 @@ The entire pipeline is designed to run in an air-gapped environment. All models 
 
 For the purpose of this project, we explored 3 different OCR tools: Tesseract, Nougat and DocTR.
 
-| OCR Engine | Accuracy                                                                                                             | Support Complex Layout | Support Handwritten Forms |                Comments                                             |
-|------------|----------------------------------------------------------------------------------------------------------------------|------------------------|---------------------------|---------------------------------------------------------------------|
-| Tesseract  | Lightweight; supports traditional (non-ML) OCR methods; high throughput                                              | -                      |                           | Cannot distinguish form borders and handle complex layouts          |
-| Donut      | High accuracy on scientific documents                                                                                | -                      |                           | Heavy dependencies and large model footprint; Require self-training |
-| DocTR      | High accuracy across varied document types; handles complex layouts (tables, columns); built-in multilingual support | -                      |                           |  No good support for handle handwritten forms;                      |
+| OCR Engine | Accuracy                                   | Support Complex Layout | Support Handwritten Forms | Comments                                                         |
+|------------|--------------------------------------------|------------------------|---------------------------|------------------------------------------------------------------|
+| Tesseract  | Medium accuracy                            | No                     | No                        | Cannot distinguish form borders and handle complex layouts       |
+| Donut      | High accuracy on scientific documents      | Yes                    | Yes                       | GPU resource intensive; should be fine-tuned for different tasks |
+| DocTR      | High accuracy across varied document types | Yes                    | No                        | No good support for handle handwritten forms                     |
 
+Since the EEO-1 and EEO-5 forms are structured and have a complex layout, and we only have CPU resources, we chose to use **DocTR** for the OCR engine.
 
 ---
 
