@@ -15,12 +15,12 @@ from utilities.dir_helper import create_dir_if_not_exists
 from logger.logger import Logger
 
 
-def get_files_in_directory(directory, extension=".pdf"):
+def get_files_in_directory(directory: str, extension: str = ".pdf"):
     """
-    
-    :param directory
+
+    :param directory: file directory
     :param data: Raw doctr JSON
-    
+
     :return: a list of files in 'directory' matching the given 'extension'.
 
     :raise FileNotFoundError: If the specified directory does not exist.
@@ -36,8 +36,8 @@ def file_exists(path: str) -> bool:
     """
     Check whether a file exists at the given path.
 
-    Returns:
-        bool: True if the file exists, False otherwise.
+    :param path: Path to the file
+    :return: True if the file exists, False otherwise
     """
     return os.path.exists(path)
 
@@ -46,18 +46,22 @@ def gen_cell(
     page, fields, key, output_folder, filename, section, scale_factor=3, padding=45
 ):
     """
-    Crop a region specified by 'fields[key]' from 'page', add padding,
-    and save as a new PDF cell file.
+    Crop a specified region from a PDF page, add padding, and save as a new PDF cell.
 
-    Args:
-        page (fitz.Page): PDF page object.
-        fields (dict): Mapping of cell keys to fitz.Rect coordinates.
-        key (str): The specific cell key to crop.
-        output_folder (str): Directory to save cropped cell PDFs.
-        filename (str): Base filename without extension.
-        section (str): Section identifier for naming.
-        scale_factor (int): Zoom factor for rendering.
-        padding (int): Padding (in pixels) around the cropped region.
+    Steps:
+      1. Render the clipped region at the given scale factor in grayscale.
+      2. Compute new page dimensions by adding padding.
+      3. Create a new PDF page and insert the cropped image centered.
+      4. Save the padded cell PDF to the output folder.
+
+    :param page: fitz.Page object representing the PDF page
+    :param fields: Mapping of cell keys to fitz.Rect coordinates
+    :param key: The specific cell key to crop
+    :param output_folder: Directory to save the cropped cell PDFs
+    :param filename: Base filename (without extension) for output
+    :param section: Section identifier used in the output filename
+    :param scale_factor: Zoom factor for rendering (default: 3)
+    :param padding: Number of pixels to pad around the cropped region (default: 45)
     """
     new_doc = fitz.open()
 
@@ -96,14 +100,17 @@ def split_section(
     page: fitz.Page, section: str, filename: str, output_folder: str, key_map: dict
 ):
     """
-    Split a PDF page into multiple cell PDFs for a given section.
+    Split a PDF page into individual cell PDFs for a given section.
 
-    Args:
-        page (fitz.Page): PDF page object.
-        section (str): Section identifier.
-        filename (str): Base filename.
-        output_folder (str): Directory for saving cell PDFs.
-        key_map (dict): Mapping of all sections to their field coordinates.
+    Steps:
+      1. Retrieve the coordinate mapping for the section.
+      2. Call gen_cell for each key in that section.
+
+    :param page: fitz.Page object representing the PDF page
+    :param section: Section identifier (e.g., 'E', 'A')
+    :param filename: Base filename for output PDFs
+    :param output_folder: Directory in which to save cell PDFs
+    :param key_map: Mapping of all sections to their field coordinate dicts
     """
     file_logger.info(f"Splitting Section {section} of the PDF...")
     fields = key_map[section]
@@ -120,21 +127,25 @@ def pdf_to_cells(
     log_dir: str = "../logs",
 ):
     """
-    Orchestrate the splitting of a PDF into individual cell PDFs.
+    Orchestrate splitting a PDF into individual cell PDFs across specified pages.
 
-    Args:
-        pdf_path (str): Path to input PDF file.
-        form_config (str): Config mapping sections to cell coordinates.
-        section_config (Dict[int, List[str]]): Mapping of page indices to section lists.
-        page_num_ls (List[int]): Page indices to process.
-        log_dir (str): Directory for log files.
+    Steps:
+      1. Load section-to-coordinate mapping from the form config.
+      2. Initialize logging and ensure output directories exist.
+      3. For each page index, split into cells based on section_config.
+
+    :param pdf_path: Path to the input PDF file
+    :param form_config: Path to YAML config mapping sections to cell coordinates
+    :param section_config: Mapping from page indices to lists of section identifiers
+    :param page_num_ls: List of page indices to process
+    :param log_dir: Directory for log files (default: "../logs")
     """
     filename = os.path.splitext(os.path.basename(pdf_path))[0]
     filename_no_ext = os.path.splitext(filename)[0]
     file_dir = os.path.dirname(pdf_path)
 
     key_map = load_cell_coordination_config(form_config)
-    
+
     if not os.path.exists(log_dir):
         os.makedirs(log_dir, exist_ok=True)
 

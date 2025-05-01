@@ -17,16 +17,14 @@ from utilities.load_config import load_cell_coordination_config
 
 def is_rectangle_dark(image, top_left, bottom_right, threshold):
     """
-    Determine if a rectangular region in the image is "dark" (i.e., mostly filled).
+    Determine whether a rectangular region in the image is predominantly dark.
 
-    Args:
-        image (ndarray): RGB image array.
-        top_left (tuple): (x1, y1) coordinates of the top-left corner of the rectangle.
-        bottom_right (tuple): (x2, y2) coordinates of the bottom-right corner.
-        threshold (float): Fraction of the maximum possible pixel sum below which the region is considered dark.
-
-    Returns:
-        bool: True if region pixel sum <= threshold * max_possible_sum, else False.
+    :param image: RGB image array as a NumPy ndarray
+    :param top_left: Tuple (x1, y1) of the rectangle's top-left corner
+    :param bottom_right: Tuple (x2, y2) of the rectangle's bottom-right corner
+    :param threshold: Fraction of the maximum possible pixel sum below which
+                      the region is considered dark
+    :return: True if region pixel sum ≤ threshold * max possible sum, otherwise False
     """
     x1, y1 = top_left
     x2, y2 = bottom_right
@@ -47,14 +45,14 @@ def extract_from_checkbox(
     form_type, input_folder, output_folder, file_name, checkbox_config
 ):
     """
-    Extract checkbox states from a single PDF form page and append results to JSON.
+    Extract checkbox states from a single PDF page and append the results to a JSON file.
 
-    Args:
-        form_type (str): Either "eeo1" or "eeo5" to determine JSON structure.
-        input_folder (str): Path containing the PDF file.
-        output_folder (str): Path to write the result JSON.
-        file_name (str): PDF filename to process.
-        checkbox_config (str): Path to config mapping checkbox keys to coordinates.
+    :param form_type: 'eeo1' or 'eeo5' to determine JSON structure
+    :param input_folder: Directory containing the PDF file
+    :param output_folder: Directory to write the result JSON
+    :param file_name: Name of the PDF file to process
+    :param checkbox_config: Path to YAML config mapping checkbox keys to coordinates
+    :return: None
     """
     zoom = 3
     directory = os.path.join(input_folder, file_name)
@@ -96,12 +94,12 @@ def extract_from_checkbox(
 
 def extract_checkboxes(input_folder, output_folder, checkbox_config):
     """
-    Process all PDF files in the input folder, extracting checkboxes for each.
+    Process all PDF files in a directory, extracting checkbox states for each.
 
-    Args:
-        input_folder (str): Directory containing PDF files.
-        output_folder (str): Directory to save JSON results.
-        checkbox_config (str): Config file path for checkbox coordinates.
+    :param input_folder: Directory containing PDF files
+    :param output_folder: Directory to save JSON results
+    :param checkbox_config: Path to YAML config mapping checkbox keys to coordinates
+    :return: None
     """
     for file in os.listdir(input_folder):
         if file.endswith(".pdf"):
@@ -116,10 +114,10 @@ def debug_checkbox(input_folder, file_name, checkbox_config):
     Render an image with ROI rectangles drawn around each checkbox for debugging.
     Use for debugging purposes only.
 
-    Args:
-        input_folder (str): Directory containing the PDF file.
-        file_name (str): PDF filename.
-        checkbox_config (str): Config file path for checkbox credentials.
+    :param input_folder: Directory containing the PDF file
+    :param file_name: Name of the PDF file to debug
+    :param checkbox_config: Path to YAML config mapping checkbox keys to coordinates
+    :return: None
     """
     zoom = 3
     directory = os.path.join(input_folder, file_name)

@@ -141,7 +141,14 @@ def init_data_table_and_conf_table(
 
 def get_table_row_and_col_num(table_config: Dict) -> Tuple[int, int]:
     """
-    Extract number of rows and columns from table config.
+    Extract the number of rows and columns defined in the table configuration.
+
+    :param table_config: Sequence where
+        - index 0 is the number of rows
+        - index 1 is the number of columns
+    :return: A tuple containing
+        - row count (int)
+        - column count (int)
     """
     return table_config[0], table_config[1]
 
@@ -276,7 +283,12 @@ def parse_doctr_json_output_table(
 
 def is_eeo5_table_cell(filename: str) -> Tuple[bool, str]:
     """
-    Identify if a cell filename corresponds to an EEO-5 table section.
+    Identify whether a cell filename corresponds to an EEO-5 table section.
+
+    :param filename: Name of the cell PDF file
+    :return: Tuple where
+        - first element is True if it matches a table section pattern, False otherwise
+        - second element is the section identifier ('a1', 'a2', 'a3', 'b', 'c') or empty string
     """
     m = re.match(r".+_section_table_(a1|a2|a3|b|c)$", filename)
     return (bool(m), m.group(1) if m else "")
@@ -284,7 +296,12 @@ def is_eeo5_table_cell(filename: str) -> Tuple[bool, str]:
 
 def merge_eeo5_table_a(table_raw: Dict) -> Tuple[List, List]:
     """
-    Merge A1, A2, A3 subtables for section A of EEO-5.
+    Merge subtables A1, A2, and A3 for section A of EEO-5 into a single table.
+
+    :param table_raw: Mapping of raw table data for keys 'a1', 'a2', 'a3'
+    :return: A tuple containing
+        - combined data rows (list)
+        - combined confidence scores (list)
     """
     data = table_raw["a1"][0] + table_raw["a2"][0] + table_raw["a3"][0]
     conf = table_raw["a1"][1] + table_raw["a2"][1] + table_raw["a3"][1]
@@ -293,7 +310,13 @@ def merge_eeo5_table_a(table_raw: Dict) -> Tuple[List, List]:
 
 def merge_eeo5_table(table_raw: Dict) -> Dict:
     """
-    Combine raw tables for EEO-5 into a single mapping.
+    Combine all raw tables for EEO-5 into a single consolidated mapping.
+
+    :param table_raw: Mapping of raw table data for keys 'a1', 'a2', 'a3', 'b', 'c'
+    :return: Dictionary with keys
+        - 'a': merged A section (data & confidence)
+        - 'b': raw B section or ([], []) if missing
+        - 'c': raw C section or ([], []) if missing
     """
     combined = {
         "a": merge_eeo5_table_a(table_raw),
