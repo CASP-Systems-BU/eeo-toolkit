@@ -1,8 +1,10 @@
 """
 This script flattens structured EEO-5 JSON records into a tabular CSV format.
-It handles nested dictionaries, multi-dimensional lists (tables A, B, and C),
+It handles nested dictionaries, multi-dimensional lists (tables A, B),
 and conditional metadata like agency types. The flattened data is saved as
 a CSV, and a summary count of records grouped by 'county' is printed.
+
+Note: Table C is considered as the subset of Table A, and thus we ignore data in Table C in this script
 """
 
 import pandas as pd
