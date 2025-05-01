@@ -12,7 +12,6 @@ from PIL import Image
 import json
 import os
 
-
 from utilities.load_config import load_cell_coordination_config
 
 

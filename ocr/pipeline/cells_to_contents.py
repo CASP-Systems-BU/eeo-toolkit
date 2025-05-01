@@ -11,17 +11,15 @@ import os
 import re
 import json
 import shutil
-from typing import Dict
-
-from typing import List, Tuple, Union
+from typing import Dict, List, Tuple, Union
 
 from doctr.io import DocumentFile
 
-from ocr.utilities.dir_helper import create_dir_if_not_exists
-from ocr.logger.logger import Logger
-from ocr.utilities.table_validator import table_validator, update_total
-from ocr.pipeline.checkboxes import extract_from_checkbox
-from ocr.utilities.dir_helper import get_files_in_directory
+from utilities.dir_helper import create_dir_if_not_exists
+from logger.logger import Logger
+from utilities.table_validator import table_validator, update_total
+from pipeline.checkboxes import extract_from_checkbox
+from utilities.dir_helper import get_files_in_directory
 
 CONFIDENCE_THRESHOLD = 0.8  # Minimum confidence to accept an OCR digit
 EEO5_TABLE_SECTION_SET = {"a1", "a2", "a3", "b", "c"}  # Valid sections for EEO-5 tables
@@ -313,6 +311,7 @@ def extract_contents(
     result_dir: str,
     predictor,
     table_config: Dict,
+    log_dir: str = "../logs"
 ) -> None:
     """
     Main pipeline to:
@@ -330,11 +329,11 @@ def extract_contents(
     :param result_dir: Output JSON directory
     :param predictor: Doctr OCR predictor instance
     :param table_config: Table schema mapping
+    :param log_dir: Log directory path
     """
-    
+
     # Prepare logging per file
     global file_logger
-    log_dir = os.path.join("..", "..", "logs")
     create_dir_if_not_exists(log_dir)
 
     # Gather cell files to process
@@ -353,7 +352,7 @@ def extract_contents(
     cells = sorted(get_files_in_directory(cell_dir), key=lambda x: x)
 
     file_logger.info(f"********** Processing File {filename} **********")
-    
+
     # PRASE 2-1: Detect text in cells
     contents_raw = dict()
     table_raw = dict()
@@ -399,8 +398,6 @@ def extract_contents(
         for k in tables.keys():
             data_table, conf_table = tables[k][0], tables[k][1]
 
-            print(data_table)
-            print(conf_table)
             post_process_table(data_table, conf_table)
             is_row_valid, is_col_valid = table_validator(
                 form_type, data_table, conf_table

@@ -17,14 +17,19 @@ from logger.logger import Logger
 
 def get_files_in_directory(directory, extension=".pdf"):
     """
-    Return a list of files in 'directory' matching the given 'extension'.
+    
+    :param directory
+    :param data: Raw doctr JSON
+    
+    :return: a list of files in 'directory' matching the given 'extension'.
 
-    Raises:
-        FileNotFoundError: If the specified directory does not exist.
+    :raise FileNotFoundError: If the specified directory does not exist.
     """
     if not os.path.exists(directory):
         raise FileNotFoundError(f"The directory {directory} does not exist.")
-    return [f for f in os.listdir(directory) if f.lower().endswith(extension)]
+    files = [f for f in os.listdir(directory) if f.lower().endswith(extension)]
+    files.sort()
+    return files
 
 
 def file_exists(path: str) -> bool:
@@ -129,6 +134,9 @@ def pdf_to_cells(
     file_dir = os.path.dirname(pdf_path)
 
     key_map = load_cell_coordination_config(form_config)
+    
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir, exist_ok=True)
 
     global file_logger
     file_logger = Logger(

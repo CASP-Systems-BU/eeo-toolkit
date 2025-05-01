@@ -15,8 +15,8 @@ from PIL import Image
 from difflib import SequenceMatcher
 
 from utilities.load_config import load_cell_coordination_config
-from logger.logger import Logger
 from utilities.dir_helper import create_dir_if_not_exists
+from logger.logger import Logger
 
 
 def detect_outer_edges_in_pdf(page, scale_factor=1):
@@ -24,12 +24,10 @@ def detect_outer_edges_in_pdf(page, scale_factor=1):
     Render a PDF page to grayscale, detect edges, and return the
     bounding rectangle around the detected content edges.
 
-    Args:
-        page (fitz.Page): The PDF page to analyze.
-        scale_factor (float): Zoom factor for rendering to improve edge detection.
+    :param page (fitz.Page): The PDF page to analyze.
+    :param scale_factor (float): Zoom factor for rendering to improve edge detection.
 
-    Returns:
-        fitz.Rect: Bounding box of detected content edges.
+    returns fitz.Rect: Bounding box of detected content edges.
     """
     """Detect edges and return the bounding box of content."""
     pix = page.get_pixmap(
@@ -51,14 +49,12 @@ def crop_pdf_to_bounds(pdf_path, filename, output_folder, scale_factor=3):
     Crop each page of a PDF to the detected content bounds and
     save as a new multi-page PDF with fixed dimensions.
 
-    Args:
-        pdf_path (str): Path to the source PDF.
-        filename (str): Base filename for the output.
-        output_folder (str): Directory where the cropped PDF will be saved.
-        scale_factor (int): Zoom factor when cropping to maintain resolution.
+    :param pdf_path (str): Path to the source PDF.
+    :param filename (str): Base filename for the output.
+    :param output_folder (str): Directory where the cropped PDF will be saved.
+    :param scale_factor (int): Zoom factor when cropping to maintain resolution.
 
-    Returns:
-        str: Path to the saved cropped PDF file.
+    :returns str: Path to the saved cropped PDF file.
     """
     DEFAULT_WIDTH = 523
     DEFAULT_HEIGHT = 679
@@ -88,26 +84,24 @@ def crop_pdf_to_bounds(pdf_path, filename, output_folder, scale_factor=3):
 
 
 def process_pdf(
-    form_type: str, pdf_path: str, form_config: str, predictor, sim_threshold=0.70
+    form_type: str, pdf_path: str, form_config: str, predictor, sim_threshold: float=0.70, log_dir: str = "../logs"
 ):
     """
     Main entry point: splits an input PDF into pages (for EEO-1) or copies intact,
     crops to content bounds, and optionally filters pages by header similarity.
 
-    Args:
-        form_type (str): 'eeo1' or 'eeo5'.
-        pdf_path (str): Path to the input PDF file directory.
-        form_config (str): Path to the config mapping for header detection.
-        predictor: OCR predictor callable that returns page blocks with text.
-        sim_threshold (float): Similarity threshold to retain pages.
+    :param form_type (str): 'eeo1' or 'eeo5'.
+    :param pdf_path (str): Path to the input PDF file directory.
+    :param form_config (str): Path to the config mapping for header detection.
+    :param predictor: OCR predictor callable that returns page blocks with text.
+    :param sim_threshold (float): Similarity threshold to retain pages.
+    :param log_dir: Log directory path
     """
     file_dir = os.path.dirname(pdf_path)
     key_map = load_cell_coordination_config(form_config)
     output_dir = f"{file_dir}/tmp"
     os.makedirs(output_dir, exist_ok=True)
-    scale_factor = 1.0
     global file_logger
-    log_dir = f"../../logs"
     create_dir_if_not_exists(log_dir)
 
     base_filename = os.path.basename(pdf_path).replace(".pdf", "")
@@ -143,8 +137,8 @@ def process_pdf(
 def cut_edges(pdf_path: str):
     """
     Crop the PDF to the detected content bounds and save it.
-    Args:
-        pdf_path (str): Path to the PDF file to crop.
+        
+    :prarm pdf_path (str): Path to the PDF file to crop.
     """
     file_dir = os.path.dirname(pdf_path)
     filename = os.path.splitext(os.path.basename(pdf_path))[0]
@@ -157,12 +151,11 @@ def check_page(new_pdf_path, key_map, predictor, sim_threshold, page_num):
     Use OCR predictor to extract the first line of text and compare against
     expected header, removing pages below similarity threshold.
 
-    Args:
-        pdf_path (str): Path to the cropped PDF page.
-        key_map (dict): Mapping of sections to detection rects.
-        predictor: OCR predictor function.
-        sim_threshold (float): Minimum ratio to keep the page.
-        page_num (int): Current page number (for logging).
+    :param pdf_path (str): Path to the cropped PDF page.
+    :param key_map (dict): Mapping of sections to detection rects.
+    :param predictor: Doctr OCR predictor instance
+    :param sim_threshold (float): Minimum ratio to keep the page.
+    :param page_num (int): Current page number (for logging).
     """
     dir_name = os.path.dirname(new_pdf_path)
     filename = os.path.splitext(os.path.basename(new_pdf_path))[0]
