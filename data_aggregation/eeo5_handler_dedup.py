@@ -9,7 +9,7 @@ import pandas as pd
 import os
 import json
 from utils import get_files_in_directory
-from const import EEO5_COLUMN_NAMES, EEO5_TABLE_A_ROW_NAMES, EEO5_TABLE_B_ROW_NAMES, EEO5_TABLE_C_ROW_NAMES
+from const import EEO5_COLUMN_NAMES, EEO5_TABLE_A_ROW_NAMES, EEO5_TABLE_B_ROW_NAMES
 
 # === Paths ===
 json_input_dir = "/home/node0/Documents/eeo5_json_corrected/filtered"
@@ -49,9 +49,7 @@ for json_file in json_files:
                                     continue
                                 row_name = "PART-TIME STAFF_" + EEO5_TABLE_B_ROW_NAMES[i]
                             else:
-                                if i == len(EEO5_TABLE_C_ROW_NAMES) - 1:
-                                    continue
-                                row_name = "FULL-TIME NEW HIRES_" + EEO5_TABLE_C_ROW_NAMES[i]
+                                continue
 
                             # Construct column name: "Race_Gender_RowName" => value
                             flat_row[f"{EEO5_COLUMN_NAMES[j]}_{row_name}"] = val
