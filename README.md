@@ -89,7 +89,7 @@ For the purpose of this project, we explored 3 different OCR tools: Tesseract, N
 | OCR Engine                                              | Accuracy                                   | Support Complex Layout | Support Handwritten Forms | Comments                                                         |
 |---------------------------------------------------------|--------------------------------------------|------------------------|---------------------------|------------------------------------------------------------------|
 | [Tesseract](https://github.com/tesseract-ocr/tesseract) | Medium accuracy                            | No                     | No                        | Cannot distinguish form borders and handle complex layouts       |
-| [Donut](https://github.com/clovaai/donut)               | High accuracy on scientific documents      | Yes                    | Yes                       | GPU resource intensive; should be fine-tuned for different tasks |
+| [Donut](https://github.com/clovaai/donut)               | High accuracy on plaintext documents       | Yes                    | Yes                       | Requires GPU for reasonable inference time; needs to be fine-tuned for different tasks |
 | [DocTR](https://github.com/mindee/doctr)                | High accuracy across varied document types | Yes                    | No                        | No good support for handle handwritten forms                     |
 
 Since the EEO-1 and EEO-5 forms are structured and have a complex layout, and we only have CPU resources, we chose to use **DocTR** for the OCR engine.
