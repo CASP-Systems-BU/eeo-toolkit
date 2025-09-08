@@ -1,12 +1,4 @@
-# **README**
-
-## Author
-**Jida Li**: https://github.com/jidalii
-
-**Haodong Xu**: https://github.com/chuckhxu
-
-**Rohit Vemparala**: https://github.com/RVKarmani
-
+# **EEO Toolkit**
 
 ## **1. Introduction**
 
@@ -110,3 +102,9 @@ Since the EEO-1 and EEO-5 forms are structured and have a complex layout, and we
 - Train a custom OCR model fine-tuned on EEO forms  
 - Build an interactive viewer for browsing OCR results
 
+## Authors
+**Jida Li**: https://github.com/jidalii
+
+**Haodong Xu**: https://github.com/chuckhxu
+
+**Rohit Vemparala**: https://github.com/RVKarmani
