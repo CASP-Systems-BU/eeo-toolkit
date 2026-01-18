@@ -28,9 +28,39 @@ class PDFViewer:
         self.zoom = 1.0  # Current zoom level
         self.img = None  # Tkinter PhotoImage for display
 
+        # Frame to hold canvas and scrollbars
+        self.canvas_frame = tk.Frame(root)
+        self.canvas_frame.pack(fill="both", expand=True)
+
+        # Create scrollbars
+        self.h_scrollbar = tk.Scrollbar(self.canvas_frame, orient=tk.HORIZONTAL)
+        self.h_scrollbar.pack(side=tk.BOTTOM, fill=tk.X)
+
+        self.v_scrollbar = tk.Scrollbar(self.canvas_frame, orient=tk.VERTICAL)
+        self.v_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
         # Canvas for rendering PDF page images
-        self.canvas = tk.Canvas(root, width=600, height=800)
-        self.canvas.pack()
+        self.canvas = tk.Canvas(
+            self.canvas_frame,
+            width=600,
+            height=800,
+            xscrollcommand=self.h_scrollbar.set,
+            yscrollcommand=self.v_scrollbar.set
+        )
+        self.canvas.pack(side=tk.LEFT, fill="both", expand=True)
+
+        # Configure scrollbars to control canvas
+        self.h_scrollbar.config(command=self.canvas.xview)
+        self.v_scrollbar.config(command=self.canvas.yview)
+
+        # Bind mouse wheel for scrolling
+        self.canvas.bind("<MouseWheel>", self._on_mousewheel)
+        self.canvas.bind("<Button-4>", self._on_mousewheel)
+        self.canvas.bind("<Button-5>", self._on_mousewheel)
+        # Bind for horizontal scrolling with Shift
+        self.canvas.bind("<Shift-MouseWheel>", self._on_shiftmouse)
+        self.canvas.bind("<Shift-Button-4>", self._on_shiftmouse)
+        self.canvas.bind("<Shift-Button-5>", self._on_shiftmouse)
 
         # Label to display clicked coordinates
         self.coordinates_label = tk.Label(root, text="Coordinates: ")
@@ -53,6 +83,26 @@ class PDFViewer:
 
         self.zoom_out_button = tk.Button(root, text="Zoom Out", command=self.zoom_out)
         self.zoom_out_button.pack()
+
+    def _on_mousewheel(self, event):
+        """
+        Handle vertical mouse wheel scrolling.
+        Works for Windows/Mac (MouseWheel) and Linux (Button-4/Button-5).
+        """
+        if event.num == 4 or event.delta > 0:
+            self.canvas.yview_scroll(-1, "units")
+        elif event.num == 5 or event.delta < 0:
+            self.canvas.yview_scroll(1, "units")
+
+    def _on_shiftmouse(self, event):
+        """
+        Handle horizontal scrolling with Shift + mouse wheel.
+        Works for Windows/Mac (Shift-MouseWheel) and Linux (Shift-Button-4/Button-5).
+        """
+        if event.num == 4 or event.delta > 0:
+            self.canvas.xview_scroll(-1, "units")
+        elif event.num == 5 or event.delta < 0:
+            self.canvas.xview_scroll(1, "units")
 
     def open_pdf(self):
         """
@@ -98,11 +148,17 @@ class PDFViewer:
         self.canvas.delete("all")
         self.canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
 
+        # Update scrollregion to match the image size
+        self.canvas.config(scrollregion=(0, 0, pix.width, pix.height))
+
         # Event handler for mouse clicks on the canvas
         def on_click(event):
+            # Get the canvas coordinates (accounting for scroll position)
+            canvas_x = self.canvas.canvasx(event.x)
+            canvas_y = self.canvas.canvasy(event.y)
             # Convert canvas (screen) coords back to PDF coords by dividing by zoom
-            x_pdf = event.x / self.zoom
-            y_pdf = event.y / self.zoom
+            x_pdf = canvas_x / self.zoom
+            y_pdf = canvas_y / self.zoom
             # Print to console for debugging
             print(f"Clicked at: x={x_pdf:.2f}, y={y_pdf:.2f}")
             # Update the label in the GUI

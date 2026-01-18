@@ -123,6 +123,32 @@ def process_pdf(
                 new_doc.close()
                 cut_edges(new_pdf_path)
                 check_page(new_pdf_path, key_map, predictor, sim_threshold, page_num)
+        elif form_type == "eeo4":
+            num_pages = len(doc)
+
+            if num_pages > 0:
+                file_logger.info(f"Processing {base_filename} - Cover Page (Page 1)")
+                cover_pdf_path = os.path.join(output_dir, f"{base_filename}_cover.pdf")
+                cover_doc = fitz.open()
+                cover_doc.insert_pdf(doc, from_page=0, to_page=0)
+                cover_doc.save(cover_pdf_path)
+                cover_doc.close()
+                cut_edges(cover_pdf_path)
+
+            group_num = 1
+            
+            for start_page in range(1, num_pages, 3):
+                end_page = min(start_page + 2, num_pages - 1)
+                file_logger.info(f"Processing {base_filename} - Group {group_num} (Pages {start_page + 1}-{end_page + 1})")
+                new_pdf_path = os.path.join(
+                    output_dir, f"{base_filename}_group{group_num}.pdf"
+                )
+                new_doc = fitz.open()
+                new_doc.insert_pdf(doc, from_page=start_page, to_page=end_page)
+                new_doc.save(new_pdf_path)
+                new_doc.close()
+                cut_edges(new_pdf_path)
+                group_num += 1
         else:
             file_logger.info(f"Processing {base_filename}")
             new_pdf_path = os.path.join(output_dir, f"{base_filename}.pdf")

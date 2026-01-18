@@ -7,6 +7,7 @@ then outputs results as JSON files.
 import os
 import shutil
 import argparse
+import fitz
 
 from doctr.models import ocr_predictor
 
@@ -95,6 +96,8 @@ def main():
         PAGE_NUM_LS = [0]  # Page number to process for EEO-1
     elif FORM_TYPE == "eeo5":
         PAGE_NUM_LS = [0, 1]  # Page number to process for EEO-5
+    elif FORM_TYPE == "eeo4":
+        PAGE_NUM_LS = [0, 1, 2, 3]  # Page number to process for EEO-4
     else:
         raise Exception(f"Invalid FORM_TYPE: {FORM_TYPE}")
     
@@ -137,8 +140,28 @@ def main():
         inner_pdf_files = get_files_in_directory(pdf_tmp_path)
         for inner_pdf_file in inner_pdf_files:
             cur_pdf_path = os.path.join(pdf_tmp_path, inner_pdf_file)
+
+            if FORM_TYPE == "eeo4":
+                if "_cover" in inner_pdf_file:
+                    cur_section_config = load_section_config(section_config_path, "eeo4_cover")
+                    cur_page_num_ls = [0]
+                elif "_group" in inner_pdf_file:
+                    doc_temp = fitz.open(cur_pdf_path)
+                    num_pages = len(doc_temp)
+                    doc_temp.close()
+                    if num_pages < 3:
+                        continue
+                    cur_section_config = section_config
+                    cur_page_num_ls = [0, 1, 2]
+                else:
+                    cur_section_config = section_config
+                    cur_page_num_ls = PAGE_NUM_LS
+            else:
+                cur_section_config = section_config
+                cur_page_num_ls = PAGE_NUM_LS
+
             # Convert PDF pages to table cells
-            pdf_to_cells(cur_pdf_path, form_config, section_config, PAGE_NUM_LS, log_dir=args.log_dir)
+            pdf_to_cells(cur_pdf_path, form_config, cur_section_config, cur_page_num_ls, log_dir=args.log_dir)
 
             # Directory containing cell images
             cell_path = os.path.join(pdf_tmp_path, "cells")

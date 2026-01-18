@@ -9,6 +9,24 @@ eeo1:
     - "h"
     - "i"
     - "j"
+
+eeo4:
+  0: !!python/tuple
+    - "table"
+  1: !!python/tuple
+    - "table2"
+  2: !!python/tuple
+    - "table3"
+    - "e"
+    - "f"
+    - "g"
+
+eeo4_cover:
+  0: !!python/tuple
+    - "title"
+    - "a"
+    - "b"
+    - "c"
 eeo5:
   0: !!python/tuple
     - "title"

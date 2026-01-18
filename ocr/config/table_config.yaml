@@ -8,6 +8,248 @@ eeo1: !!python/tuple
     - 12
     - 15
 
+eeo4: 
+#hispanic male row 1-40
+  a1: !!python/tuple
+    - 40
+    - 1
+#hispanic female row 1-40
+  a2: !!python/tuple
+    - 40
+    - 1
+#non hispanic row 1-40
+  a3: !!python/tuple
+    - 40
+    - 12
+#total row 1-40
+  a4: !!python/tuple
+    - 40
+    - 1
+#hispanic male row 41-64
+  a5: !!python/tuple
+    - 24
+    - 1
+#hispanic female row 41-64
+  a6: !!python/tuple
+    - 24
+    - 1
+#non hispanic row 41-64
+  a7: !!python/tuple
+    - 24
+    - 12
+#total row 41-64
+  a8: !!python/tuple
+    - 24
+    - 1
+#hispanic male row 65
+  atotal1: !!python/tuple
+    - 1
+    - 1
+#hispanic female row 65
+  atotal2: !!python/tuple
+    - 1
+    - 1
+#non hispanic row 65
+  atotal3: !!python/tuple
+    - 1
+    - 12
+#total row 65
+  atotal4: !!python/tuple
+    - 1
+    - 1
+#hispanic male row 66
+  bhistm_1: !!python/tuple
+    - 1
+    - 1
+#hispanic female row 66
+  bhistf_1: !!python/tuple
+    - 1
+    - 1
+#non hispanic row 66
+  brest_1: !!python/tuple
+    - 1
+    - 12
+#total row 66
+  btotal_1: !!python/tuple
+    - 1
+    - 1
+#hispanic male row 67-70
+  bhistm_2: !!python/tuple
+    - 4
+    - 1
+#hispanic female row 67-70
+  bhistf_2: !!python/tuple
+    - 4
+    - 1
+#non hispanic row 67-70
+  brest_2: !!python/tuple
+    - 4
+    - 12
+#total row 67-70
+  btotal_2: !!python/tuple
+    - 4
+    - 1
+#hispanic male row 71
+  bhistm_3: !!python/tuple
+    - 1
+    - 1
+#hispanic female row 71
+  bhistf_3: !!python/tuple
+    - 1
+    - 1
+#non hispanic row 71
+  brest_3: !!python/tuple
+    - 1
+    - 12
+#total row 71
+  btotal_3: !!python/tuple
+    - 1
+    - 1
+#hispanic male row 72
+  bhistm_4: !!python/tuple
+    - 1
+    - 1
+#hispanic female row 72
+  bhistf_4: !!python/tuple
+    - 1
+    - 1
+#non hispanic row 72
+  brest_4: !!python/tuple
+    - 1
+    - 12
+#total row 72
+  btotal_4: !!python/tuple
+    - 1
+    - 1
+#hispanic male row 73
+  bhistm_5: !!python/tuple
+    - 1
+    - 1
+#hispanic female row 73
+  bhistf_5: !!python/tuple
+    - 1
+    - 1
+#non hispanic row 73
+  brest_5: !!python/tuple
+    - 1
+    - 12
+#total row 73
+  btotal_5: !!python/tuple
+    - 1
+    - 1
+#hispanic male row 74
+  bhistm_total: !!python/tuple
+    - 1
+    - 1
+#hispanic female row 74
+  bhistf_total: !!python/tuple
+    - 1
+    - 1
+#non hispanic row 74
+  brest_total: !!python/tuple
+    - 1
+    - 12
+#total row 74
+  btotal_total: !!python/tuple
+    - 1
+    - 1
+#hispanic male row 75
+  chistm_1: !!python/tuple
+    - 1
+    - 1
+#hispanic female row 75
+  chistf_1: !!python/tuple
+    - 1
+    - 1
+#non hispanic row 75
+  crest_1: !!python/tuple
+    - 1
+    - 12
+#total row 75
+  ctotal_1: !!python/tuple
+    - 1
+    - 1
+#hispanic male row 76-79
+  chistm_2: !!python/tuple
+    - 4
+    - 1
+#hispanic female row 76-79
+  chistf_2: !!python/tuple
+    - 4
+    - 1
+#non hispanic row 76-79
+  crest_2: !!python/tuple
+    - 4
+    - 12
+#total row 76-79
+  ctotal_2: !!python/tuple
+    - 4
+    - 1
+#hispanic male row 80
+  chistm_3: !!python/tuple
+    - 1
+    - 1
+#hispanic female row 80
+  chistf_3: !!python/tuple
+    - 1
+    - 1
+#non hispanic row 80
+  crest_3: !!python/tuple
+    - 1
+    - 12
+#total row 80
+  ctotal_3: !!python/tuple
+    - 1
+    - 1
+#hispanic male row 81
+  chistm_4: !!python/tuple
+    - 1
+    - 1
+#hispanic female row 81
+  chistf_4: !!python/tuple
+    - 1
+    - 1
+#non hispanic row 81
+  crest_4: !!python/tuple
+    - 1
+    - 12
+#total row 81
+  ctotal_4: !!python/tuple
+    - 1
+    - 1
+#hispanic male row 82
+  chistm_5: !!python/tuple
+    - 1
+    - 1
+#hispanic female row 82
+  chistf_5: !!python/tuple
+    - 1
+    - 1
+#non hispanic row 82
+  crest_5: !!python/tuple
+    - 1
+    - 12
+#total row 82
+  ctotal_5: !!python/tuple
+    - 1
+    - 1
+#hispanic male row 83
+  chistm_total: !!python/tuple
+    - 1
+    - 1
+#hispanic female row 83
+  chistf_total: !!python/tuple
+    - 1
+    - 1
+#non hispanic row 83
+  crest_total: !!python/tuple
+    - 1
+    - 12
+#total row 83
+  ctotal_total: !!python/tuple
+    - 1
+    - 1
+
 eeo5:
   a1: !!python/tuple
     - 10
