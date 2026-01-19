@@ -71,6 +71,28 @@ EEO5_TABLE_C_ROW_NAMES = [
     "Table C Total"
 ]
 
+EEO4_TABLE_JOB_CATEGORIES = [
+    "Officials - Administrators",
+    "Professionals",
+    "Technicians",
+    "Protective Service",
+    "Paraprofessionals",
+    "Administrative Support",
+    "Skilled Craft",
+    "Service - Maintenance",
+    "Table Total"
+]
+EEO4_TABLE_A_SALARY_RANGES = [
+    "$0.1 - 15.9",
+    "$16.0 - 19.9",
+    "$20.0 - 24.9",
+    "$25.0 - 32.9",
+    "$33.0 - 42.9",
+    "$43.0 - 54.9",
+    "$55.0 - 69.9",
+    "$70.0 PLUS",
+]
+
 RACE_GENDER_COLUMNS = [
     "Hispanic or Latino Male",
     "Hispanic or Latino Female",
