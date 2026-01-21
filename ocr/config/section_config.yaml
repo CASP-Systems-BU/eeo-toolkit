@@ -14,6 +14,7 @@ eeo4:
   0: !!python/tuple
     - "table"
   1: !!python/tuple
+    - "function"
     - "table2"
   2: !!python/tuple
     - "table3"

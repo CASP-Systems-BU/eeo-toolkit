@@ -68,7 +68,8 @@ def extract_from_checkbox(
     json_outputs = []
 
     if form_type == "eeo4":
-        # EEO-4 has multiple sections with checkboxes.
+        if "_group" in file_name:
+            pass
         for section, fields in checkbox_key_map.items():
             for field_name, checkboxes in fields.items():
                 json_map = {}

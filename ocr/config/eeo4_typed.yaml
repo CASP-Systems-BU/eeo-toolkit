@@ -74,6 +74,12 @@ table:
   - 216
   - 522
   - 619
+function:
+  FUNCTION: !!python/tuple
+  - 286
+  - 94
+  - 522
+  - 106
 table2:
   a5: !!python/tuple
   - 85
