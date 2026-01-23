@@ -278,9 +278,7 @@ def get_base_filename(filepath: str) -> str:
     :return: Base filename for matching cover to groups
     """
     filename = os.path.basename(filepath)
-    # Remove _cropped_result.json suffix
     filename = filename.replace("_cropped_result.json", "")
-    # Remove _cover or _groupN suffix
     filename = re.sub(r"_(cover|group\d+)$", "", filename)
     return filename
 
