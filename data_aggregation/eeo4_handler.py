@@ -1,8 +1,8 @@
 """
-This script flattens structured EEO-5 JSON records into a tabular CSV format.
-It handles nested dictionaries, multi-dimensional lists (tables A, B, and C),
-and conditional metadata like agency types. The flattened data is saved as
-a CSV, and a summary count of records grouped by 'county' is printed.
+This script flattens structured EEO-4 JSON records into a tabular CSV format.
+EEO-4 filter output contains top-level jurisdiction metadata and a nested
+`function_reports` array (one per government function). This script creates
+one CSV row per function report, repeating the jurisdiction metadata.
 """
 
 import pandas as pd
@@ -12,11 +12,11 @@ from utils import get_files_in_directory
 from const import EEO4_TABLE_JOB_CATEGORIES, EEO4_TABLE_A_SALARY_RANGES, EEO5_COLUMN_NAMES
 
 # === Paths ===
-json_input_dir = "/home/node0/Documents/eeo4_json_corrected/filtered"
-output_dir = "/home/node0/Documents/eeo4_json_corrected/filtered"
+json_input_dir = "/Users/anthonytsehuang/Documents/eeo-clone/output_eeo4/filter_output_test"
+output_dir = "/Users/anthonytsehuang/Documents/eeo-clone/output_eeo4/filter_output_test"
 
-
-EEO4_TABLE_A_ROW_NAMES = [f"{i}, {j}" for i in EEO4_TABLE_JOB_CATEGORIES[:-1] for j in EEO4_TABLE_A_SALARY_RANGES] + ["Total"]
+EEO4_TABLE_A_ROW_NAMES = [f"{cat}, {sal}" for cat in EEO4_TABLE_JOB_CATEGORIES[:-1] for sal in EEO4_TABLE_A_SALARY_RANGES] + ["Total"]
+EEO4_COLUMN_NAMES = EEO5_COLUMN_NAMES
 
 # === Load all JSON files ===
 flat_rows = []
@@ -27,51 +27,64 @@ for json_file in json_files:
     with open(json_path) as f:
         data = json.load(f)
 
-    flat_row = {}
+    # Extract top-level information
+    metadata = {
+        "filename": data.get("filename", ""),
+        "jurisdiction_name": data.get("jurisdiction_name", ""),
+        "address": data.get("address", ""),
+        "city": data.get("city", ""),
+        "county": data.get("county", ""),
+        "state": data.get("state", ""),
+        "zipcode": data.get("zipcode", ""),
+        "control_number": data.get("control_number", ""),
+        "reporting_year": data.get("reporting_year", ""),
+        "government_type": data.get("government_type", ""),
+        "functions_other_description": data.get("functions_other_description", ""),
+    }
 
-    for key, value in data.items():
-        if isinstance(value, dict):
-            # Flatten nested dictionaries by prefixing keys
-            for sub_key, sub_val in value.items():
-                flat_row[f"{key}.{sub_key}"] = sub_val
+    # Process each function report
+    function_reports = data.get("function_reports", [])
+    for report in function_reports:
+        flat_row = metadata.copy()
 
-        elif isinstance(value, list):
-            # Handle 2D tables (list of lists)
-            if all(isinstance(row, list) for row in value):
-                for i, row in enumerate(value):
-                    for j, val in enumerate(row):
-                        # Skip the total column
-                        if j != len(EEO5_COLUMN_NAMES) - 1:
-                            # Determine which table this is (A, B, or C)
-                            if key == "table_a":
-                                if i == len(EEO4_TABLE_A_ROW_NAMES) - 1:
-                                    continue  # Skip total row
-                                row_name = "FULL-TIME STAFF_" + EEO4_TABLE_A_ROW_NAMES[i]
-                            elif key == "table_b":
-                                if i == len(EEO4_TABLE_JOB_CATEGORIES) - 1:
-                                    continue
-                                row_name = "PART-TIME STAFF_" + EEO4_TABLE_JOB_CATEGORIES[i]
-                            else:
-                                if i == len(EEO4_TABLE_JOB_CATEGORIES) - 1:
-                                    continue
-                                row_name = "FULL-TIME NEW HIRES_" + EEO4_TABLE_JOB_CATEGORIES[i]
-                            # Construct column name: "Race_Gender_RowName" => value
-                            flat_row[f"{EEO5_COLUMN_NAMES[j]}_{row_name}"] = val
+        # Add function report specific fields
+        flat_row["group_number"] = report.get("group_number", 0)
+        flat_row["government_function"] = report.get("government_function", "")
+        flat_row["departments_included"] = report.get("departments_included", "")
+        flat_row["departments_not_included"] = report.get("departments_not_included", "")
+        flat_row["remarks"] = report.get("remarks", "")
 
-            else:
-                # Flatten simple lists by index
-                for i, val in enumerate(value):
-                    flat_row[f"{key}_{i}"] = val
+        # Flatten Table A (full-time)
+        table_a = report.get("table_a", [])
+        for i, row in enumerate(table_a):
+            if i >= len(EEO4_TABLE_A_ROW_NAMES) - 1:
+                continue  # Skip total row
+            row_name = "FULL-TIME STAFF_" + EEO4_TABLE_A_ROW_NAMES[i]
+            for j, val in enumerate(row):
+                if j < len(EEO4_COLUMN_NAMES) - 1:
+                    flat_row[f"{EEO4_COLUMN_NAMES[j]}_{row_name}"] = val
 
-        else:
-            # Determine agent type from boolean flags
-            if key in ["State", "County", "City", "Township", "Special District", "Other"]:
-                if value:
-                    flat_row["Type of Government"] = key
-            else:
-                flat_row[key] = value
+        # Flatten Table B (part-time)
+        table_b = report.get("table_b", [])
+        for i, row in enumerate(table_b):
+            if i >= len(EEO4_TABLE_JOB_CATEGORIES) - 1:
+                continue
+            row_name = "PART-TIME STAFF_" + EEO4_TABLE_JOB_CATEGORIES[i]
+            for j, val in enumerate(row):
+                if j < len(EEO4_COLUMN_NAMES) - 1:
+                    flat_row[f"{EEO4_COLUMN_NAMES[j]}_{row_name}"] = val
 
-    flat_rows.append(flat_row)
+        # Flatten Table C (new hires)
+        table_c = report.get("table_c", [])
+        for i, row in enumerate(table_c):
+            if i >= len(EEO4_TABLE_JOB_CATEGORIES) - 1:
+                continue
+            row_name = "FULL-TIME NEW HIRES_" + EEO4_TABLE_JOB_CATEGORIES[i]
+            for j, val in enumerate(row):
+                if j < len(EEO4_COLUMN_NAMES) - 1:
+                    flat_row[f"{EEO4_COLUMN_NAMES[j]}_{row_name}"] = val
+
+        flat_rows.append(flat_row)
 
 # === Convert to DataFrame and export ===
 df = pd.DataFrame(flat_rows)
@@ -79,5 +92,7 @@ df.to_csv(os.path.join(output_dir, "eeo4.csv"), index=False)
 
 # === Reload and print county-level summary ===
 df = pd.read_csv(os.path.join(output_dir, "eeo4.csv"))
-group_counts = df.groupby('county').size()
-print(group_counts)
+print(f"Total rows: {len(df)}")
+if 'county' in df.columns:
+    group_counts = df.groupby('county').size()
+    print(group_counts)
