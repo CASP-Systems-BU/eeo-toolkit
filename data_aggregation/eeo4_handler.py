@@ -48,7 +48,7 @@ for json_file in json_files:
         flat_row = metadata.copy()
 
         # Add function report specific fields
-        flat_row["group_number"] = report.get("group_number", 0)
+        flat_row["function_number"] = report.get("function_number", 0)
         flat_row["government_function"] = report.get("government_function", "")
         flat_row["departments_included"] = report.get("departments_included", "")
         flat_row["departments_not_included"] = report.get("departments_not_included", "")
@@ -84,6 +84,8 @@ for json_file in json_files:
                 if j < len(EEO4_COLUMN_NAMES) - 1:
                     flat_row[f"{EEO4_COLUMN_NAMES[j]}_{row_name}"] = val
 
+        if flat_row['government_function'] != "OTHER":
+            flat_row['functions_other_description'] = ""
         flat_rows.append(flat_row)
 
 # === Convert to DataFrame and export ===

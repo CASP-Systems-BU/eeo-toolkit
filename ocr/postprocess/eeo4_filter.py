@@ -116,35 +116,57 @@ def get_selected_government_type(json_data: List[Dict]) -> str:
     return ""
 
 
-def get_selected_function(json_data: List[Dict]) -> str:
+def get_selected_function(json_data: List[Dict]) -> tuple:
     """
-    Determine which government function this group represents.-
+    Determine which government function this group represents.
 
     :param json_data: List of field dictionaries from OCR JSON
-    :return: The selected government function, or empty string if none found
+    :return: Tuple of (function_number, function_name) where function_number is 1-indexed
     """
     for field in json_data:
         if field.get("id") == "function-FUNCTION":
             content = field.get("content", [])
             if isinstance(content, list) and len(content) > 0:
                 func_text = content[0]
+                func_name = ""
+                func_number = 0
+
+                # Try to extract function number from "Function X - NAME" pattern
+                func_num_match = re.search(r"Function\s*(\d+)", func_text, re.IGNORECASE)
+                if func_num_match:
+                    func_number = int(func_num_match.group(1))
+
+                # Extract function name after the dash
                 if " - - " in func_text:
                     func_name = func_text.split(" - - ", 1)[1].strip()
-                    return func_name
                 elif " - " in func_text:
                     func_name = func_text.split(" - ", 1)[1].strip()
-                    return func_name
                 elif "- " in func_text:
                     func_name = func_text.split("- ", 1)[1].strip()
-                    return func_name
                 elif " -" in func_text:
                     func_name = func_text.split(" -", 1)[1].strip()
-                    return func_name
                 elif "-" in func_text:
                     func_name = func_text.split("-", 1)[1].strip()
-                    return func_name
-                return func_text
-    return ""
+                else:
+                    func_name = func_text
+
+                # If we didn't get a function number from the text, try to match by name
+                if func_number == 0 and func_name:
+                    # Try exact match first
+                    func_name_upper = func_name.upper()
+                    for i, gf in enumerate(GOVERNMENT_FUNCTIONS):
+                        if gf == func_name_upper:
+                            func_number = i + 1  # 1-indexed
+                            break
+                    # If no exact match, try partial match
+                    if func_number == 0:
+                        for i, gf in enumerate(GOVERNMENT_FUNCTIONS):
+                            if gf in func_name_upper or func_name_upper in gf:
+                                func_number = i + 1
+                                break
+
+                return (func_number, func_name)
+    return (0, "")
 
 
 def extract_cover_metadata(json_data: List[Dict]) -> Dict:
@@ -265,7 +287,9 @@ def extract_group_data(json_data: List[Dict]) -> Dict:
         group_data["table_c"] = table_c_field.get("content", [])
 
     # Extract which government function this group represents
-    group_data["government_function"] = get_selected_function(json_data)
+    func_number, func_name = get_selected_function(json_data)
+    group_data["function_number"] = func_number
+    group_data["government_function"] = func_name
 
     return group_data
 
@@ -343,15 +367,9 @@ if __name__ == "__main__":
 
             group_data = extract_group_data(group_json)
 
-            # Extract group number from filename
-            group_num = 0
-            group_match = re.search(r"_group(\d+)", os.path.basename(group_path))
-            if group_match:
-                group_num = int(group_match.group(1))
-
             # Build group record
             group_record = {
-                "group_number": group_num,
+                "function_number": group_data.get("function_number", 0),
                 "government_function": group_data.get("government_function", ""),
                 "departments_included": group_data.get("departments_included", ""),
                 "departments_not_included": group_data.get("departments_not_included", ""),
