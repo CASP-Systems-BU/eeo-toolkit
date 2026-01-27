@@ -16,8 +16,8 @@ from utils import get_files_in_directory
 from const import EEO4_TABLE_JOB_CATEGORIES, EEO4_TABLE_A_SALARY_RANGES, EEO5_COLUMN_NAMES
 
 # === Paths ===
-json_input_dir = "/Users/anthonytsehuang/Documents/eeo-clone/output_eeo4/filter_output_test"
-output_dir = "/Users/anthonytsehuang/Documents/eeo-clone/output_eeo4/filter_output_test"
+json_input_dir = ""
+output_dir = ""
 
 EEO4_TABLE_A_ROW_NAMES = [f"{cat}, {sal}" for cat in EEO4_TABLE_JOB_CATEGORIES[:-1] for sal in EEO4_TABLE_A_SALARY_RANGES] + ["Total"]
 EEO4_COLUMN_NAMES = EEO5_COLUMN_NAMES

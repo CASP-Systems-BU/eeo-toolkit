@@ -25,7 +25,7 @@ from const import EEO4_TABLE_JOB_CATEGORIES, EEO4_TABLE_A_SALARY_RANGES, EEO5_CO
 epsilon = 1 / 21
 
 # Input/output paths
-input_dir = "/Users/anthonytsehuang/Documents/eeo-clone/output_eeo4/filter_output_test"
+input_dir = ""
 output_dir_dp = f"{input_dir}/../eeo4_contingency_tables_dp"
 
 all_fields = ["Race", "Gender", "Work Type", "Job Category", "Government Function"]
