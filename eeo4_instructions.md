@@ -40,6 +40,7 @@ Edit line 15 to an input path for a combined json (ideally the output path used 
 Edit line 16 to an output path for your csv.
 
 ```bash
+cd ../../data_aggregation
 python3 eeo4_handler.py
 ```
 

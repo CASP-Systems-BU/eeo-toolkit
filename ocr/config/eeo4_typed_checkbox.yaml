@@ -1,129 +1,38 @@
+#Multiply cropped coordinates by 3 for typed checkboxes.
 a:
   TYPE_OF_GOVERNMENT:
     State: !!python/tuple
-      - 32
-      - 161
-      - 38
-      - 166
+      - 96
+      - 483
+      - 114
+      - 498
 
     County: !!python/tuple
-      - 120
-      - 161
-      - 127
-      - 166
+      - 360
+      - 483
+      - 381
+      - 498
 
     City: !!python/tuple
-      - 227
-      - 161
-      - 233
-      - 166
+      - 681
+      - 483
+      - 699
+      - 498
 
     Township: !!python/tuple
-      - 317
-      - 161
-      - 323
-      - 166
+      - 951
+      - 483
+      - 969
+      - 498
 
     Special District: !!python/tuple
-      - 406
-      - 161
-      - 412
-      - 166
+      - 1218
+      - 483
+      - 1236
+      - 498
 
     Other: !!python/tuple
-      - 32
-      - 180
-      - 38
-      - 185
-
-c:
-  FUNCTIONS:
-    FINANCIAL ADMINISTRATION GENERAL CONTROL: !!python/tuple
-      - 2
-      - 327
-      - 22
-      - 420
-
-    STREETS AND HIGHWAYS: !!python/tuple
-      - 2
-      - 420
-      - 22
-      - 450
-
-    PUBLIC WELFARE: !!python/tuple
-      - 2
-      - 450
-      - 22
-      - 489
-
-    POLICE PROTECTION: !!python/tuple
-      - 2
-      - 489
-      - 22
-      - 528
-
-    FIRE PROTECTION: !!python/tuple
-      - 2
-      - 528
-      - 22
-      - 567
-
-    NATURAL RESOURCES PARKS AND RECREATION: !!python/tuple
-      - 2
-      - 567
-      - 22
-      - 650
-
-    HOSPITALS: !!python/tuple
-      - 2
-      - 650
-      - 22
-      - 670
-
-    HEALTH: !!python/tuple
-      - 262
-      - 327
-      - 282
-      - 373
-
-    HOUSING: !!python/tuple
-      - 262
-      - 373
-      - 282
-      - 420
-
-    COMMUNITY DEVELOPMENT: !!python/tuple
-      - 262
-      - 420
-      - 282
-      - 450
-
-    CORRECTIONS: !!python/tuple
-      - 262
-      - 450
-      - 282
-      - 489
-
-    UTILITIES AND TRANSPORTATION: !!python/tuple
-      - 262
-      - 489
-      - 282
-      - 528
-
-    SANITATION AND SEWAGE: !!python/tuple
-      - 262
-      - 528
-      - 282
-      - 567
-
-    EMPLOYMENT SECURITY: !!python/tuple
-      - 262
-      - 567
-      - 282
-      - 588
-
-    OTHER: !!python/tuple
-      - 262
-      - 588
-      - 282
-      - 650
+      - 96
+      - 540
+      - 114
+      - 555

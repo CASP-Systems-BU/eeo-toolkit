@@ -42,11 +42,6 @@ b:
   - 521
   - 310
 c:
-  FUNCTIONS: !!python/tuple
-  - 2
-  - 327
-  - 522
-  - 670
   FUNCTIONS_OTHER: !!python/tuple
   - 282
   - 590

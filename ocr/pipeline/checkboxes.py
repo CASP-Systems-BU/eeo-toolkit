@@ -64,7 +64,7 @@ def extract_from_checkbox(
     image = np.array(Image.frombytes("RGB", [pix.width, pix.height], pix.samples))
 
     checkbox_key_map = load_cell_coordination_config(checkbox_config)
-    threshold = 0.7
+    threshold = 0.8
     json_outputs = []
 
     if form_type == "eeo4":
