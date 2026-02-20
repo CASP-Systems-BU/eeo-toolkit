@@ -1,0 +1,16 @@
+langdetect==1.0.9
+matplotlib==3.10.0
+opencv-python==4.11.0.86
+numpy==2.2.3
+pandas==2.2.3
+pillow==11.1.0
+PyMuPDF==1.25.3
+python-doctr==0.11.0
+PyYAML==6.0.2
+RapidFuzz==3.12.1
+requests==2.32.3
+selenium==4.29.0
+torch==2.6.0
+torchvision==0.21.0
+webdriver-manager==4.0.2
+websocket-client==1.8.0
