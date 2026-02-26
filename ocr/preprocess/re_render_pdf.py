@@ -18,6 +18,8 @@ import logging
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.print_page_options import PrintOptions
+import base64
 
 
 def wait_for_file(file_path, timeout=1000):
@@ -43,8 +45,8 @@ def wait_for_file(file_path, timeout=1000):
 restart_threshold = 50
 
 # ==========> Customize script params STARTs here <==========
-input_folder = "../../files/offset/"
-output_folder = "../../files/offset/output/"
+input_folder = "~/data/eeo1/pdf/"
+output_folder = "~/data/eeo1/rerendered_pdfs/"
 log_file = "re_render_pdf_logs.log"
 # ==========> Customize script params ENDs here <==========
 
@@ -60,15 +62,15 @@ logging.info("=== Script started ===")
 os.makedirs(output_folder, exist_ok=True)
 
 # Paths for Firefox and its profile
-geckodriver_path = "/usr/local/bin/geckodriver"
-firefox_profile_path = "/home/node0/snap/firefox/common/.mozilla/firefox/rznn2zjo.default"
+geckodriver_path = "/snap/bin/geckodriver"
+firefox_profile_path = "/home/eolwd/snap/firefox/common/.mozilla/firefox/ui2jvbg0.default" # change based on your system
 
 def start_firefox():
     """
     Initialize and return a Firefox WebDriver configured for silent PDF printing.
     """
     firefox_options = Options()
-    firefox_options.binary_location = "/usr/bin/firefox"
+    firefox_options.binary_location = "/snap/firefox/current/usr/lib/firefox/firefox"
     firefox_options.add_argument("-profile")
     firefox_options.add_argument(firefox_profile_path)
     firefox_options.add_argument("--headless")
@@ -82,7 +84,7 @@ def start_firefox():
     firefox_options.set_preference("print.print_to_file", True)
     firefox_options.set_preference(
         "print.printer_Mozilla_Save_to_PDF.print_to_filename",
-        "/home/node0/Downloads/output.pdf"
+        "/home/eolwd/Downloads/output.pdf"
     )
 
     print("Starting Firefox WebDriver...")
@@ -97,6 +99,8 @@ logging.info(f"Found {len(pdf_files)} PDF files for processing.")
 processed_cnt = 0
 skipped_cnt = 0
 driver = start_firefox()
+print_options = PrintOptions() # use selenium printoptions instead of the javascript command
+print_options.orientation = 'portrait'
 
 # Main loop to process each PDF file
 for filename in pdf_files:
@@ -109,7 +113,7 @@ for filename in pdf_files:
         skipped_cnt += 1
         continue
 
-    temp_output_path = "/home/node0/Downloads/output.pdf"
+    temp_output_path = "/home/eolwd/Downloads/output.pdf"
     print(f"Processing: {filename}")
     logging.info(f"Processing: {filename}")
     print(f"File size: {os.path.getsize(os.path.join(input_folder, filename)) / 1024} KB")
@@ -122,7 +126,10 @@ for filename in pdf_files:
         # Trigger print to PDF
         print("Triggering print command...")
         logging.info("Triggering print command...")
-        driver.execute_script("window.print();")
+        pdf_data = driver.print_page(print_options)
+        with open(temp_output_path, "wb") as f:
+            f.write(base64.b64decode(pdf_data))
+        #driver.execute_script("window.print();")
         time.sleep(3)
 
         processed_cnt += 1
