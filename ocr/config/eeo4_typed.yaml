@@ -98,44 +98,44 @@ table2:
   - 460
   atotal1: !!python/tuple
   - 85
-  - 460
+  - 464
   - 117
-  - 479
+  - 476
   atotal2: !!python/tuple
   - 117
-  - 460
+  - 464
   - 153
-  - 479
+  - 476
   atotal3: !!python/tuple
   - 153
-  - 460
+  - 464
   - 490
-  - 479
+  - 476
   atotal4: !!python/tuple
   - 490
-  - 460
+  - 464
   - 522
-  - 479
+  - 476
   bhistm_1: !!python/tuple
     - 85
-    - 490
+    - 494
     - 117
-    - 506
+    - 503
   bhistf_1: !!python/tuple
     - 117
-    - 490
+    - 494
     - 153
-    - 506
+    - 503
   brest_1: !!python/tuple
     - 153
+    - 494
     - 490
-    - 490
-    - 506
+    - 503
   btotal_1: !!python/tuple
     - 490
-    - 490
+    - 494
     - 522
-    - 506
+    - 503
   bhistm_2: !!python/tuple
     - 85
     - 506
@@ -158,24 +158,24 @@ table2:
     - 546
   bhistm_3: !!python/tuple
     - 85
-    - 546
+    - 550
     - 117
-    - 562
+    - 559
   bhistf_3: !!python/tuple
     - 117
-    - 546
+    - 550
     - 153
-    - 562
+    - 559
   brest_3: !!python/tuple
     - 153
-    - 546
+    - 550
     - 490
-    - 562
+    - 559
   btotal_3: !!python/tuple
     - 490
-    - 546
+    - 550
     - 522
-    - 562
+    - 559
   bhistm_4: !!python/tuple
     - 85
     - 562
@@ -198,65 +198,65 @@ table2:
     - 573
   bhistm_5: !!python/tuple
     - 85
-    - 573
+    - 577
     - 117
-    - 590
+    - 587
   bhistf_5: !!python/tuple
     - 117
-    - 573
+    - 577
     - 153
-    - 590
+    - 587
   brest_5: !!python/tuple
     - 153
-    - 573
+    - 577
     - 490
-    - 590
+    - 587
   btotal_5: !!python/tuple
     - 490
-    - 573
+    - 577
     - 522
-    - 590
+    - 587
   bhistm_total: !!python/tuple
     - 85
-    - 590
+    - 597
     - 117
-    - 615
+    - 609
   bhistf_total: !!python/tuple
     - 117
-    - 590
+    - 597
     - 153
-    - 615
+    - 609
   brest_total: !!python/tuple
     - 153
-    - 590
+    - 597
     - 490
-    - 615
+    - 609
   btotal_total: !!python/tuple
     - 490
-    - 590
+    - 597
     - 522
-    - 615
+    - 609
 table3:
   chistm_1: !!python/tuple
     - 85
-    - 196
+    - 200
     - 117
-    - 212
+    - 209
   chistf_1: !!python/tuple
     - 117
-    - 196
+    - 200
     - 153
-    - 212
+    - 209
   crest_1: !!python/tuple
     - 153
-    - 196
+    - 200
     - 490
-    - 212
+    - 209
   ctotal_1: !!python/tuple
     - 490
-    - 196
+    - 200
     - 522
-    - 212
+    - 209
   chistm_2: !!python/tuple
     - 85
     - 212
@@ -279,24 +279,24 @@ table3:
     - 252
   chistm_3: !!python/tuple
     - 85
-    - 252
+    - 256
     - 117
-    - 269
+    - 266
   chistf_3: !!python/tuple
     - 117
-    - 252
+    - 256
     - 153
-    - 269
+    - 266
   crest_3: !!python/tuple
     - 153
-    - 252
+    - 256
     - 490
-    - 269
+    - 266
   ctotal_3: !!python/tuple
     - 490
-    - 252
+    - 256
     - 522
-    - 269
+    - 266
   chistm_4: !!python/tuple
     - 85
     - 269
@@ -319,44 +319,44 @@ table3:
     - 279
   chistm_5: !!python/tuple
     - 85
-    - 279
+    - 283
     - 117
-    - 296
+    - 293
   chistf_5: !!python/tuple
     - 117
-    - 279
+    - 283
     - 153
-    - 296
+    - 293
   crest_5: !!python/tuple
     - 153
-    - 279
+    - 283
     - 490
-    - 296
+    - 293
   ctotal_5: !!python/tuple
     - 490
-    - 279
+    - 283
     - 522
-    - 296
+    - 293
   chistm_total: !!python/tuple
     - 85
-    - 296
+    - 303
     - 117
-    - 322
+    - 315
   chistf_total: !!python/tuple
     - 117
-    - 296
+    - 303
     - 153
-    - 322
+    - 315
   crest_total: !!python/tuple
     - 153
-    - 296
+    - 303
     - 490
-    - 322
+    - 315
   ctotal_total: !!python/tuple
     - 490
-    - 296
+    - 303
     - 522
-    - 322
+    - 315
 e:
   DEPARTMENTS_AGENCIES_INCLUDED: !!python/tuple
   - 2
