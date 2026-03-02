@@ -122,10 +122,10 @@ table2:
     - 117
     - 503
   bhistf_1: !!python/tuple
-    - 122
-    - 494
-    - 150
-    - 503
+    - 126
+    - 495
+    - 146
+    - 502
   brest_1: !!python/tuple
     - 153
     - 494
@@ -142,9 +142,9 @@ table2:
     - 117
     - 546
   bhistf_2: !!python/tuple
-    - 122
+    - 126
     - 506
-    - 150
+    - 146
     - 546
   brest_2: !!python/tuple
     - 153
@@ -162,9 +162,9 @@ table2:
     - 117
     - 559
   bhistf_3: !!python/tuple
-    - 122
+    - 126
     - 550
-    - 150
+    - 146
     - 559
   brest_3: !!python/tuple
     - 153
@@ -182,9 +182,9 @@ table2:
     - 117
     - 573
   bhistf_4: !!python/tuple
-    - 122
+    - 126
     - 562
-    - 150
+    - 146
     - 573
   brest_4: !!python/tuple
     - 153
@@ -202,9 +202,9 @@ table2:
     - 117
     - 587
   bhistf_5: !!python/tuple
-    - 122
+    - 126
     - 577
-    - 150
+    - 146
     - 587
   brest_5: !!python/tuple
     - 153
@@ -222,9 +222,9 @@ table2:
     - 117
     - 609
   bhistf_total: !!python/tuple
-    - 122
+    - 126
     - 597
-    - 150
+    - 146
     - 609
   brest_total: !!python/tuple
     - 153
@@ -243,9 +243,9 @@ table3:
     - 117
     - 209
   chistf_1: !!python/tuple
-    - 122
+    - 126
     - 200
-    - 150
+    - 146
     - 209
   crest_1: !!python/tuple
     - 153
@@ -263,9 +263,9 @@ table3:
     - 117
     - 252
   chistf_2: !!python/tuple
-    - 122
+    - 126
     - 212
-    - 150
+    - 146
     - 252
   crest_2: !!python/tuple
     - 153
@@ -283,9 +283,9 @@ table3:
     - 117
     - 266
   chistf_3: !!python/tuple
-    - 122
+    - 126
     - 256
-    - 150
+    - 146
     - 266
   crest_3: !!python/tuple
     - 153
@@ -303,9 +303,9 @@ table3:
     - 117
     - 279
   chistf_4: !!python/tuple
-    - 122
+    - 126
     - 269
-    - 150
+    - 146
     - 279
   crest_4: !!python/tuple
     - 153
@@ -323,9 +323,9 @@ table3:
     - 117
     - 293
   chistf_5: !!python/tuple
-    - 122
+    - 126
     - 283
-    - 150
+    - 146
     - 293
   crest_5: !!python/tuple
     - 153
@@ -343,9 +343,9 @@ table3:
     - 117
     - 315
   chistf_total: !!python/tuple
-    - 122
+    - 126
     - 303
-    - 150
+    - 146
     - 315
   crest_total: !!python/tuple
     - 153
