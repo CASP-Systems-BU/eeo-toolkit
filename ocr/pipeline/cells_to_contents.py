@@ -412,14 +412,15 @@ def merge_eeo4_table_horizontal(columns: List[Tuple[List, List]]) -> Tuple[List,
     :param columns: List of (data, confidence) tuples to merge horizontally
     :return: Tuple of (final_data, final_confidence) as a single wide table
     """
-    # Verify all columns have the same number of rows
+    # Verify all columns have the same number of rows; truncate to minimum
     num_rows = len(columns[0][0])
     for idx, (data, _) in enumerate(columns):
         if len(data) != num_rows:
             file_logger.warning(
                 f"Row count mismatch: column 0 has {num_rows} rows, "
-                f"column {idx} has {len(data)} rows"
+                f"column {idx} has {len(data)} rows — truncating to minimum"
             )
+    num_rows = min(len(data) for data, _ in columns)
 
     final_data = []
     final_conf = []
@@ -440,6 +441,55 @@ def merge_eeo4_table_horizontal(columns: List[Tuple[List, List]]) -> Tuple[List,
         final_conf.append(row_conf)
 
     return final_data, final_conf
+
+
+def merge_eeo4_munis_table(table_raw: Dict) -> Dict:
+    """
+    Combine all raw tables for EEO-4 munis into the same consolidated format as eeo4.
+
+    Each block (a1..a5, a6..a8+atotal, b, btotal, c, ctotal) is stored as four columns:
+    *_hisp (2 cols), *_male (6 cols), *_female (6 cols), *_total (1 col) = 15 cols per row.
+
+    :param table_raw: Mapping of raw table data keyed by field name
+    :return: Dictionary with keys 'a', 'b', 'c' matching the eeo4 merge output format
+    """
+    def merge_block(prefix):
+        """Horizontally merge the four column-groups for a given row-block prefix."""
+        return merge_eeo4_table_horizontal([
+            table_raw.get(f"{prefix}_hisp",   ([], [])),
+            table_raw.get(f"{prefix}_male",   ([], [])),
+            table_raw.get(f"{prefix}_female", ([], [])),
+            table_raw.get(f"{prefix}_total",  ([], [])),
+        ])
+
+    # Full-time table A: rows 1-40 (a1..a5) then rows 41-64 (a6..a8) + row 65 (atotal)
+    a_blocks = [merge_block(f"a{i}") for i in range(1, 6)]   # rows 1-40
+    a_blocks += [merge_block(f"a{i}") for i in range(6, 9)]  # rows 41-64
+    a_blocks.append(merge_block("atotal"))                    # row 65
+
+    final_a_data: List = []
+    final_a_conf: List = []
+    for data, conf in a_blocks:
+        final_a_data.extend(data)
+        final_a_conf.extend(conf)
+
+    # Part-time table B: rows 66-73 (b) + row 74 (btotal)
+    final_b_data, final_b_conf = merge_eeo4_table_vertical(
+        {k: v for k, v in [("b", merge_block("b")), ("btotal", merge_block("btotal"))]},
+        ["b", "btotal"],
+    )
+
+    # New hire table C: rows 75-82 (c) + row 83 (ctotal)
+    final_c_data, final_c_conf = merge_eeo4_table_vertical(
+        {k: v for k, v in [("c", merge_block("c")), ("ctotal", merge_block("ctotal"))]},
+        ["c", "ctotal"],
+    )
+
+    return {
+        "a": (final_a_data, final_a_conf),
+        "b": (final_b_data, final_b_conf),
+        "c": (final_c_data, final_c_conf),
+    }
 
 
 def merge_eeo4_table(table_raw: Dict) -> Dict:
@@ -562,7 +612,7 @@ def extract_contents(
             else:
                 (str_lines, confidence_lines) = parse_doctr_json_output(raw_result)
             contents_raw[cellname] = (str_lines, confidence_lines)
-        elif form_type == "eeo4":
+        elif form_type in ("eeo4", "eeo4_munis"):
             ok, sect = is_eeo4_table_cell(cellname)
             if ok:
                 (str_lines, confidence_lines) = parse_doctr_json_output_table(
@@ -614,9 +664,14 @@ def extract_contents(
         tables = merge_eeo4_table(table_raw)
         for k in tables.keys():
             data_table, conf_table = tables[k][0], tables[k][1]
-
             post_process_table(data_table, conf_table)
+            contents_raw[f"the_section_table_{k.upper()}"] = data_table, conf_table
 
+    if form_type == "eeo4_munis":
+        tables = merge_eeo4_munis_table(table_raw)
+        for k in tables.keys():
+            data_table, conf_table = tables[k][0], tables[k][1]
+            post_process_table(data_table, conf_table)
             contents_raw[f"the_section_table_{k.upper()}"] = data_table, conf_table
 
     # PRASE 2-2: TXT to JSON

@@ -28,6 +28,25 @@ eeo4_cover:
     - "a"
     - "b"
     - "c"
+
+eeo4_munis:
+  0: !!python/tuple
+    - "title"
+    - "a"
+    - "b"
+    - "c"
+    - "table1"
+  1: !!python/tuple
+    - "function"
+    - "table2"
+  2: !!python/tuple
+    - "table3"
+  3: !!python/tuple
+    - "table4"
+    - "e"
+    - "f"
+    - "g"
+
 eeo5:
   0: !!python/tuple
     - "title"

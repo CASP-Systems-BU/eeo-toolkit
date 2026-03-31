@@ -250,6 +250,220 @@ eeo4:
     - 1
     - 1
 
+eeo4_munis:
+# table1: rows 1-40
+# rows 1-8 hispanic male and female
+  a1_hisp: !!python/tuple
+    - 8
+    - 2
+# rows 1-8 non hispanic male
+  a1_male: !!python/tuple
+    - 8
+    - 6
+# rows 1-8 non hispanic female
+  a1_female: !!python/tuple
+    - 8
+    - 6
+# rows 1-8 total
+  a1_total: !!python/tuple
+    - 8
+    - 1
+# rows 9-16 hispanic male and female
+  a2_hisp: !!python/tuple
+    - 8
+    - 2
+# rows 9-16 non hispanic male
+  a2_male: !!python/tuple
+    - 8
+    - 6
+# rows 9-16 non hispanic female
+  a2_female: !!python/tuple
+    - 8
+    - 6
+# rows 9-16 total
+  a2_total: !!python/tuple
+    - 8
+    - 1
+# rows 17-24 hispanic male and female
+  a3_hisp: !!python/tuple
+    - 8
+    - 2
+# rows 17-24 non hispanic male
+  a3_male: !!python/tuple
+    - 8
+    - 6
+# rows 17-24 non hispanic female
+  a3_female: !!python/tuple
+    - 8
+    - 6
+# rows 17-24 total
+  a3_total: !!python/tuple
+    - 8
+    - 1
+# rows 25-32 hispanic male and female
+  a4_hisp: !!python/tuple
+    - 8
+    - 2
+# rows 25-32 non hispanic male
+  a4_male: !!python/tuple
+    - 8
+    - 6
+# rows 25-32 non hispanic female
+  a4_female: !!python/tuple
+    - 8
+    - 6
+# rows 25-32 total
+  a4_total: !!python/tuple
+    - 8
+    - 1
+# rows 33-40 hispanic male and female
+  a5_hisp: !!python/tuple
+    - 8
+    - 2
+# rows 33-40 non hispanic male
+  a5_male: !!python/tuple
+    - 8
+    - 6
+# rows 33-40 non hispanic female
+  a5_female: !!python/tuple
+    - 8
+    - 6
+# rows 33-40 total
+  a5_total: !!python/tuple
+    - 8
+    - 1
+# table2: rows 41-65
+# rows 41-48 hispanic male and female
+  a6_hisp: !!python/tuple
+    - 8
+    - 2
+# rows 41-48 non hispanic male
+  a6_male: !!python/tuple
+    - 8
+    - 6
+# rows 41-48 non hispanic female
+  a6_female: !!python/tuple
+    - 8
+    - 6
+# rows 41-48 total
+  a6_total: !!python/tuple
+    - 8
+    - 1
+# rows 49-56 hispanic male and female
+  a7_hisp: !!python/tuple
+    - 8
+    - 2
+# rows 49-56 non hispanic male
+  a7_male: !!python/tuple
+    - 8
+    - 6
+# rows 49-56 non hispanic female
+  a7_female: !!python/tuple
+    - 8
+    - 6
+# rows 49-56 total
+  a7_total: !!python/tuple
+    - 8
+    - 1
+# rows 57-64 hispanic male and female
+  a8_hisp: !!python/tuple
+    - 8
+    - 2
+# rows 57-64 non hispanic male
+  a8_male: !!python/tuple
+    - 8
+    - 6
+# rows 57-64 non hispanic female
+  a8_female: !!python/tuple
+    - 8
+    - 6
+# rows 57-64 total
+  a8_total: !!python/tuple
+    - 8
+    - 1
+# row 65 hispanic male and female
+  atotal_hisp: !!python/tuple
+    - 1
+    - 2
+# row 65 non hispanic male
+  atotal_male: !!python/tuple
+    - 1
+    - 6
+# row 65 non hispanic female
+  atotal_female: !!python/tuple
+    - 1
+    - 6
+# row 65 total
+  atotal_total: !!python/tuple
+    - 1
+    - 1
+# table3: rows 66-74
+# rows 66-73 hispanic male and female
+  b_hisp: !!python/tuple
+    - 8
+    - 2
+# rows 66-73 non hispanic male
+  b_male: !!python/tuple
+    - 8
+    - 6
+# rows 66-73 non hispanic female
+  b_female: !!python/tuple
+    - 8
+    - 6
+# rows 66-73 total
+  b_total: !!python/tuple
+    - 8
+    - 1
+# row 74 hispanic male and female
+  btotal_hisp: !!python/tuple
+    - 1
+    - 2
+# row 74 non hispanic male
+  btotal_male: !!python/tuple
+    - 1
+    - 6
+# row 74 non hispanic female
+  btotal_female: !!python/tuple
+    - 1
+    - 6
+# row 74 total
+  btotal_total: !!python/tuple
+    - 1
+    - 1
+# table4: rows 75-83
+# rows 75-82 hispanic male and female
+  c_hisp: !!python/tuple
+    - 8
+    - 2
+# rows 75-82 non hispanic male
+  c_male: !!python/tuple
+    - 8
+    - 6
+# rows 75-82 non hispanic female
+  c_female: !!python/tuple
+    - 8
+    - 6
+# rows 75-82 total
+  c_total: !!python/tuple
+    - 8
+    - 1
+# row 83 hispanic male and female
+  ctotal_hisp: !!python/tuple
+    - 1
+    - 2
+# row 83 non hispanic male
+  ctotal_male: !!python/tuple
+    - 1
+    - 6
+# row 83 non hispanic female
+  ctotal_female: !!python/tuple
+    - 1
+    - 6
+# row 83 total
+  ctotal_total: !!python/tuple
+    - 1
+    - 1
+
 eeo5:
   a1: !!python/tuple
     - 10

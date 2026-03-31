@@ -1,0 +1,353 @@
+title:
+  CONTROL_NUMBER_YEAR: !!python/tuple
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+
+a:
+  TYPE_OF_GOVERNMENT: !!python/tuple
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+
+b:
+  NAME: !!python/tuple
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  ADDRESS: !!python/tuple
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  CITY: !!python/tuple
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  COUNTY: !!python/tuple
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  STATE: !!python/tuple
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  ZIPCODE: !!python/tuple
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+
+c:
+  FUNCTIONS_OTHER: !!python/tuple
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+
+# Page 1: full-time rows 1-40 (8 rows per block)
+table1:
+  a1_hisp: !!python/tuple   # rows 1-8 hispanic male+female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a1_male: !!python/tuple   # rows 1-8 non-hispanic male
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a1_female: !!python/tuple # rows 1-8 non-hispanic female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a1_total: !!python/tuple  # rows 1-8 total
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a2_hisp: !!python/tuple   # rows 9-16 hispanic male+female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a2_male: !!python/tuple   # rows 9-16 non-hispanic male
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a2_female: !!python/tuple # rows 9-16 non-hispanic female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a2_total: !!python/tuple  # rows 9-16 total
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a3_hisp: !!python/tuple   # rows 17-24 hispanic male+female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a3_male: !!python/tuple   # rows 17-24 non-hispanic male
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a3_female: !!python/tuple # rows 17-24 non-hispanic female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a3_total: !!python/tuple  # rows 17-24 total
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a4_hisp: !!python/tuple   # rows 25-32 hispanic male+female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a4_male: !!python/tuple   # rows 25-32 non-hispanic male
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a4_female: !!python/tuple # rows 25-32 non-hispanic female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a4_total: !!python/tuple  # rows 25-32 total
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a5_hisp: !!python/tuple   # rows 33-40 hispanic male+female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a5_male: !!python/tuple   # rows 33-40 non-hispanic male
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a5_female: !!python/tuple # rows 33-40 non-hispanic female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a5_total: !!python/tuple  # rows 33-40 total
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+
+# Page 2: function name
+function:
+  FUNCTION: !!python/tuple
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+
+# Page 2: full-time rows 41-65 (8 rows per block + total row)
+table2:
+  a6_hisp: !!python/tuple   # rows 41-48 hispanic male+female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a6_male: !!python/tuple   # rows 41-48 non-hispanic male
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a6_female: !!python/tuple # rows 41-48 non-hispanic female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a6_total: !!python/tuple  # rows 41-48 total
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a7_hisp: !!python/tuple   # rows 49-56 hispanic male+female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a7_male: !!python/tuple   # rows 49-56 non-hispanic male
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a7_female: !!python/tuple # rows 49-56 non-hispanic female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a7_total: !!python/tuple  # rows 49-56 total
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a8_hisp: !!python/tuple   # rows 57-64 hispanic male+female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a8_male: !!python/tuple   # rows 57-64 non-hispanic male
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a8_female: !!python/tuple # rows 57-64 non-hispanic female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  a8_total: !!python/tuple  # rows 57-64 total
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  atotal_hisp: !!python/tuple   # row 65 hispanic male+female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  atotal_male: !!python/tuple   # row 65 non-hispanic male
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  atotal_female: !!python/tuple # row 65 non-hispanic female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  atotal_total: !!python/tuple  # row 65 total
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+
+# Page 3: part-time rows 66-74
+table3:
+  b_hisp: !!python/tuple    # rows 66-73 hispanic male+female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  b_male: !!python/tuple    # rows 66-73 non-hispanic male
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  b_female: !!python/tuple  # rows 66-73 non-hispanic female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  b_total: !!python/tuple   # rows 66-73 total
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  btotal_hisp: !!python/tuple   # row 74 hispanic male+female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  btotal_male: !!python/tuple   # row 74 non-hispanic male
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  btotal_female: !!python/tuple # row 74 non-hispanic female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  btotal_total: !!python/tuple  # row 74 total
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+
+# Page 4: new hire rows 75-83
+table4:
+  c_hisp: !!python/tuple    # rows 75-82 hispanic male+female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  c_male: !!python/tuple    # rows 75-82 non-hispanic male
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  c_female: !!python/tuple  # rows 75-82 non-hispanic female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  c_total: !!python/tuple   # rows 75-82 total
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  ctotal_hisp: !!python/tuple   # row 83 hispanic male+female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  ctotal_male: !!python/tuple   # row 83 non-hispanic male
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  ctotal_female: !!python/tuple # row 83 non-hispanic female
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+  ctotal_total: !!python/tuple  # row 83 total
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+
+e:
+  DEPARTMENTS_AGENCIES_INCLUDED: !!python/tuple
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+
+f:
+  DEPARTMENTS_AGENCIES_NOT_INCLUDED: !!python/tuple
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max
+
+g:
+  REMARKS: !!python/tuple
+  - 0  # TODO: x_min
+  - 0  # TODO: y_min
+  - 0  # TODO: x_max
+  - 0  # TODO: y_max

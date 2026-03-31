@@ -136,9 +136,30 @@ def process_pdf(
                 cut_edges(cover_pdf_path)
 
             group_num = 1
-            
+
             for start_page in range(1, num_pages, 3):
                 end_page = min(start_page + 2, num_pages - 1)
+                file_logger.info(f"Processing {base_filename} - Group {group_num} (Pages {start_page + 1}-{end_page + 1})")
+                new_pdf_path = os.path.join(
+                    output_dir, f"{base_filename}_group{group_num}.pdf"
+                )
+                new_doc = fitz.open()
+                new_doc.insert_pdf(doc, from_page=start_page, to_page=end_page)
+                new_doc.save(new_pdf_path)
+                new_doc.close()
+                cut_edges(new_pdf_path)
+                group_num += 1
+        elif form_type == "eeo4_munis":
+            # No cover page; groups of 4 pages starting from page 0
+            # Page 0: metadata + rows 1-40
+            # Page 1: rows 41-65
+            # Page 2: part time
+            # Page 3: new hire
+            num_pages = len(doc)
+            group_num = 1
+
+            for start_page in range(0, num_pages, 4):
+                end_page = min(start_page + 3, num_pages - 1)
                 file_logger.info(f"Processing {base_filename} - Group {group_num} (Pages {start_page + 1}-{end_page + 1})")
                 new_pdf_path = os.path.join(
                     output_dir, f"{base_filename}_group{group_num}.pdf"
