@@ -7,6 +7,7 @@ then outputs results as JSON files.
 import os
 import shutil
 import argparse
+import fitz
 
 from doctr.models import ocr_predictor
 
@@ -26,6 +27,8 @@ def parse_args():
     )
     parser.add_argument(
         "output_dir",
+        nargs="?",
+        default=None,
         help=(
             "Directory to store result JSON files "
             "(default: INPUT_DIR/results)"
@@ -34,8 +37,7 @@ def parse_args():
     parser.add_argument(
         "form_type",
         help=(
-            "Directory to store result JSON files "
-            "(default: INPUT_DIR/results)"
+            "Form type to process: eeo1, eeo4_type1, eeo4_type2, or eeo5."
         )
     )
     parser.add_argument(
@@ -60,14 +62,14 @@ def parse_args():
     )
     args = parser.parse_args()
 
+    # If output_dir was omitted, default it now
+    if args.output_dir is None:
+        args.output_dir = os.path.join(args.input_dir, "results")
+
     # Look for any arguments that ended up as None
     missing = [name for name, val in vars(args).items() if val is None]
     if missing:
         parser.error(f"Missing required arguments: {', '.join(missing)}")
-
-    # If output_dir was omitted, default it now
-    if args.output_dir is None:
-        args.output_dir = os.path.join(args.input_dir, "results")
 
     return args
 
@@ -95,6 +97,10 @@ def main():
         PAGE_NUM_LS = [0]  # Page number to process for EEO-1
     elif FORM_TYPE == "eeo5":
         PAGE_NUM_LS = [0, 1]  # Page number to process for EEO-5
+    elif FORM_TYPE == "eeo4_type1":
+        PAGE_NUM_LS = [0, 1, 2, 3]  # Page number to process for EEO-4
+    elif FORM_TYPE == "eeo4_type2":
+        PAGE_NUM_LS = [0, 1, 2, 3]  # Page number to process for EEO-4 munis (no cover page, 4-page groups)
     else:
         raise Exception(f"Invalid FORM_TYPE: {FORM_TYPE}")
     
@@ -127,35 +133,71 @@ def main():
     # Process each PDF file
     for pdf_file in pdf_files:
         pdf_path = os.path.join(input_dir, pdf_file)
-        # Split the PDF into individual pages and perform initial OCR
-        process_pdf(FORM_TYPE, pdf_path, form_config, predictor, log_dir=args.log_dir)
-
-        # Temporary directory for intermediate PDF pages
         pdf_tmp_path = os.path.join(input_dir, "tmp")
+        try:
+            # Split the PDF into individual pages and perform initial OCR
+            process_pdf(FORM_TYPE, pdf_path, form_config, predictor, log_dir=args.log_dir)
 
-        # Iterate over the generated page PDFs
-        inner_pdf_files = get_files_in_directory(pdf_tmp_path)
-        for inner_pdf_file in inner_pdf_files:
-            cur_pdf_path = os.path.join(pdf_tmp_path, inner_pdf_file)
-            # Convert PDF pages to table cells
-            pdf_to_cells(cur_pdf_path, form_config, section_config, PAGE_NUM_LS, log_dir=args.log_dir)
+            # Iterate over the generated page PDFs
+            inner_pdf_files = get_files_in_directory(pdf_tmp_path)
+            for inner_pdf_file in inner_pdf_files:
+                cur_pdf_path = os.path.join(pdf_tmp_path, inner_pdf_file)
 
-            # Directory containing cell images
-            cell_path = os.path.join(pdf_tmp_path, "cells")
-            # Extract contents from cells and generate results
-            extract_contents(
-                FORM_TYPE,
-                pdf_tmp_path,
-                cell_path,
-                checkbox_config,
-                res_dir,
-                predictor,
-                table_config,
-            )
+                if FORM_TYPE == "eeo4_type1":
+                    if "_cover" in inner_pdf_file:
+                        cur_section_config = load_section_config(section_config_path, "eeo4_type1_cover")
+                        cur_page_num_ls = [0]
+                    elif "_group" in inner_pdf_file:
+                        doc_temp = fitz.open(cur_pdf_path)
+                        num_pages = len(doc_temp)
+                        doc_temp.close()
+                        if num_pages < 3:
+                            continue
+                        cur_section_config = section_config
+                        cur_page_num_ls = [0, 1, 2]
+                    else:
+                        cur_section_config = section_config
+                        cur_page_num_ls = PAGE_NUM_LS
+                elif FORM_TYPE == "eeo4_type2":
+                    if "_group" in inner_pdf_file:
+                        doc_temp = fitz.open(cur_pdf_path)
+                        num_pages = len(doc_temp)
+                        doc_temp.close()
+                        if num_pages < 4:
+                            continue
+                        cur_section_config = section_config
+                        cur_page_num_ls = [0, 1, 2, 3]
+                    else:
+                        cur_section_config = section_config
+                        cur_page_num_ls = PAGE_NUM_LS
+                else:
+                    cur_section_config = section_config
+                    cur_page_num_ls = PAGE_NUM_LS
 
-        # Clean up temporary directory for next PDF
-        shutil.rmtree(pdf_tmp_path)
-        os.makedirs(pdf_tmp_path, exist_ok=True)
+                # Convert PDF pages to table cells
+                pdf_to_cells(cur_pdf_path, form_config, cur_section_config, cur_page_num_ls, log_dir=args.log_dir)
+
+                # Directory containing cell images
+                cell_path = os.path.join(pdf_tmp_path, "cells")
+                # Extract contents from cells and generate results
+                extract_contents(
+                    FORM_TYPE,
+                    pdf_tmp_path,
+                    cell_path,
+                    checkbox_config,
+                    res_dir,
+                    predictor,
+                    table_config,
+                )
+
+        except Exception as e:
+            print(f"Skipping {pdf_file}: {e}")
+
+        finally:
+            # Clean up temporary directory for next PDF
+            if os.path.exists(pdf_tmp_path):
+                shutil.rmtree(pdf_tmp_path)
+            os.makedirs(pdf_tmp_path, exist_ok=True)
 
 
 if __name__ == "__main__":

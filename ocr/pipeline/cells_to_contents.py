@@ -260,6 +260,54 @@ def parse_doctr_json_output_table(
                             ):
                                 digit_table[y_relative][x_relative] = val
                                 confidence_table[y_relative][x_relative] = conf
+    elif form_type in ("eeo4_type1", "eeo4_type2"):
+        if sect is None or sect not in table_config:
+            file_logger.error(f"sect invalid: {sect}")
+        else:
+            row_num, col_num = get_table_row_and_col_num(table_config[sect])
+            digit_table, confidence_table = init_data_table_and_conf_table(
+                table_config[sect]
+            )
+            for page in data.get("pages", []):
+                page_dimensions = page.get("dimensions")
+                # !!! REQUIERED to scale down by 2: `read_pdf` from docTR scales up by 2 by default
+                total_height, total_width = (
+                    page_dimensions[0] / 2,
+                    page_dimensions[1] / 2,
+                )
+
+                avg_cell_height = (total_height - 2 * padding) / row_num
+                avg_cell_width = (total_width - 2 * padding) / col_num
+
+                for block in page.get("blocks", {}):
+                    for line in block.get("lines", {}):
+                        for raw_word in line.get("words", {}):
+                            val, conf = raw_word["value"], raw_word["confidence"]
+                            if row_num == 1 and col_num == 1:
+                                x_relative, y_relative = 0, 0
+                            else:
+                                mid_x, mid_y = calculate_midpoint(
+                                    raw_word["geometry"][0],
+                                    raw_word["geometry"][1],
+                                    total_width,
+                                    total_height,
+                                )
+                                x_relative = int((mid_x - padding) // avg_cell_width)
+                                y_relative = int((mid_y - padding) // avg_cell_height)
+                                if y_relative >= row_num:
+                                    y_relative = row_num - 1
+
+                            if not val.isdigit():
+                                file_logger.warning(
+                                    f"Invalid_digit,val:{val},loc:[{x_relative}, {y_relative}]"
+                                )
+
+                            if (
+                                digit_table[y_relative][x_relative] == -1
+                                or not digit_table[y_relative][x_relative].isdigit()
+                            ):
+                                digit_table[y_relative][x_relative] = val
+                                confidence_table[y_relative][x_relative] = conf
 
     if form_type == "eeo1":
         post_process_table(digit_table, confidence_table)
@@ -279,6 +327,19 @@ def parse_doctr_json_output_table(
             file_logger.warning(f"Invalid table:row-{is_row_valid},col-{is_col_valid}")
 
     return (digit_table, confidence_table)
+
+
+def is_eeo4_table_cell(filename: str) -> Tuple[bool, str]:
+    """
+    Identify whether a cell filename corresponds to an EEO-4 table section.
+
+    :param filename: Name of the cell PDF file
+    :return: Tuple where
+        - first element is True if it matches a table section pattern, False otherwise
+        - second element is the section identifier or empty string
+    """
+    m = re.match(r".+_section_table\d*_(.+)$", filename)
+    return (bool(m), m.group(1) if m else "")
 
 
 def is_eeo5_table_cell(filename: str) -> Tuple[bool, str]:
@@ -325,6 +386,154 @@ def merge_eeo5_table(table_raw: Dict) -> Dict:
     }
     return combined
 
+
+def merge_eeo4_table_vertical(table_raw: Dict, section_keys: List[str]) -> Tuple[List, List]:
+    """
+    Vertically concatenate multiple table sections into a single column.
+
+    :param table_raw: Dictionary containing raw table data
+    :param section_keys: List of section keys to merge (e.g., ['a1', 'a5', 'atotal1'])
+    :return: Tuple of (merged_data, merged_confidence)
+    """
+    merged_data = []
+    merged_conf = []
+
+    for key in section_keys:
+        data, conf = table_raw.get(key, ([], []))
+        merged_data += data
+        merged_conf += conf
+
+    return merged_data, merged_conf
+
+
+def merge_eeo4_table_horizontal(columns: List[Tuple[List, List]]) -> Tuple[List, List]:
+    """
+    Horizontally merge multiple columns/column groups into a single wide table.
+
+    :param columns: List of (data, confidence) tuples to merge horizontally
+    :return: Tuple of (final_data, final_confidence) as a single wide table
+    """
+    # Verify all columns have the same number of rows; truncate to minimum
+    num_rows = len(columns[0][0])
+    for idx, (data, _) in enumerate(columns):
+        if len(data) != num_rows:
+            file_logger.warning(
+                f"Row count mismatch: column 0 has {num_rows} rows, "
+                f"column {idx} has {len(data)} rows — truncating to minimum"
+            )
+    num_rows = min(len(data) for data, _ in columns)
+
+    final_data = []
+    final_conf = []
+
+    for i in range(num_rows):
+        row_data = []
+        row_conf = []
+
+        for data, conf in columns:
+            if i < len(data):
+                # Ensure data is a list for concatenation
+                cell_data = data[i] if isinstance(data[i], list) else [data[i]]
+                cell_conf = conf[i] if isinstance(conf[i], list) else [conf[i]]
+                row_data.extend(cell_data)
+                row_conf.extend(cell_conf)
+
+        final_data.append(row_data)
+        final_conf.append(row_conf)
+
+    return final_data, final_conf
+
+
+def merge_eeo4_type2_table(table_raw: Dict) -> Dict:
+    """
+    Combine all raw tables for EEO-4 munis into the same consolidated format as eeo4.
+
+    Each block (a1..a5, a6..a8+atotal, b, btotal, c, ctotal) is stored as four columns:
+    *_hisp (2 cols), *_male (6 cols), *_female (6 cols), *_total (1 col) = 15 cols per row.
+
+    :param table_raw: Mapping of raw table data keyed by field name
+    :return: Dictionary with keys 'a', 'b', 'c' matching the eeo4 merge output format
+    """
+    def merge_block(prefix):
+        """Horizontally merge the four column-groups for a given row-block prefix."""
+        return merge_eeo4_table_horizontal([
+            table_raw.get(f"{prefix}_hisp",   ([], [])),
+            table_raw.get(f"{prefix}_male",   ([], [])),
+            table_raw.get(f"{prefix}_female", ([], [])),
+            table_raw.get(f"{prefix}_total",  ([], [])),
+        ])
+
+    # Full-time table A: rows 1-40 (a1..a5) then rows 41-64 (a6..a8) + row 65 (atotal)
+    a_blocks = [merge_block(f"a{i}") for i in range(1, 6)]   # rows 1-40
+    a_blocks += [merge_block(f"a{i}") for i in range(6, 9)]  # rows 41-64
+    a_blocks.append(merge_block("atotal"))                    # row 65
+
+    final_a_data: List = []
+    final_a_conf: List = []
+    for data, conf in a_blocks:
+        final_a_data.extend(data)
+        final_a_conf.extend(conf)
+
+    # Part-time table B: rows 66-73 (b) + row 74 (btotal)
+    final_b_data, final_b_conf = merge_eeo4_table_vertical(
+        {k: v for k, v in [("b", merge_block("b")), ("btotal", merge_block("btotal"))]},
+        ["b", "btotal"],
+    )
+
+    # New hire table C: rows 75-82 (c) + row 83 (ctotal)
+    final_c_data, final_c_conf = merge_eeo4_table_vertical(
+        {k: v for k, v in [("c", merge_block("c")), ("ctotal", merge_block("ctotal"))]},
+        ["c", "ctotal"],
+    )
+
+    return {
+        "a": (final_a_data, final_a_conf),
+        "b": (final_b_data, final_b_conf),
+        "c": (final_c_data, final_c_conf),
+    }
+
+
+def merge_eeo4_table(table_raw: Dict) -> Dict:
+    """
+    Combine all raw tables for EEO-4 into a single consolidated mapping.
+
+    :param table_raw: Mapping of raw table data for all table sections
+    :return: Dictionary with key 'a' containing the fully merged table
+    """
+    # Full Time Employee Table
+    merged_a1 = merge_eeo4_table_vertical(table_raw, ["a1", "a5", "atotal1"])
+    merged_a2 = merge_eeo4_table_vertical(table_raw, ["a2", "a6", "atotal2"])
+    merged_a3 = merge_eeo4_table_vertical(table_raw, ["a3", "a7", "atotal3"])
+    merged_a4 = merge_eeo4_table_vertical(table_raw, ["a4", "a8", "atotal4"])
+
+    final_a_data, final_a_conf = merge_eeo4_table_horizontal(
+        [merged_a1, merged_a2, merged_a3, merged_a4]
+    )
+
+    # Other Than Full Time Employee Table
+    merged_bhistm = merge_eeo4_table_vertical(table_raw, ["bhistm_1", "bhistm_2", "bhistm_3", "bhistm_4", "bhistm_5", "bhistm_total"])
+    merged_bhistf = merge_eeo4_table_vertical(table_raw, ["bhistf_1", "bhistf_2", "bhistf_3", "bhistf_4", "bhistf_5", "bhistf_total"])
+    merged_brest = merge_eeo4_table_vertical(table_raw, ["brest_1", "brest_2", "brest_3", "brest_4", "brest_5", "brest_total"])
+    merged_btotal = merge_eeo4_table_vertical(table_raw, ["btotal_1", "btotal_2", "btotal_3", "btotal_4", "btotal_5", "btotal_total"])
+
+    final_b_data, final_b_conf = merge_eeo4_table_horizontal(
+        [merged_bhistm, merged_bhistf, merged_brest, merged_btotal]
+    )
+
+
+    # New Hires Table
+    merged_chistm = merge_eeo4_table_vertical(table_raw, ["chistm_1", "chistm_2", "chistm_3", "chistm_4", "chistm_5", "chistm_total"])
+    merged_chistf = merge_eeo4_table_vertical(table_raw, ["chistf_1", "chistf_2", "chistf_3", "chistf_4", "chistf_5", "chistf_total"])
+    merged_crest = merge_eeo4_table_vertical(table_raw, ["crest_1", "crest_2", "crest_3", "crest_4", "crest_5", "crest_total"])
+    merged_ctotal = merge_eeo4_table_vertical(table_raw, ["ctotal_1", "ctotal_2", "ctotal_3", "ctotal_4", "ctotal_5", "ctotal_total"])
+
+    final_c_data, final_c_conf = merge_eeo4_table_horizontal(
+        [merged_chistm, merged_chistf, merged_crest, merged_ctotal]
+    )
+
+    return {"a": (final_a_data, final_a_conf),
+            "b": (final_b_data, final_b_conf),
+            "c": (final_c_data, final_c_conf)}
 
 def extract_contents(
     form_type: str,
@@ -404,6 +613,16 @@ def extract_contents(
             else:
                 (str_lines, confidence_lines) = parse_doctr_json_output(raw_result)
             contents_raw[cellname] = (str_lines, confidence_lines)
+        elif form_type in ("eeo4_type1", "eeo4_type2"):
+            ok, sect = is_eeo4_table_cell(cellname)
+            if ok:
+                (str_lines, confidence_lines) = parse_doctr_json_output_table(
+                    form_type, raw_result, table_config, sect
+                )
+                table_raw[sect] = (str_lines, confidence_lines)
+            else:
+                (str_lines, confidence_lines) = parse_doctr_json_output(raw_result)
+                contents_raw[cellname] = (str_lines, confidence_lines)
         elif form_type == "eeo5":
             ok, sect = is_eeo5_table_cell(cellname)
             if ok:
@@ -439,6 +658,23 @@ def extract_contents(
                     f"Invalid table:row-{is_row_valid},col-{is_col_valid}"
                 )
 
+            contents_raw[f"the_section_table_{k.upper()}"] = data_table, conf_table
+
+    # Merge and post-process EEO-4 tables if present
+    if form_type == "eeo4_type1":
+        tables = merge_eeo4_table(table_raw)
+        for k in tables.keys():
+            data_table, conf_table = tables[k][0], tables[k][1]
+            post_process_table(data_table, conf_table)
+            contents_raw[f"the_section_table_{k.upper()}"] = data_table, conf_table
+
+    if form_type == "eeo4_type2":
+        tables = merge_eeo4_type2_table(table_raw)
+        for k in tables.keys():
+            data_table, conf_table = tables[k][0], tables[k][1]
+            post_process_table(data_table, conf_table)
+            if data_table and data_table[-1][-1] == 0:
+                data_table[-1][-1] = sum(data_table[-1][:-1])
             contents_raw[f"the_section_table_{k.upper()}"] = data_table, conf_table
 
     # PRASE 2-2: TXT to JSON

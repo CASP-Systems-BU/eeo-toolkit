@@ -64,27 +64,51 @@ def extract_from_checkbox(
     image = np.array(Image.frombytes("RGB", [pix.width, pix.height], pix.samples))
 
     checkbox_key_map = load_cell_coordination_config(checkbox_config)
-    json_map = {}
-    threshold = 0.7
-    for key, value in checkbox_key_map.items():
-        top_left = (value[0], value[1])
-        bottom_right = (value[2], value[3])
-        json_map[key] = is_rectangle_dark(image, top_left, bottom_right, threshold)
-    json_output = {}
-    if form_type == "eeo1":
-        json_output["id"] = "E-AND_F"
-        json_output["section"] = "E"
-        json_output["content"] = json_map
-    elif form_type == "eeo5":
-        json_output["id"] = "a-TYPE_OF_AGENCY"
-        json_output["section"] = "a"
-        json_output["content"] = json_map
+    threshold = 0.8
+    json_outputs = []
+
+    if form_type in ("eeo4_type1", "eeo4_type2"):
+        if form_type == "eeo4_type1" and "_group" in file_name:
+            return
+        for section, fields in checkbox_key_map.items():
+            for field_name, checkboxes in fields.items():
+                json_map = {}
+                for key, value in checkboxes.items():
+                    top_left = (value[0], value[1])
+                    bottom_right = (value[2], value[3])
+                    json_map[key] = is_rectangle_dark(image, top_left, bottom_right, threshold)
+                json_outputs.append({
+                    "id": f"{section}-{field_name}",
+                    "section": section,
+                    "content": json_map
+                })
+    else:
+        # EEO-1 and EEO-5 have only one flat checkbox.
+        json_map = {}
+        for key, value in checkbox_key_map.items():
+            top_left = (value[0], value[1])
+            bottom_right = (value[2], value[3])
+            json_map[key] = is_rectangle_dark(image, top_left, bottom_right, threshold)
+
+        if form_type == "eeo1":
+            json_outputs.append({
+                "id": "E-AND_F",
+                "section": "E",
+                "content": json_map
+            })
+        elif form_type == "eeo5":
+            json_outputs.append({
+                "id": "a-TYPE_OF_AGENCY",
+                "section": "a",
+                "content": json_map
+            })
 
     folder_name = os.path.splitext(file_name)[0]
     path = os.path.join(output_folder, folder_name + "_result.json")
     with open(path, "r+") as f:
         data = json.load(f)
-        data.append(json_output)
+        for json_output in json_outputs:
+            data.append(json_output)
         f.seek(0)
         json.dump(data, f, indent=4)
         f.truncate()
