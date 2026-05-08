@@ -335,7 +335,11 @@ if __name__ == "__main__":
     processed = 0
     for base_name, cover_path in cover_files.items():
         with open(cover_path, "r") as f:
-            cover_json = json.load(f)
+            try:
+                cover_json = json.load(f)
+            except json.JSONDecodeError as e:
+                print(f"Skipping {cover_path}: {e}")
+                continue
         cover_metadata = extract_cover_metadata(cover_json)
 
         groups = group_files.get(base_name, [])
@@ -343,7 +347,11 @@ if __name__ == "__main__":
 
         for group_path in groups:
             with open(group_path, "r") as f:
-                group_json = json.load(f)
+                try:
+                    group_json = json.load(f)
+                except json.JSONDecodeError as e:
+                    print(f"Skipping {group_path}: {e}")
+                    continue
 
             group_data = extract_group_data(group_json)
 

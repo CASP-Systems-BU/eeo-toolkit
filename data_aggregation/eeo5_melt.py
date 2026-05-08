@@ -403,6 +403,10 @@ df_melted = df_melted.drop(columns=["Race_Gender_Work Type_Job Category"])
 
 # === Group and aggregate ===
 df_melted = df_melted.groupby(all_fields)["Count"].sum().reset_index()
+
+full_index = pd.MultiIndex.from_product([df_melted[f].unique() for f in all_fields], names=all_fields)
+df_melted = df_melted.set_index(all_fields).reindex(full_index, fill_value=0).reset_index()
+
 df_melted.to_csv(os.path.join(input_dir, "melted_data.csv"), index=False)
 
 # Reload the melted file

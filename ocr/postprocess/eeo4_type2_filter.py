@@ -63,12 +63,20 @@ if __name__ == "__main__":
 
         # Metadata lives on page 0 of every group — read from the first one
         with open(groups[0], "r") as f:
-            first_group_json = json.load(f)
+            try:
+                first_group_json = json.load(f)
+            except json.JSONDecodeError as e:
+                print(f"Skipping {groups[0]}: {e}")
+                continue
         cover_metadata = extract_cover_metadata(first_group_json)
 
         for group_path in groups:
             with open(group_path, "r") as f:
-                group_json = json.load(f)
+                try:
+                    group_json = json.load(f)
+                except json.JSONDecodeError as e:
+                    print(f"Skipping {group_path}: {e}")
+                    continue
 
             group_data = extract_group_data(group_json)
 

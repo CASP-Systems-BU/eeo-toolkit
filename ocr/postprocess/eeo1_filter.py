@@ -110,7 +110,11 @@ if __name__ == "__main__":
         json_output = {}
 
         with open(json_file, "r") as f:
-            json_data = json.load(f)
+            try:
+                json_data = json.load(f)
+            except json.JSONDecodeError as e:
+                print(f"Skipping {json_file}: {e}")
+                continue
 
             # Derive clean filename
             filename = json_file.split("/")[-1].split("_cropped")[0]
