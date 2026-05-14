@@ -197,7 +197,7 @@ def check_page(new_pdf_path, key_map, predictor, sim_threshold, page_num):
     Use OCR predictor to extract the first line of text and compare against
     expected header, removing pages below similarity threshold.
 
-    :param pdf_path (str): Path to the cropped PDF page.
+    :param new_pdf_path (str): Path to the cropped PDF page.
     :param key_map (dict): Mapping of sections to detection rects.
     :param predictor: Doctr OCR predictor instance
     :param sim_threshold (float): Minimum ratio to keep the page.

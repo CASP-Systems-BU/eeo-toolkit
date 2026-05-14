@@ -13,21 +13,6 @@ import yaml
 from typing import Dict
 
 
-def is_file_or_dir_exist(path: str) -> bool:
-    """
-    Check whether a file or directory exists at the given path.
-
-    Args:
-        path (str): Filesystem path to check.
-
-    Returns:
-        bool: True if the path exists, False otherwise.
-    """
-    if os.path.exists(path):
-        return True
-    return False
-
-
 def load_cell_coordination_config(file_path: str) -> Dict:
     """
     Load the YAML config mapping cell identifiers to their PDF cropping coordinates.
@@ -39,7 +24,7 @@ def load_cell_coordination_config(file_path: str) -> Dict:
         Dict: Mapping of sections to cell coordinate dicts, or None if missing.
     """
     print(f"Log: Loading {file_path}...")
-    if not is_file_or_dir_exist(file_path):
+    if not os.path.exists(file_path):
         print("Error: The specified config file does not exist.")
         return
 
@@ -58,7 +43,7 @@ def load_yaml_config(file_path: str) -> Dict:
     Returns:
         Dict: Parsed YAML content, or None if file is missing.
     """
-    if not is_file_or_dir_exist(file_path):
+    if not os.path.exists(file_path):
         print("Error: The specified config file does not exist.")
         return
 

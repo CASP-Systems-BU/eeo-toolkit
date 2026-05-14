@@ -13,6 +13,12 @@ from utilities.load_config import load_cell_coordination_config
 from utilities.dir_helper import create_dir_if_not_exists
 from logger.logger import Logger
 
+# Initialize a default logger; will be reconfigured per file in pdf_to_cells()
+file_logger = Logger(
+    log_file_path="pdf_to_cells.log",
+    prefix="PDF_TO_CELLS",
+)
+
 
 def gen_cell(
     page, fields, key, output_folder, filename, section, scale_factor=3, padding=45

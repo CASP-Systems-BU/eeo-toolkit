@@ -674,6 +674,8 @@ def extract_contents(
         for k in tables.keys():
             data_table, conf_table = tables[k][0], tables[k][1]
             post_process_table(data_table, conf_table)
+            # EEO-4 type2 munis forms often have the grand total cell OCR'd as 0;
+            # recompute it from the row sum when that happens
             if data_table and data_table[-1][-1] == 0:
                 data_table[-1][-1] = sum(data_table[-1][:-1])
             contents_raw[f"the_section_table_{k.upper()}"] = data_table, conf_table

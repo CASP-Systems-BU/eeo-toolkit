@@ -21,18 +21,6 @@ from typing import Dict
 SCALE_FACTOR = 1.3
 
 
-def is_file_or_dir_exist(path: str) -> bool:
-    """
-    Check if a file or directory exists at the given path.
-
-    :param path: File or directory path to check
-    :return: True if exists, False otherwise
-    """
-    if os.path.exists(path):
-        return True
-    return False
-
-
 def load_cell_coordination_config(file_path: str) -> Dict:
     """
     Load a YAML configuration defining bounding box coordinates for each form cell.
@@ -41,7 +29,7 @@ def load_cell_coordination_config(file_path: str) -> Dict:
     :return: Dictionary mapping section names to coordinate lists
     """
     print(f"Log: Loading {file_path}...")
-    if not is_file_or_dir_exist(file_path):
+    if not os.path.exists(file_path):
         print("Error: The specified config file does not exist.")
         return
 

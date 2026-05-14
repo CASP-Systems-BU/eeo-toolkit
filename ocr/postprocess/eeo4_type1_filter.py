@@ -137,7 +137,8 @@ def get_selected_function(json_data: List[Dict]) -> tuple:
                 if func_num_match:
                     func_number = int(func_num_match.group(1))
 
-                # Extract function name after the dash
+                # Extract function name after the dash — OCR produces inconsistent spacing around
+                # dashes, so each variant is tried in order from most to least specific
                 if " - - " in func_text:
                     func_name = func_text.split(" - - ", 1)[1].strip()
                 elif " - " in func_text:

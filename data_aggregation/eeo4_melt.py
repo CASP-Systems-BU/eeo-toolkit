@@ -89,7 +89,11 @@ df_melted = agg_df.melt(
 
 
 def parse_column_name(col_name):
-    """Parse column name into Race, Gender, Work Type, Job Category."""
+    """Parse a compound column name into Race, Gender, Work Type, Job Category, and Salary Range.
+
+    Expected format: "{Race}_{Gender}_{Work Type}_{Job Category}" or
+    "{Race}_{Gender}_FULL-TIME STAFF_{Job Category}, {Salary Range}"
+    """
     parts = col_name.split("_")
     race = parts[0]
     gender = parts[1]
