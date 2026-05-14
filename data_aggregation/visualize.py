@@ -10,7 +10,7 @@ For two-way tables:
 Each chart is saved as a PNG file named after the corresponding contingency dimensions.
 """
 
-import os.path
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from utils import get_files_in_directory

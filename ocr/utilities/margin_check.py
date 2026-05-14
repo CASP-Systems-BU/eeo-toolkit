@@ -17,29 +17,14 @@ Key Features:
 import json
 from typing import List
 import os
-import glob
 
-
-def get_all_json_files(path: str) -> List[str]:
-    """
-    Recursively collect all JSON files under the specified path.
-    """
-    dirs = [
-        os.path.join(path, d)
-        for d in os.listdir(path)
-        if os.path.isdir(os.path.join(path, d))
-    ]
-    dirs.append(path)
-    json_files = []
-    for d in dirs:
-        json_files.extend(glob.glob(os.path.join(d, "*.json")))
-    json_files.sort()
-    return json_files
+from dir_helper import get_all_json_files
 
 
 def cal_eeo1_margin_diff(input_dir):
     """
     Compute and log differences between row/column totals and reported totals in EEO-1 tables.
+    Writes results to output_dir (module-level variable set in __main__).
     """
     json_files = get_all_json_files(input_dir)
     diff_cnt = dict()
@@ -48,7 +33,7 @@ def cal_eeo1_margin_diff(input_dir):
             json_data = json.load(f)
         table = json_data.get("table")
 
-        # Reported whole total is the bottom-right cell
+        # EEO-1 uses the penultimate row as the total row; the final row is the prior-year total
         whole_total = table[-2][-1]
 
         # Row and column sums exclude total row/column
@@ -73,10 +58,12 @@ def cal_eeo1_margin_diff(input_dir):
 def update_diff_cnt(diff_cnt, json_data, table_name, file):
     """
     Helper to compute and record discrepancies in margin totals for a given EEO-5 table.
+    Mutates diff_cnt in place.
     """
     table = json_data.get(table_name)
     if not table:
         return
+    # EEO-5 stores the total in the last row (unlike EEO-1 which uses the penultimate row)
     whole_total = table[-1][-1]
     row_sum = sum(row[-1] for i, row in enumerate(table) if i < len(table) - 1)
     col_sum = sum(table[-1][:-1])

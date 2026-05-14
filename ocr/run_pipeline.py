@@ -78,7 +78,7 @@ def main():
     Main function to initialize OCR predictor and process all PDFs.
     """
     
-    # ===================================> User Input Starts <===================================
+    # === User Input Starts ===
     
     args = parse_args()
     input_dir = args.input_dir
@@ -104,7 +104,7 @@ def main():
     else:
         raise Exception(f"Invalid FORM_TYPE: {FORM_TYPE}")
     
-    # ===================================> User Input Ends <===================================
+    # === User Input Ends ===
 
     # Paths to configuration files (DO NOT MODIFY UNLESS NECESSARY)
     table_config_path = "config/table_config.yaml"

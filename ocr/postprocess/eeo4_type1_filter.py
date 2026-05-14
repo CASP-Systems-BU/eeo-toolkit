@@ -25,7 +25,7 @@ import re
 from typing import List, Dict, Optional
 
 
-# ===============> Const Starts <===============
+# === Const Starts ===
 # Government function names
 GOVERNMENT_FUNCTIONS = [
     "FINANCIAL ADMINISTRATION/GENERAL CONTROL",
@@ -54,7 +54,7 @@ GOVERNMENT_TYPES = [
     "Special District",
     "Other"
 ]
-# ===============> Const Ends <===============
+# === Const Ends ===
 
 
 def get_all_json_files(path: str) -> List[str]:

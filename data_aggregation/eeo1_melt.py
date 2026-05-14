@@ -17,7 +17,7 @@ from itertools import combinations
 from collections import defaultdict
 from const import RACE_GENDER_COLUMNS
 
-# Laplace noise scale
+# Privacy budget; Laplace noise per query is drawn from Laplace(0, 1/epsilon), so scale = 21
 epsilon = 1 / 21
 
 # Input/output paths
@@ -47,6 +47,8 @@ df_melted = df_melted.drop(columns=['Race_Gender'])
 # Aggregate identical records
 df_melted = df_melted.groupby(all_fields)['Count'].sum().reset_index()
 
+# Materialize the full Cartesian product so every combination exists; missing combinations fill with 0
+# to ensure downstream contingency tables have aligned indices
 full_index = pd.MultiIndex.from_product([df_melted[f].unique() for f in all_fields], names=all_fields)
 df_melted = df_melted.set_index(all_fields).reindex(full_index, fill_value=0).reset_index()
 
@@ -57,7 +59,6 @@ df_melted = pd.read_csv(os.path.join(input_dir, "melted_data.csv"))
 
 # === Generate all 3-way combinations ===
 three_combos = list(combinations(all_fields, 3))
-two_combos = list(combinations(all_fields, 2))
 noisy_three_way_tables = []
 
 # Add Laplace noise and save each 3-way contingency table

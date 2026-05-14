@@ -49,7 +49,7 @@ for job_cat in JOB_CATEGORIES:
 for job_cat in JOB_CATEGORIES:
     for race_gender in RACE_GENDER_COLS:
         value_vars.append(f"{race_gender}_FULL-TIME NEW HIRES_{job_cat}")
-        
+
 FUNCTION_NUMBER_TO_NAME = {1 : "FINANCIAL ADMINISTRATION/GENERAL CONTROL",
 2 : "STREETS AND HIGHWAYS",
 3 : "PUBLIC WELFARE",
@@ -70,16 +70,15 @@ FUNCTION_NUMBER_TO_NAME = {1 : "FINANCIAL ADMINISTRATION/GENERAL CONTROL",
 
 agg_df = pd.read_csv(os.path.join(input_dir, "join_with_county.csv"), low_memory=False)
 
+# Prefer function_number when present — more reliable than the raw government_function string
 if "function_number" in agg_df.columns:
     agg_df["government_function"] = agg_df["function_number"].map(FUNCTION_NUMBER_TO_NAME).fillna(agg_df["government_function"])
 
 potential_id_vars = ["government_function", "government_type", "state", "reporting_year", "Organizational Size Binned"]
 id_vars = [col for col in potential_id_vars if col in agg_df.columns]
-print("using id vars:", id_vars)
 
 # Filter to only columns that exist in the dataframe
 existing_value_vars = [v for v in value_vars if v in agg_df.columns]
-print(f"Melting {len(existing_value_vars)} columns out of {len(value_vars)} expected")
 
 df_melted = agg_df.melt(
     id_vars=id_vars,
@@ -129,6 +128,9 @@ df_melted = df_melted.rename(columns={"government_function": "Government Functio
 all_fields = [f for f in all_fields if f in df_melted.columns]
 df_melted = df_melted.groupby(all_fields, dropna=False)["Count"].sum().reset_index()
 
+# === Load and normalize state employment data ===
+# Maps state CSV race/gender column headers to normalized (Race, Gender) tuples.
+# State data uses a different naming convention than the local government data.
 STATE_DEMO_COL_MAP = {
 "HISPANIC OR LATINO Male" : ("Hispanic or Latino", "Male"),
 "HISPANIC OR LATINO Female" : ("Hispanic or Latino", "Female"),
@@ -146,85 +148,71 @@ STATE_DEMO_COL_MAP = {
 "NOT-HISPANIC OR LATINO Two or more races Female" : ("Two or More Races", "Female"),
 }
 
-state_fulltime_raw = pd.read_csv(os.path.join(state_dir, "E4_001_2025_Full-Time.csv"), low_memory = False)
-state_fulltime_raw.rename(columns = {"Full-Time Employees\tJob Categories" : "Job Category", "Annual Salary (in thousands)" : "Salary Range"},inplace=True)
-state_fulltime_raw["Job Category"] = state_fulltime_raw["Job Category"].str.split(":").str[0]
-state_fulltime_raw["Job Category"] = state_fulltime_raw["Job Category"].str.replace("Officials and Administrators", "Officials - Administrators")
-state_fulltime_raw["Salary Range"] = state_fulltime_raw["Salary Range"].str.replace("-$", " - ")
-state_fulltime_raw["Salary Range"] = state_fulltime_raw["Salary Range"].str.replace("$ 0.1 - 15.9", "$0.1 - 15.9")
-demo_cols = [c for c in state_fulltime_raw.columns if c in STATE_DEMO_COL_MAP]
-state_fulltime_melted = state_fulltime_raw.melt(id_vars = ["Function", "Job Category", "Salary Range"],
-value_vars=demo_cols,
-var_name = "_demo",
-value_name = "Count")
-state_fulltime_melted["Race"] = state_fulltime_melted["_demo"].map(lambda c: STATE_DEMO_COL_MAP[c][0])
-state_fulltime_melted["Gender"] = state_fulltime_melted["_demo"].map(lambda c: STATE_DEMO_COL_MAP[c][1])
-state_fulltime_melted["Work Type"] = "FULL-TIME STAFF"
-state_fulltime_melted["Government Function"] = state_fulltime_melted["Function"].map(FUNCTION_NUMBER_TO_NAME).fillna("UNSPECIFIED")
-state_fulltime_melted["Government Type"] = "State"
-state_fulltime_melted["Count"] = pd.to_numeric(state_fulltime_melted["Count"], errors="coerce").fillna(0).astype(int)
-state_fulltime_melted = state_fulltime_melted.drop(columns=["_demo", "Function"])
-state_fulltime_melted = state_fulltime_melted.reindex(columns=df_melted.columns, fill_value = pd.NA)
-state_fulltime_melted.to_csv(os.path.join(input_dir, "state_fulltime.csv"), index=False)
+def _load_state_data(filepath, job_cat_col, work_type, output_filename, has_salary_range=False):
+    """Load and normalize a state employment CSV into the long format used by df_melted.
 
-state_parttime_raw = pd.read_csv(os.path.join(state_dir, "E4_001_2025_Other_Than_Full-Time.csv"), low_memory = False)
-state_parttime_raw.rename(columns = {"Other Than Full-Time Employees\tJob Categories" : "Job Category"},inplace=True)
-state_parttime_raw["Job Category"] = state_parttime_raw["Job Category"].str.split(":").str[0]
-state_parttime_raw["Job Category"] = state_parttime_raw["Job Category"].str.replace("Officials and Administrators", "Officials - Administrators")
-demo_cols = [c for c in state_parttime_raw.columns if c in STATE_DEMO_COL_MAP]
-state_parttime_melted = state_parttime_raw.melt(id_vars = ["Function", "Job Category"],
-value_vars=demo_cols,
-var_name = "_demo",
-value_name = "Count")
-state_parttime_melted["Salary Range"] = "-"
-state_parttime_melted["Race"] = state_parttime_melted["_demo"].map(lambda c: STATE_DEMO_COL_MAP[c][0])
-state_parttime_melted["Gender"] = state_parttime_melted["_demo"].map(lambda c: STATE_DEMO_COL_MAP[c][1])
-state_parttime_melted["Work Type"] = "PART-TIME STAFF"
-state_parttime_melted["Government Function"] = state_parttime_melted["Function"].map(FUNCTION_NUMBER_TO_NAME).fillna("UNSPECIFIED")
-state_parttime_melted["Government Type"] = "State"
-state_parttime_melted["Count"] = pd.to_numeric(state_parttime_melted["Count"], errors="coerce").fillna(0).astype(int)
-state_parttime_melted = state_parttime_melted.drop(columns=["_demo", "Function"])
-state_parttime_melted = state_parttime_melted.reindex(columns=df_melted.columns, fill_value = pd.NA)
-state_parttime_melted.to_csv(os.path.join(input_dir, "state_parttime.csv"), index=False)
+    has_salary_range=True: file has a salary range column that needs renaming and
+    normalization, and it becomes an id_var in the melt. False: salary range is
+    not in the source — it is set to "-" after melting (part-time and new hires).
+    """
+    raw = pd.read_csv(filepath, low_memory=False)
+    rename_map = {job_cat_col: "Job Category"}
+    if has_salary_range:
+        rename_map["Annual Salary (in thousands)"] = "Salary Range"
+    raw.rename(columns=rename_map, inplace=True)
+    raw["Job Category"] = raw["Job Category"].str.split(":").str[0]  # State CSVs append a descriptor after ":" — strip it
+    raw["Job Category"] = raw["Job Category"].str.replace("Officials and Administrators", "Officials - Administrators")  # Reconcile naming discrepancy with local data
+    if has_salary_range:
+        raw["Salary Range"] = raw["Salary Range"].str.replace("-$", " - ")  # Normalize state salary range format to match local data
+        raw["Salary Range"] = raw["Salary Range"].str.replace("$ 0.1 - 15.9", "$0.1 - 15.9")  # Fix specific formatting quirk in state source
+    id_vars = ["Function", "Job Category"] + (["Salary Range"] if has_salary_range else [])
+    demo_cols = [c for c in raw.columns if c in STATE_DEMO_COL_MAP]
+    melted = raw.melt(id_vars=id_vars, value_vars=demo_cols, var_name="_demo", value_name="Count")
+    if not has_salary_range:
+        melted["Salary Range"] = "-"
+    melted["Race"] = melted["_demo"].map(lambda c: STATE_DEMO_COL_MAP[c][0])
+    melted["Gender"] = melted["_demo"].map(lambda c: STATE_DEMO_COL_MAP[c][1])
+    melted["Work Type"] = work_type
+    melted["Government Function"] = melted["Function"].map(FUNCTION_NUMBER_TO_NAME).fillna("UNSPECIFIED")
+    melted["Government Type"] = "State"
+    melted["Count"] = pd.to_numeric(melted["Count"], errors="coerce").fillna(0).astype(int)
+    melted = melted.drop(columns=["_demo", "Function"])
+    melted = melted.reindex(columns=df_melted.columns, fill_value=pd.NA)
+    melted.to_csv(os.path.join(input_dir, output_filename), index=False)
+    return melted
 
-state_newhire_raw = pd.read_csv(os.path.join(state_dir, "E4_001_2025_New_Hires.csv"), low_memory = False)
-state_newhire_raw.rename(columns = {"New Hires During Fiscal Year\t(01-JUL-2024 - 30-JUN-2025)\tJob Categories" : "Job Category"},inplace=True)
-state_newhire_raw["Job Category"] = state_newhire_raw["Job Category"].str.split(":").str[0]
-state_newhire_raw["Job Category"] = state_newhire_raw["Job Category"].str.replace("Officials and Administrators", "Officials - Administrators")
-demo_cols = [c for c in state_newhire_raw.columns if c in STATE_DEMO_COL_MAP]
-state_newhire_melted = state_newhire_raw.melt(id_vars = ["Function", "Job Category"],
-value_vars=demo_cols,
-var_name = "_demo",
-value_name = "Count")
-state_newhire_melted["Salary Range"] = "-"
-state_newhire_melted["Race"] = state_newhire_melted["_demo"].map(lambda c: STATE_DEMO_COL_MAP[c][0])
-state_newhire_melted["Gender"] = state_newhire_melted["_demo"].map(lambda c: STATE_DEMO_COL_MAP[c][1])
-state_newhire_melted["Work Type"] = "NEW HIRES"
-state_newhire_melted["Government Function"] = state_newhire_melted["Function"].map(FUNCTION_NUMBER_TO_NAME).fillna("UNSPECIFIED")
-state_newhire_melted["Government Type"] = "State"
-state_newhire_melted["Count"] = pd.to_numeric(state_newhire_melted["Count"], errors="coerce").fillna(0).astype(int)
-state_newhire_melted = state_newhire_melted.drop(columns=["_demo", "Function"])
-state_newhire_melted = state_newhire_melted.reindex(columns=df_melted.columns, fill_value = pd.NA)
-state_newhire_melted.to_csv(os.path.join(input_dir, "state_newhire.csv"), index=False)
+state_fulltime_melted = _load_state_data(
+    os.path.join(state_dir, "E4_001_2025_Full-Time.csv"),
+    job_cat_col="Full-Time Employees\tJob Categories",
+    work_type="FULL-TIME STAFF",
+    output_filename="state_fulltime.csv",
+    has_salary_range=True,
+)
 
-print("merge sanity check")
-print(f"base rows: {len(df_melted):>8} total count: {df_melted['Count'].sum():>10,.0f}")
-for label, sdf in [("full time state", state_fulltime_melted), ("part time state", state_parttime_melted), ("newhire state", state_newhire_melted)]:
-    loaded = len(sdf) > 0
-    print(f"{label} rows: {len(sdf):>8} total count: {sdf['Count'].sum() if loaded else 0:>10,.0f} {'loaded' if loaded else 'empty'}")
+state_parttime_melted = _load_state_data(
+    os.path.join(state_dir, "E4_001_2025_Other_Than_Full-Time.csv"),
+    job_cat_col="Other Than Full-Time Employees\tJob Categories",
+    work_type="PART-TIME STAFF",
+    output_filename="state_parttime.csv",
+)
 
+state_newhire_melted = _load_state_data(
+    os.path.join(state_dir, "E4_001_2025_New_Hires.csv"),
+    job_cat_col="New Hires During Fiscal Year\t(01-JUL-2024 - 30-JUN-2025)\tJob Categories",
+    work_type="NEW HIRES",
+    output_filename="state_newhire.csv",
+)
+
+# === Merge state data into local dataset and re-aggregate ===
 df_melted = pd.concat([df_melted, state_fulltime_melted, state_parttime_melted, state_newhire_melted], ignore_index = True)
 df_melted = df_melted.groupby(all_fields, dropna=False)["Count"].sum().reset_index()
 
-# === Unique values of each feature ===
-for field in all_fields:
-     vals = sorted(df_melted[field].dropna().unique().tolist())
-     print(f"\n{field} ({len(vals)} unique):")
-     for v in vals:
-        print(f"{v}")
-        
 MA_COUNTIES = ["Barnstable", "Berkshire", "Bristol", "Dukes", "Essex", "Franklin", "Hampden", "Hampshire", "Middlesex", "Nantucket", "Norfolk", "Plymouth", "Suffolk", "Worcester", "Unspecified"]
 
+# === Build full index to ensure every combination is represented ===
+# Work Type and Salary Range are coupled (only FULL-TIME STAFF has salary ranges;
+# PART-TIME STAFF and NEW HIRES use "-"), so they are handled as pairs rather than
+# independent dimensions. Missing combinations are filled with 0 after the merge.
 dim = {f:sorted(df_melted[f].dropna().unique().tolist()) for f in all_fields if f not in ("Work Type", "Salary Range")}
 
 work_salary_pairs = (
@@ -240,7 +228,7 @@ for wt, sal in work_salary_pairs:
         row["Work Type"] = wt
         row["Salary Range"] = sal
         full_rows.append(row)
-        
+
 full_index_df = pd.DataFrame(full_rows, columns=all_fields)
 df_melted = full_index_df.merge(df_melted, on= all_fields, how = 'left')
 df_melted["Count"] = df_melted["Count"].fillna(0).astype(int)
@@ -276,6 +264,7 @@ two_way_table_dict = defaultdict(list)
 
 for table in noisy_three_way_tables:
     features = [col for col in table.columns if col != "Count"]
+    # Each 3-way table contributes 3 pairwise 2-way marginals
     for i in range(3):
         for j in range(i + 1, 3):
             A, B = features[i], features[j]

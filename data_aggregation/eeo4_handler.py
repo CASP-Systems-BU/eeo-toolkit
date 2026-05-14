@@ -84,9 +84,8 @@ for json_file in json_files:
 df = pd.DataFrame(flat_rows)
 df.to_csv(os.path.join(output_dir, "aggregation.csv"), index=False)
 
-# === Reload and print county-level summary ===
+# === Reload for county-level processing ===
 df = pd.read_csv(os.path.join(output_dir, "aggregation.csv"))
-print(f"Total rows: {len(df)}")
 
 
 fulltime_cols = [c for c in df.columns if "FULL-TIME STAFF" in c]
@@ -105,8 +104,7 @@ if len(bins) > 1:
         labels=all_labels[:len(bins) - 1],
         include_lowest=True
     )
-print(bins)
-    
+
 df['zip5'] = df['zipcode'].astype(str).str.extract(r"^(\d{4,5})")[0].str.zfill(5)
 df.to_csv(os.path.join(output_dir, "join.csv"), index=False)
 
@@ -125,11 +123,11 @@ else:
     df['County Only'] = np.nan
 
 additional_zip_df = pd.read_csv("../public_data/uscities.csv")
-additional_zip_df= additional_zip_df[additional_zip_df["state_id"] == "MA"]
+additional_zip_df = additional_zip_df[additional_zip_df["state_id"] == "MA"]
 additional_zip_df['zips'] = additional_zip_df['zips'].str.strip("[]").str.split()
 additional_zip_df = additional_zip_df.explode('zips')[['zips', 'county_name']].drop_duplicates(subset='zips', keep='first').rename(
         columns={'zips': 'zip', 'county_name': 'county_fallback'})
-        
+
 df = df.merge(additional_zip_df, left_on='zip5', right_on='zip', how='left')
 
 df['County Name'] = np.where(

@@ -5,6 +5,7 @@ Utility module for basic file system operations commonly used across OCR pipelin
 Provides helper functions to safely create directories, list files by extension, and check the existence of files or folders.
 """
 
+import glob
 import os
 
 def create_dir_if_not_exists(directory):
@@ -48,3 +49,22 @@ def is_file_or_dir_exist(path: str) -> bool:
         bool: True if the path exists, otherwise False.
     """
     return os.path.exists(path)
+
+
+def get_all_json_files(path: str) -> list:
+    """
+    Recursively retrieve all JSON files under the specified directory.
+
+    Args:
+        path (str): Root directory in which to search for JSON files.
+
+    Returns:
+        List[str]: Sorted list of file paths to all found JSON files.
+    """
+    dirs = [os.path.join(path, d) for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))]
+    dirs.append(path)
+    json_files = []
+    for d in dirs:
+        json_files.extend(glob.glob(os.path.join(d, "*.json")))
+    json_files.sort()
+    return json_files

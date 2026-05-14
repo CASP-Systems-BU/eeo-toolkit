@@ -180,7 +180,7 @@ def parse_doctr_json_output_table(
         digit_table, confidence_table = init_data_table_and_conf_table(table_config)
         for page in data.get("pages", []):
             page_dimensions = page.get("dimensions")
-            # !! REQUIERED to scale down by 2: `read_pdf` from docTR scales up by 2 by default
+            # Scale down by 2: `read_pdf` from docTR scales up by 2 by default
             total_height, total_width = page_dimensions[0] / 2, page_dimensions[1] / 2
 
             avg_cell_width = (total_width - 2 * padding) / col_num
@@ -198,7 +198,7 @@ def parse_doctr_json_output_table(
                         val, conf = raw_word["value"], raw_word["confidence"]
 
                         x_relative = int((mid_x - padding) // avg_cell_width)
-                        y_relative = int((mid_y - padding) // 25)
+                        y_relative = int((mid_y - padding) // 25)  # 25px is the fixed row height for EEO-1; EEO-5/4 compute this dynamically
                         if y_relative >= row_num:
                             y_relative = row_num - 1
 
@@ -207,6 +207,7 @@ def parse_doctr_json_output_table(
                                 f"Invalid_digit,val:{val},loc:[{x_relative}, {y_relative}]"
                             )
 
+                        # Keep the first valid digit seen; prefer any digit over a non-digit placeholder (-1)
                         if (
                             digit_table[y_relative][x_relative] == -1
                             or not digit_table[y_relative][x_relative].isdigit()
@@ -223,7 +224,7 @@ def parse_doctr_json_output_table(
             )
             for page in data.get("pages", []):
                 page_dimensions = page.get("dimensions")
-                # !!! REQUIERED to scale down by 2: `read_pdf` from docTR scales up by 2 by default
+                # Scale down by 2: `read_pdf` from docTR scales up by 2 by default
                 total_height, total_width = (
                     page_dimensions[0] / 2,
                     page_dimensions[1] / 2,
@@ -270,7 +271,7 @@ def parse_doctr_json_output_table(
             )
             for page in data.get("pages", []):
                 page_dimensions = page.get("dimensions")
-                # !!! REQUIERED to scale down by 2: `read_pdf` from docTR scales up by 2 by default
+                # Scale down by 2: `read_pdf` from docTR scales up by 2 by default
                 total_height, total_width = (
                     page_dimensions[0] / 2,
                     page_dimensions[1] / 2,
@@ -585,7 +586,7 @@ def extract_contents(
 
     file_logger.info(f"********** Processing File {filename} **********")
 
-    # PRASE 2-1: Detect text in cells
+    # PHASE 2-1: Detect text in cells
     contents_raw = dict()
     table_raw = dict()
     for cell in cells:
@@ -677,7 +678,7 @@ def extract_contents(
                 data_table[-1][-1] = sum(data_table[-1][:-1])
             contents_raw[f"the_section_table_{k.upper()}"] = data_table, conf_table
 
-    # PRASE 2-2: TXT to JSON
+    # PHASE 2-2: TXT to JSON
     # Build final JSON structure
     json_data = []
     pattern = re.compile(r".*_section_([a-z]+)_([a-zA-Z0-9_]+)", re.IGNORECASE)

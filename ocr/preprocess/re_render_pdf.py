@@ -42,11 +42,11 @@ def wait_for_file(file_path, timeout=1000):
 # Threshold to restart the Firefox driver to avoid memory leaks or crashes
 restart_threshold = 50
 
-# ==========> Customize script params STARTs here <==========
+# === Customize script params Starts ===
 input_folder = "../../files/offset/"
 output_folder = "../../files/offset/output/"
 log_file = "re_render_pdf_logs.log"
-# ==========> Customize script params ENDs here <==========
+# === Customize script params Ends ===
 
 # Set up logging
 logging.basicConfig(

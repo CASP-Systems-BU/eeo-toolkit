@@ -29,7 +29,6 @@ def detect_outer_edges_in_pdf(page, scale_factor=1):
 
     returns fitz.Rect: Bounding box of detected content edges.
     """
-    """Detect edges and return the bounding box of content."""
     pix = page.get_pixmap(
         matrix=fitz.Matrix(scale_factor, scale_factor), colorspace=fitz.csGRAY
     )
@@ -184,7 +183,7 @@ def process_pdf(
 def cut_edges(pdf_path: str):
     """
     Crop the PDF to the detected content bounds and save it.
-        
+
     :prarm pdf_path (str): Path to the PDF file to crop.
     """
     file_dir = os.path.dirname(pdf_path)

@@ -19,7 +19,7 @@ import numpy as np
 from itertools import combinations
 from collections import defaultdict
 
-# Laplace noise parameter (epsilon)
+# Privacy budget; Laplace noise per query is drawn from Laplace(0, 1/epsilon), so scale = 21
 epsilon = 1 / 21
 
 # Input/output paths
@@ -396,6 +396,7 @@ df_melted = agg_df.melt(
     var_name="Race_Gender_Work Type_Job Category",
     value_name="Count",
 )
+# Right-split on last 3 underscores to produce exactly 4 fields (Race, Gender, Work Type, Job Category)
 df_melted[["Race", "Gender", "Work Type", "Job Category"]] = df_melted[
     "Race_Gender_Work Type_Job Category"
 ].str.rsplit("_", n=3, expand=True)
@@ -404,6 +405,8 @@ df_melted = df_melted.drop(columns=["Race_Gender_Work Type_Job Category"])
 # === Group and aggregate ===
 df_melted = df_melted.groupby(all_fields)["Count"].sum().reset_index()
 
+# Materialize the full Cartesian product so every combination exists; missing combinations fill with 0
+# to ensure downstream contingency tables have aligned indices
 full_index = pd.MultiIndex.from_product([df_melted[f].unique() for f in all_fields], names=all_fields)
 df_melted = df_melted.set_index(all_fields).reindex(full_index, fill_value=0).reset_index()
 
@@ -414,7 +417,6 @@ df_melted = pd.read_csv(os.path.join(input_dir, "melted_data.csv"))
 
 # === Generate 3-way contingency tables with differential privacy ===
 three_combos = list(combinations(all_fields, 3))
-two_combos = list(combinations(all_fields, 2))
 noisy_three_way_tables = []
 
 for combo in three_combos:
@@ -433,6 +435,7 @@ two_way_table_dict = defaultdict(list)
 
 for table in noisy_three_way_tables:
     features = [col for col in table.columns if col != "Count"]
+    # Each 3-way table contributes 3 pairwise 2-way marginals
     for i in range(3):
         for j in range(i + 1, 3):
             A, B = features[i], features[j]

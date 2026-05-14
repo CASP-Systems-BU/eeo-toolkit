@@ -75,7 +75,4 @@ for json_file in json_files:
 df = pd.DataFrame(flat_rows)
 df.to_csv(os.path.join(output_dir, "eeo5.csv"), index=False)
 
-# === Reload and print county-level summary ===
 df = pd.read_csv(os.path.join(output_dir, "eeo5.csv"))
-group_counts = df.groupby('county').size()
-print(group_counts)

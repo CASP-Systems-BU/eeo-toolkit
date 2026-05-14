@@ -70,7 +70,6 @@ if __name__ == "__main__":
         labels=['Small', 'Medium', 'Large', 'Very Large'],
         retbins=True
     )
-    print(bins)
 
     # === Step 4: Derive a reliable ZIP code field ===
     merged_df['Real Zip Code'] = np.where(
