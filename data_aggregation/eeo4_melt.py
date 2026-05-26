@@ -1,32 +1,30 @@
 """
 This script processes EEO-4 staff composition data and generates
-different levels of differentially private contingency tables.
+differentially private contingency tables using OpenDP Laplace noise.
 
 Steps:
 1. Load and melt the original dataset to a long format with extracted fields:
    Race, Gender, Work Type, Job Category, and Salary Range (for full-time staff).
-2. Aggregate counts grouped by combinations of demographic and job-related features.
-3. Apply Laplace noise to create differentially private 3-way tables.
-4. Derive 2-way tables by collapsing over one dimension of 3-way tables and taking the median.
-5. Generate 1-way marginal distributions for each feature.
+2. Merge in state employment data (full-time, part-time, new hires).
+3. Aggregate counts and build a full index so every combination is represented.
+4. Apply Laplace noise to create differentially private main and side tables.
 
 Output:
-- Differentially private 1-way, 2-way, and 3-way contingency tables as CSVs.
+- Differentially private main table (Work Type x Salary x Gov Function x Race x Gender)
+  and side tables (new hires, job category, government type splits) as CSVs.
 """
 
 import pandas as pd
 import os
-import numpy as np
-from itertools import combinations, product as iterproduct
-from collections import defaultdict
+from itertools import product as iterproduct
 from const import EEO4_TABLE_JOB_CATEGORIES, EEO4_TABLE_A_SALARY_RANGES, EEO5_COLUMN_NAMES
 
-# Laplace noise parameter (epsilon)
-epsilon = 1 / 21
+# opendp setup
+import opendp.prelude as dp
+dp.enable_features("contrib")
 
 # Input/output paths
 input_dir = "/home/eolwd/data/eeo4_csv"
-output_dir_dp = f"{input_dir}/eeo4_contingency_tables_dp"
 state_dir = "/home/eolwd/data/state_data"
 
 all_fields = ["Race", "Gender", "Work Type", "Job Category", "Salary Range", "Government Function", "Government Type"]
@@ -119,6 +117,7 @@ def parse_column_name(col_name):
     else:
         work_type = "Unknown"
         job_category = rest
+        salary_range = "-"
 
     return pd.Series([race, gender, work_type, job_category, salary_range])
 
@@ -211,8 +210,6 @@ state_newhire_melted = _load_state_data(
 df_melted = pd.concat([df_melted, state_fulltime_melted, state_parttime_melted, state_newhire_melted], ignore_index = True)
 df_melted = df_melted.groupby(all_fields, dropna=False)["Count"].sum().reset_index()
 
-MA_COUNTIES = ["Barnstable", "Berkshire", "Bristol", "Dukes", "Essex", "Franklin", "Hampden", "Hampshire", "Middlesex", "Nantucket", "Norfolk", "Plymouth", "Suffolk", "Worcester", "Unspecified"]
-
 # === Build full index to ensure every combination is represented ===
 # Work Type and Salary Range are coupled (only FULL-TIME STAFF has salary ranges;
 # PART-TIME STAFF and NEW HIRES use "-"), so they are handled as pairs rather than
@@ -242,72 +239,93 @@ df_melted.to_csv(os.path.join(input_dir, "melted_data.csv"), index=False)
 print(f"\nMelted data saved with {len(df_melted)} rows")
 
 # Reload the melted file
-df_melted = pd.read_csv(os.path.join(input_dir, "melted_data.csv"))
+read_df = pd.read_csv(os.path.join(input_dir, "melted_data.csv"))
+
+# Define fields for analysis (removing 'Government Type')
+# 'Government Function'       # 16
+# 'Job Category'              # 8
+# 'Work Type', 'Salary Range' # 7 after grouping
+# 'Race', 'Gender'            # 7 * 2
+all_but_type = ['Work Type', 'Salary Range', 'Government Function', 'Job Category', 'Race', 'Gender'] # removing 'Government Type'
+true_df = read_df.groupby(all_but_type)['Count'].sum().reset_index()
+
+# Collapse the salary ranges < $43k:
+true_df['Salary Range Groups'] = true_df['Salary Range'].map({
+        '$0.1 - 15.9':  '$0.1 - 42.9',
+        '$16.0 - 19.9': '$0.1 - 42.9',
+        '$20.0 - 24.9': '$0.1 - 42.9',
+        '$25.0 - 32.9': '$0.1 - 42.9',
+        '$33.0 - 42.9': '$0.1 - 42.9',
+        '$43.0 - 54.9': '$43.0 - 54.9',
+        '$55.0 - 69.9': '$55.0 - 69.9',
+        '$70.0 PLUS':   '$70.0 PLUS',
+        '-':            '-'          
+})
+true_df = true_df.groupby(['Work Type', 'Salary Range Groups', 'Government Function', 'Job Category', 'Race', 'Gender'])['Count'].sum().reset_index()
+
+# Split into new hires vs all employees (new and otherwise)
+new_df = true_df[true_df['Work Type'] == 'NEW HIRES']
+all_df = true_df[true_df['Work Type'] != 'NEW HIRES']
 
 # Create output directories
-os.makedirs(os.path.join(output_dir_dp, "three_way"), exist_ok=True)
-os.makedirs(os.path.join(output_dir_dp, "two_way"), exist_ok=True)
+#os.makedirs(os.path.join(output_dir_dp, "three_way"), exist_ok=True)
+#os.makedirs(os.path.join(output_dir_dp, "two_way"), exist_ok=True)
 
-# === Generate 3-way contingency tables with differential privacy ===
-three_combos = list(combinations(all_fields, 3))
-noisy_three_way_tables = []
+def make_file(the_df, the_combo, the_laplace, the_filename):
+    temp_df = the_df.groupby(list(the_combo))['Count'].sum().reset_index()
+    temp_df.to_csv("out_real_" + the_filename + ".csv", index=False)
+    temp_df['Count'] = temp_df['Count'].apply(lambda x: the_laplace(x))
+    temp_df.to_csv("out_dp_" + the_filename + ".csv", index=False)
 
-for combo in three_combos:
-    grouped = df_melted.groupby(list(combo))["Count"].sum().reset_index()
-    # Add Laplace noise for differential privacy
-    grouped["Count"] = grouped["Count"] + np.random.laplace(
-        loc=0, scale=1 / epsilon, size=len(grouped)
-    )
-    filename = "_".join(combo).replace(" ", "_") + "_contingency.csv"
-    noisy_three_way_tables.append(grouped.copy())
-    grouped.to_csv(os.path.join(output_dir_dp, "three_way", filename), index=False)
-    print(f"Saved: {filename}")
+# main table: Worktype+salary, govFunction, Race, Gender using all employees
+main_epsilon = 0.7
+space = (dp.atom_domain(T=int, nan=False), dp.absolute_distance(T=int))
+laplace_noise_main = dp.m.make_laplace(*space, scale=1.0/main_epsilon)
 
-# === Derive 2-way tables by collapsing 3-way tables ===
-two_way_table_dict = defaultdict(list)
+make_file(all_df, ['Work Type', 'Salary Range Groups', 'Government Function', 'Race', 'Gender'], laplace_noise_main, 'WFRG_all')
 
-for table in noisy_three_way_tables:
-    features = [col for col in table.columns if col != "Count"]
-    # Each 3-way table contributes 3 pairwise 2-way marginals
-    for i in range(3):
-        for j in range(i + 1, 3):
-            A, B = features[i], features[j]
-            collapsed = table.groupby([A, B])["Count"].sum().reset_index()
-            collapsed.set_index([A, B], inplace=True)
-            two_way_table_dict[frozenset([A, B])].append(collapsed)
+# side tables
+side_epsilon = 0.3
+space = (dp.atom_domain(T=int, nan=False), dp.absolute_distance(T=int))
+laplace_noise_side = dp.m.make_laplace(*space, scale=1.0/side_epsilon)
 
-# Combine and median-aggregate to get final 2-way tables
-final_two_way_tables = {}
+# first side table: same as main, but for new hires only
+make_file(new_df, ['Work Type', 'Salary Range Groups', 'Government Function', 'Race', 'Gender'], laplace_noise_side, 'WFRG_new')
 
-for pair, tables in two_way_table_dict.items():
-    combined = pd.concat(tables, axis=1)
-    median_series = combined.median(axis=1)
-    median_series.index.names = list(next(iter(tables)).index.names)
-    median_table = median_series.reset_index(name="Count")
-    filename = "_".join(pair).replace(" ", "_") + "_contingency.csv"
-    median_table.to_csv(os.path.join(output_dir_dp, "two_way", filename), index=False)
-    final_two_way_tables[pair] = median_table
+# second side table: job category, race, gender (only for the 'all' table)
+make_file(all_df, ['Job Category', 'Race', 'Gender'], laplace_noise_side, 'JRG_all')
 
-# === Derive 1-way tables from 2-way tables ===
-one_way_table_dict = defaultdict(list)
 
-for pair, table in final_two_way_tables.items():
-    A, B = list(pair)
-    for feature in [A, B]:
-        collapsed = table.groupby(feature)["Count"].sum().reset_index()
-        collapsed.set_index(feature, inplace=True)
-        one_way_table_dict[feature].append(collapsed)
+### NEW ADDITIONS ON 5/6/2026
 
-# Combine and median-aggregate to get final 1-way tables
-final_one_way_tables = {}
 
-for feature, tables in one_way_table_dict.items():
-    combined = pd.concat(tables, axis=1)
-    median_series = combined.median(axis=1)
-    median_series.index.names = list(next(iter(tables)).index.names)
-    median_table = median_series.reset_index(name="Count")
-    filename = f"Employee_Distribution_by_{feature}.csv"
-    median_table.to_csv(os.path.join(output_dir_dp, filename), index=False)
-    final_one_way_tables[feature] = median_table
+# Create a table with Government Type
+temp_df = read_df.groupby(['Government Type', 'Work Type', 'Government Function', 'Race', 'Gender'])['Count'].sum().reset_index()
 
-print("Done!")
+# Remove new hires
+type_df = temp_df[temp_df['Work Type'] != 'NEW HIRES']
+
+# Collapse Government Types to just state vs local governments
+type_df['Gov Type'] = type_df['Government Type'].map({
+        'City':     'Local',
+        'County':   'Local',
+        'Other':    'State',
+        'State':    'State',
+        'Township': 'Local'
+})
+
+# Remove two columns that are no longer needed: Work Type and the original (5 option) Government Type
+type_df = type_df.groupby(['Gov Type', 'Government Function', 'Race', 'Gender'])['Count'].sum().reset_index()
+
+# new side tables
+side_epsilon = 0.3
+space = (dp.atom_domain(T=int, nan=False), dp.absolute_distance(T=int))
+laplace_noise_side = dp.m.make_laplace(*space, scale=1.0/side_epsilon)
+
+# first new side table: keep Gender but not Race
+make_file(type_df, ['Gov Type', 'Government Function', 'Gender'], laplace_noise_side, 'TFG')
+
+# second new side table: keep Race but not Gender
+make_file(type_df, ['Gov Type', 'Government Function', 'Race'], laplace_noise_side, 'TFR')
+
+# print("Done!")

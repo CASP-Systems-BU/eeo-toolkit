@@ -2,12 +2,10 @@
 This script generates differentially private contingency tables from EEO-1 data.
 It performs the following steps:
 1. Reads and melts EEO-1 data into a long format (Race x Gender x Dimensions).
-2. Aggregates counts for all 3-way combinations of key fields.
-3. Applies Laplace noise to ensure differential privacy.
-4. Derives 2-way tables from the noisy 3-way tables using median aggregation.
-5. Further collapses to 1-way tables for basic feature distributions.
-The output includes differentially private one-way, two-way, and three-way tables,
-saved as individual CSV files for each combination.
+2. Aggregates counts into a 4-way main table (JobCategory x NAICS x Race x Gender).
+3. Applies OpenDP Laplace noise to the 4-way table and 9 curated 3-way side tables.
+The output includes a differentially private 4-way main table and 3-way side tables,
+saved as individual CSV files.
 """
 
 import pandas as pd
@@ -17,13 +15,12 @@ from itertools import combinations
 from collections import defaultdict
 from const import RACE_GENDER_COLUMNS
 
-# Privacy budget; Laplace noise per query is drawn from Laplace(0, 1/epsilon), so scale = 21
-epsilon = 1 / 21
+# opendp setup
+import opendp.prelude as dp
+dp.enable_features("contrib")
 
 # Input/output paths
 input_dir = "/home/node0/Documents/csv_output"
-output_dir = f"{input_dir}/eeo1_contingency_tables"
-output_dir_dp = f"{input_dir}/eeo1_contingency_tables_dp"
 
 # Define fields for analysis
 all_fields = ['JobCategory', 'NAICS_label', 'Organizational Size Binned', 'County Name', 'Race', 'Gender']
@@ -55,64 +52,37 @@ df_melted = df_melted.set_index(all_fields).reindex(full_index, fill_value=0).re
 df_melted.to_csv(os.path.join(input_dir, "melted_data.csv"), index=False)
 
 # Reload for safety
-df_melted = pd.read_csv(os.path.join(input_dir, "melted_data.csv"))
+df = pd.read_csv(os.path.join(input_dir, "melted_data.csv"))
+
+# remove Public Administration industry type (this is in EEO-4 instead)
+df_new = df[~(df["NAICS_label"] == "Public Administration")]
 
 # === Generate all 3-way combinations ===
-three_combos = list(combinations(all_fields, 3))
-noisy_three_way_tables = []
+# three_combos = list(combinations(all_fields, 3))
+# two_combos = list(combinations(all_fields, 2))
+four_combo = ['JobCategory', 'NAICS_label', 'Race', 'Gender']
+three_combos = [('JobCategory', 'Organizational Size Binned', 'Race'), ('JobCategory', 'Organizational Size Binned', 'Gender'), ('NAICS_label', 'Organizational Size Binned', 'Race'), ('NAICS_label', 'Organizational Size Binned', 'Gender'), ('JobCategory', 'County Name', 'Race'), ('JobCategory', 'County Name', 'Gender'), ('NAICS_label', 'County Name', 'Race'), ('NAICS_label', 'County Name', 'Gender'), ('Gender', 'Organizational Size Binned', 'Race')]
 
-# Add Laplace noise and save each 3-way contingency table
+# Save the (real!) main 4-way table
+main_df = df_new.groupby(four_combo)['Count'].sum().reset_index()
+main_df.to_csv("temp_real_main.csv", index=False)
+
+# Add Laplace noise and save the noisy 4-way table
+main_epsilon = 0.4
+space = (dp.atom_domain(T=int, nan=False), dp.absolute_distance(T=int))
+laplace_noise_main = dp.m.make_laplace(*space, scale=1.0/main_epsilon)
+main_df['Count'] = main_df['Count'].apply(lambda x: laplace_noise_main(x))
+main_df.to_csv("dp_main.csv", index=False)
+
+
+# Add Laplace noise and save each 3-way side table
+# noisy_three_way_tables = []
+side_epsilon = 0.7 / 8 # whoops, actually made 9 of them this year using this epsilon
+laplace_noise_side = dp.m.make_laplace(*space, scale=1.0/side_epsilon)
+
 for combo in three_combos:
-    grouped = df_melted.groupby(list(combo))['Count'].sum().reset_index()
-    grouped['Count'] = grouped['Count'] + np.random.laplace(loc=0, scale=1 / epsilon, size=len(grouped))
-    filename = '_'.join(combo).replace(' ', '_') + '_contingency.csv'
-    noisy_three_way_tables.append(grouped.copy())
-    grouped.to_csv(os.path.join(output_dir_dp, "three_way", filename), index=False)
-    print(f"Saved: {filename}")
-
-# === Derive 2-way tables from 3-way tables by marginalizing ===
-two_way_table_dict = defaultdict(list)
-
-# For each 3-way table, collapse along all 2-way pairs
-for table in noisy_three_way_tables:
-    features = [col for col in table.columns if col != 'Count']
-    for i in range(3):
-        for j in range(i + 1, 3):
-            A, B = features[i], features[j]
-            collapsed = table.groupby([A, B])['Count'].sum().reset_index()
-            collapsed.set_index([A, B], inplace=True)
-            two_way_table_dict[frozenset([A, B])].append(collapsed)
-
-# Combine 2-way tables using median across all derived versions
-final_two_way_tables = {}
-
-for pair, tables in two_way_table_dict.items():
-    combined = pd.concat(tables, axis=1)
-    median_series = combined.median(axis=1)
-    median_series.index.names = list(next(iter(tables)).index.names)
-    median_table = median_series.reset_index(name='Count')
-    filename = '_'.join(pair).replace(' ', '_') + '_contingency.csv'
-    median_table.to_csv(os.path.join(output_dir_dp, "two_way", filename), index=False)
-    final_two_way_tables[pair] = median_table
-
-# === Derive 1-way tables from 2-way tables ===
-one_way_table_dict = defaultdict(list)
-
-for pair, table in final_two_way_tables.items():
-    A, B = list(pair)
-    for feature in [A, B]:
-        collapsed = table.groupby(feature)['Count'].sum().reset_index()
-        collapsed.set_index(feature, inplace=True)
-        one_way_table_dict[feature].append(collapsed)
-
-# Combine 1-way tables using median
-final_one_way_tables = {}
-
-for feature, tables in one_way_table_dict.items():
-    combined = pd.concat(tables, axis=1)
-    median_series = combined.median(axis=1)
-    median_series.index.names = list(next(iter(tables)).index.names)
-    median_table = median_series.reset_index(name='Count')
-    filename = f"Employee_Distribution_by_{feature}.csv"
-    median_table.to_csv(os.path.join(output_dir_dp, filename), index=False)
-    final_one_way_tables[feature] = median_table
+    side_df = df_new.groupby(list(combo))['Count'].sum().reset_index()
+    filename = 'side_' + ''.join(field[0] for field in combo) + '.csv'
+    side_df.to_csv("temp_real_" + filename, index=False)
+    side_df['Count'] = side_df['Count'].apply(lambda x: laplace_noise_side(x))
+    side_df.to_csv("temp_dp_" + filename, index=False)
