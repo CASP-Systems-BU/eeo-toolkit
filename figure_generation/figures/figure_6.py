@@ -30,8 +30,8 @@ def figure_6(df, output_dir, table_dir):
 
     # Legend and axis labels
     legend_handles = [
-        Patch(facecolor=FEMALE_COLOR, label='Female'),
-        Patch(facecolor=MALE_COLOR,   label='Male'),
+        Patch(facecolor=FEMALE_COLOR, edgecolor=BAR_EDGE_COLOR, label='Female'),
+        Patch(facecolor=MALE_COLOR,   edgecolor=BAR_EDGE_COLOR, label='Male'),
     ]
     ax.legend(handles=legend_handles, title='Sex', title_fontsize=14, fontsize=14)
 

@@ -33,7 +33,7 @@ def figure_12(df, output_dir, table_dir):
 
     # Legend and axis labels
     legend_handles = [
-        Patch(facecolor=RACE_COLORS[r], label=r)
+        Patch(facecolor=RACE_COLORS[r], label=r, edgecolor=BAR_EDGE_COLOR)
         for r in RACE_ORDER_5
     ]
     ax.legend(handles=legend_handles, title='Race',

@@ -31,9 +31,6 @@ def figure_10(org_size_gender_df, output_dir, table_dir):
         xpos   = x + (j - 0.5) * width
 
         ax.bar(xpos, vals, width=width, color=color, edgecolor="none")
-        overlay = ax.bar(xpos, vals, width=width, color="none", edgecolor="white")
-        for patch in overlay:
-            patch.set_linewidth(0)
         ax.bar(xpos, vals, width=width, color="none", edgecolor=BAR_EDGE_COLOR)
 
         for xi, val in zip(xpos, vals):
@@ -41,7 +38,7 @@ def figure_10(org_size_gender_df, output_dir, table_dir):
 
     # Legend and axis labels
     legend_handles = [
-        Patch(facecolor=ORG_COLORS_10[s], label=s)
+        Patch(facecolor=ORG_COLORS_10[s], label=s, edgecolor=BAR_EDGE_COLOR)
         for s in ORG_SIZES_10
     ]
     ax.legend(handles=legend_handles, title="Org Size", fontsize=14, title_fontsize=14)

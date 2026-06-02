@@ -3,7 +3,8 @@ import matplotlib
 
 # Input/output directory
 
-INPUT_DIR = Path("/home/node0/Documents/csv_output")
+# INPUT_DIR = Path("/home/node0/Documents/csv_output")
+INPUT_DIR = Path("/Users/anthonytsehuang/Documents/work_projects/eeo_pipeline/EEO-1_FILES/adjusted_tables")
 OUTPUT_DIR = INPUT_DIR.parent / "figures"
 TABLE_DIR = OUTPUT_DIR / "tables"
 
@@ -38,7 +39,6 @@ def apply_style():
 
 # Pattern hatching for better differentiation
 # Currently unused, can be applied if needed.
-
 GENDER_HATCHES = {
     'Female': '//',
     'Male':   '\\\\'}
