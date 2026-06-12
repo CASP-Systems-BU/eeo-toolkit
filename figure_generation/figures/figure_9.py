@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Wedge as MplWedge
-from eeo1_config import ORG_SIZE_ORDER, PIE_ORDER, BAR_EDGE_COLOR, RACE_COLORS, RACE_ORDER_5
+from eeo1_figure_config import ORG_SIZE_ORDER, PIE_ORDER, BAR_EDGE_COLOR, RACE_COLORS, RACE_ORDER_5
 
 def figure_9(org_size_race_df, output_dir, table_dir):
     EXPLODE = 0.06

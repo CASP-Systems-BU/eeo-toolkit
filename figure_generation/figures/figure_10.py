@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Patch
-from eeo1_config import BAR_EDGE_COLOR
+from eeo1_figure_config import BAR_EDGE_COLOR
 
 def figure_10(org_size_gender_df, output_dir, table_dir):
     ORG_SIZES_10   = ['Small', 'Very Large']

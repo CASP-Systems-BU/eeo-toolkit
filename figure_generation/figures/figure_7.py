@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import textwrap
-from eeo1_config import BAR_EDGE_COLOR, RACE_COLORS, RACE_ORDER_5
+from eeo1_figure_config import BAR_EDGE_COLOR, RACE_COLORS, RACE_ORDER_5
 
 def figure_7(df, output_dir, table_dir):
     RACES_7 = ['White', 'Asian', 'Black or African American']

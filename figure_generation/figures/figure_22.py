@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Wedge as MplWedge
-from eeo4_config import BAR_EDGE_COLOR, SALARY_LABELS_K_TABLE, SALARY_ORDER, SALARY_LABELS_K, PIE_ORDER, RACE_COLORS
+from eeo4_figure_config import BAR_EDGE_COLOR, SALARY_LABELS_K_TABLE, SALARY_ORDER, SALARY_LABELS_K, PIE_ORDER, RACE_COLORS
 
 def figure_22(wfrg_df, output_dir, table_dir):
 

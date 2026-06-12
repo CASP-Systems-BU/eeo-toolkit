@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 import numpy as np
-from eeo4_config import BAR_EDGE_COLOR, RACE_ORDER_5, FEMALE_COLOR, MALE_COLOR
+from eeo4_figure_config import BAR_EDGE_COLOR, RACE_ORDER_5, FEMALE_COLOR, MALE_COLOR
 
 def figure_16(jrg_df, output_dir, table_dir):
     bar_df  = (jrg_df[jrg_df['Race'].isin(RACE_ORDER_5)]

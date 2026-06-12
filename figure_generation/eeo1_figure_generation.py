@@ -1,5 +1,5 @@
 import pandas as pd
-from eeo1_config import INPUT_DIR, OUTPUT_DIR, TABLE_DIR, apply_style
+from eeo1_figure_config import INPUT_DIR, OUTPUT_DIR, TABLE_DIR, apply_style
 from figures import (
     figure_1, figure_2, figure_3, figure_4, figure_5, figure_6, figure_7,
     figure_8, figure_9, figure_10, figure_11, figure_12, figure_13

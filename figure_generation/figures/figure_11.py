@@ -2,7 +2,7 @@ import textwrap
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from eeo1_config import BAR_EDGE_COLOR
+from eeo1_figure_config import BAR_EDGE_COLOR
 
 def figure_11(df, output_dir, table_dir):
     fig_11_df = df.groupby(['NAICS_label']).agg({'Count': 'sum'}).sort_values('Count', ascending=False)

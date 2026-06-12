@@ -3,7 +3,7 @@ from matplotlib.patches import Patch
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from eeo1_config import BAR_EDGE_COLOR, FEMALE_COLOR, MALE_COLOR
+from eeo1_figure_config import BAR_EDGE_COLOR, FEMALE_COLOR, MALE_COLOR
 
 def figure_13(df, output_dir, table_dir):
     naics_total    = df.groupby("NAICS_label")["Count"].sum().sort_values(ascending=True)

@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Wedge as MplWedge
-from eeo4_config import BAR_EDGE_COLOR, PIE_ORDER, RACE_COLORS
+from eeo4_figure_config import BAR_EDGE_COLOR, PIE_ORDER, RACE_COLORS
 
 def figure_28(wfrg_df, output_dir, table_dir):
 

@@ -1,7 +1,7 @@
 import textwrap
 import pandas as pd
 import matplotlib.pyplot as plt
-from eeo4_config import BAR_EDGE_COLOR
+from eeo4_figure_config import BAR_EDGE_COLOR
 
 def figure_29(wfrg_df, output_dir, table_dir):
 

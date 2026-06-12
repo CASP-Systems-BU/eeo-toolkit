@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Patch
-from eeo4_config import BAR_EDGE_COLOR, SALARY_LABELS_K_TABLE, SALARY_ORDER, SALARY_LABELS_K, SALARY_COLORS, RACE_ORDER_5
+from eeo4_figure_config import BAR_EDGE_COLOR, SALARY_LABELS_K_TABLE, SALARY_ORDER, SALARY_LABELS_K, SALARY_COLORS, RACE_ORDER_5
 
 def figure_23(wfrg_df, output_dir, table_dir):
 

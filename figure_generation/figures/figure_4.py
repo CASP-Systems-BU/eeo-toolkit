@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import textwrap
-from eeo1_config import RACE_COLORS, BAR_EDGE_COLOR, RACE_ORDER_5
+from eeo1_figure_config import RACE_COLORS, BAR_EDGE_COLOR, RACE_ORDER_5
 
 def figure_4(df, output_dir, table_dir):
     stack_df   = df.groupby(['Gender', 'Race'])['Count'].sum().unstack().reindex(['Female', 'Male'])[RACE_ORDER_5]

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
 import numpy as np
 import textwrap
-from eeo1_config import FEMALE_COLOR, MALE_COLOR, BAR_EDGE_COLOR, RACE_ORDER_5
+from eeo1_figure_config import FEMALE_COLOR, MALE_COLOR, BAR_EDGE_COLOR, RACE_ORDER_5
 
 def figure_3(df, output_dir, table_dir):
 

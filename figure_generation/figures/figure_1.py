@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from eeo1_config import FEMALE_COLOR, MALE_COLOR, BAR_EDGE_COLOR
+from eeo1_figure_config import FEMALE_COLOR, MALE_COLOR, BAR_EDGE_COLOR
 
 def figure_1(df, output_dir, table_dir):
     gender_totals = df.groupby('Gender')['Count'].sum()

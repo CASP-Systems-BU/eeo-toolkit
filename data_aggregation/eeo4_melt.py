@@ -1,27 +1,19 @@
 """
-This script processes EEO-4 staff composition data and generates
-differentially private contingency tables using OpenDP Laplace noise.
+This script reads and melts EEO-4 staff composition data into a long format.
 
 Steps:
 1. Load and melt the original dataset to a long format with extracted fields:
    Race, Gender, Work Type, Job Category, and Salary Range (for full-time staff).
 2. Merge in state employment data (full-time, part-time, new hires).
 3. Aggregate counts and build a full index so every combination is represented.
-4. Apply Laplace noise to create differentially private main and side tables.
 
-Output:
-- Differentially private main table (Work Type x Salary x Gov Function x Race x Gender)
-  and side tables (new hires, job category, government type splits) as CSVs.
+Output is melted_data.csv, consumed by eeo4_dp.py for differential privacy.
 """
 
 import pandas as pd
 import os
 from itertools import product as iterproduct
 from const import EEO4_TABLE_JOB_CATEGORIES, EEO4_TABLE_A_SALARY_RANGES, EEO5_COLUMN_NAMES
-
-# opendp setup
-import opendp.prelude as dp
-dp.enable_features("contrib")
 
 # Input/output paths
 input_dir = "/home/eolwd/data/eeo4_csv"
@@ -238,94 +230,3 @@ df_melted.to_csv(os.path.join(input_dir, "melted_data.csv"), index=False)
 
 print(f"\nMelted data saved with {len(df_melted)} rows")
 
-# Reload the melted file
-read_df = pd.read_csv(os.path.join(input_dir, "melted_data.csv"))
-
-# Define fields for analysis (removing 'Government Type')
-# 'Government Function'       # 16
-# 'Job Category'              # 8
-# 'Work Type', 'Salary Range' # 7 after grouping
-# 'Race', 'Gender'            # 7 * 2
-all_but_type = ['Work Type', 'Salary Range', 'Government Function', 'Job Category', 'Race', 'Gender'] # removing 'Government Type'
-true_df = read_df.groupby(all_but_type)['Count'].sum().reset_index()
-
-# Collapse the salary ranges < $43k:
-true_df['Salary Range Groups'] = true_df['Salary Range'].map({
-        '$0.1 - 15.9':  '$0.1 - 42.9',
-        '$16.0 - 19.9': '$0.1 - 42.9',
-        '$20.0 - 24.9': '$0.1 - 42.9',
-        '$25.0 - 32.9': '$0.1 - 42.9',
-        '$33.0 - 42.9': '$0.1 - 42.9',
-        '$43.0 - 54.9': '$43.0 - 54.9',
-        '$55.0 - 69.9': '$55.0 - 69.9',
-        '$70.0 PLUS':   '$70.0 PLUS',
-        '-':            '-'          
-})
-true_df = true_df.groupby(['Work Type', 'Salary Range Groups', 'Government Function', 'Job Category', 'Race', 'Gender'])['Count'].sum().reset_index()
-
-# Split into new hires vs all employees (new and otherwise)
-new_df = true_df[true_df['Work Type'] == 'NEW HIRES']
-all_df = true_df[true_df['Work Type'] != 'NEW HIRES']
-
-# Create output directories
-#os.makedirs(os.path.join(output_dir_dp, "three_way"), exist_ok=True)
-#os.makedirs(os.path.join(output_dir_dp, "two_way"), exist_ok=True)
-
-def make_file(the_df, the_combo, the_laplace, the_filename):
-    temp_df = the_df.groupby(list(the_combo))['Count'].sum().reset_index()
-    temp_df.to_csv("out_real_" + the_filename + ".csv", index=False)
-    temp_df['Count'] = temp_df['Count'].apply(lambda x: the_laplace(x))
-    temp_df.to_csv("out_dp_" + the_filename + ".csv", index=False)
-
-# main table: Worktype+salary, govFunction, Race, Gender using all employees
-main_epsilon = 0.7
-space = (dp.atom_domain(T=int, nan=False), dp.absolute_distance(T=int))
-laplace_noise_main = dp.m.make_laplace(*space, scale=1.0/main_epsilon)
-
-make_file(all_df, ['Work Type', 'Salary Range Groups', 'Government Function', 'Race', 'Gender'], laplace_noise_main, 'WFRG_all')
-
-# side tables
-side_epsilon = 0.3
-space = (dp.atom_domain(T=int, nan=False), dp.absolute_distance(T=int))
-laplace_noise_side = dp.m.make_laplace(*space, scale=1.0/side_epsilon)
-
-# first side table: same as main, but for new hires only
-make_file(new_df, ['Work Type', 'Salary Range Groups', 'Government Function', 'Race', 'Gender'], laplace_noise_side, 'WFRG_new')
-
-# second side table: job category, race, gender (only for the 'all' table)
-make_file(all_df, ['Job Category', 'Race', 'Gender'], laplace_noise_side, 'JRG_all')
-
-
-### NEW ADDITIONS ON 5/6/2026
-
-
-# Create a table with Government Type
-temp_df = read_df.groupby(['Government Type', 'Work Type', 'Government Function', 'Race', 'Gender'])['Count'].sum().reset_index()
-
-# Remove new hires
-type_df = temp_df[temp_df['Work Type'] != 'NEW HIRES']
-
-# Collapse Government Types to just state vs local governments
-type_df['Gov Type'] = type_df['Government Type'].map({
-        'City':     'Local',
-        'County':   'Local',
-        'Other':    'State',
-        'State':    'State',
-        'Township': 'Local'
-})
-
-# Remove two columns that are no longer needed: Work Type and the original (5 option) Government Type
-type_df = type_df.groupby(['Gov Type', 'Government Function', 'Race', 'Gender'])['Count'].sum().reset_index()
-
-# new side tables
-side_epsilon = 0.3
-space = (dp.atom_domain(T=int, nan=False), dp.absolute_distance(T=int))
-laplace_noise_side = dp.m.make_laplace(*space, scale=1.0/side_epsilon)
-
-# first new side table: keep Gender but not Race
-make_file(type_df, ['Gov Type', 'Government Function', 'Gender'], laplace_noise_side, 'TFG')
-
-# second new side table: keep Race but not Gender
-make_file(type_df, ['Gov Type', 'Government Function', 'Race'], laplace_noise_side, 'TFR')
-
-# print("Done!")

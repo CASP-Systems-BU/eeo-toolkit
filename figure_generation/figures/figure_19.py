@@ -2,7 +2,7 @@ import textwrap
 from matplotlib.patches import Patch
 import pandas as pd
 import matplotlib.pyplot as plt
-from eeo4_config import BAR_EDGE_COLOR, RACE_COLORS, RACE_ORDER_5
+from eeo4_figure_config import BAR_EDGE_COLOR, RACE_COLORS, RACE_ORDER_5
 
 def figure_19(wfrg_df, output_dir, table_dir):
 

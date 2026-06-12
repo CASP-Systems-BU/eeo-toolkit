@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Wedge as MplWedge
-from eeo1_config import FEMALE_COLOR, ORG_SIZE_ORDER, MALE_COLOR, BAR_EDGE_COLOR
+from eeo1_figure_config import FEMALE_COLOR, ORG_SIZE_ORDER, MALE_COLOR, BAR_EDGE_COLOR
 
 def figure_8(org_size_gender_df, output_dir, table_dir):
 

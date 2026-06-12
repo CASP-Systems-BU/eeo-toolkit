@@ -2,7 +2,7 @@ import textwrap
 from matplotlib.patches import Patch
 import pandas as pd
 import matplotlib.pyplot as plt
-from eeo4_config import BAR_EDGE_COLOR, SALARY_LABELS_K_TABLE, SALARY_ORDER, SALARY_COLORS, SALARY_LABELS_K
+from eeo4_figure_config import BAR_EDGE_COLOR, SALARY_LABELS_K_TABLE, SALARY_ORDER, SALARY_COLORS, SALARY_LABELS_K
 
 def figure_20(wfrg_df, output_dir, table_dir):
 

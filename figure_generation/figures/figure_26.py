@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Patch
-from eeo4_config import BAR_EDGE_COLOR, FEMALE_COLOR, MALE_COLOR
+from eeo4_figure_config import BAR_EDGE_COLOR, FEMALE_COLOR, MALE_COLOR
 
 def figure_26(jrg_df, output_dir, table_dir):
 

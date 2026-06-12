@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import textwrap
-from eeo1_config import RACE_ORDER_5, RACE_COLORS, BAR_EDGE_COLOR
+from eeo1_figure_config import RACE_ORDER_5, RACE_COLORS, BAR_EDGE_COLOR
 
 def figure_2(df, output_dir, table_dir):
     race_totals = df[df['Race'].isin(RACE_ORDER_5)].groupby('Race')['Count'].sum()
