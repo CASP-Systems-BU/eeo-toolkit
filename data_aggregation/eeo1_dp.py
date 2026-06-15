@@ -3,7 +3,7 @@ This script applies differential privacy to pre-melted EEO-1 contingency tables.
 It expects the output of eeo1_melt.py (melted_data.csv) as input and produces:
 1. A noisy 4-way main table (JobCategory x NAICS x Race x Gender).
 2. Nine noisy 3-way side tables over curated dimension combinations.
-Both the real (pre-noise) and noisy versions of each table are saved as CSVs.
+Both tables are saved as CSVs.
 """
 
 import pandas as pd
@@ -55,7 +55,5 @@ laplace_noise_side = dp.m.make_laplace(*space, scale=1.0 / side_epsilon)
 for combo in three_combos:
     side_df = df_new.groupby(list(combo))['Count'].sum().reset_index()
     filename = 'side_' + ''.join(field[0] for field in combo) + '.csv'
-    # Save real table, then overwrite Count column in-place with noisy values
-    side_df.to_csv("temp_real_" + filename, index=False)
     side_df['Count'] = side_df['Count'].apply(lambda x: laplace_noise_side(x))
-    side_df.to_csv("temp_dp_" + filename, index=False)
+    side_df.to_csv(filename, index=False)

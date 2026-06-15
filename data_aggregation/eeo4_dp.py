@@ -3,7 +3,7 @@ This script applies differential privacy to pre-melted EEO-4 contingency tables.
 It expects the output of eeo4_melt.py (melted_data.csv) as input and produces:
 1. A noisy main table (Work Type x Salary x Government Function x Race x Gender).
 2. Side tables for new hires, job category, and government type splits.
-Both the real (pre-noise) and noisy versions of each table are saved as CSVs.
+Both tables are saved as CSVs.
 """
 
 import pandas as pd
@@ -47,11 +47,10 @@ all_df = true_df[true_df['Work Type'] != 'NEW HIRES']
 
 
 def make_file(the_df, the_combo, the_laplace, the_filename):
-    """Aggregate, save real table, apply Laplace noise, save noisy table."""
+    """Aggregate, apply Laplace noise, and save noisy table."""
     temp_df = the_df.groupby(list(the_combo))['Count'].sum().reset_index()
-    temp_df.to_csv("out_real_" + the_filename + ".csv", index=False)
     temp_df['Count'] = temp_df['Count'].apply(lambda x: the_laplace(x))
-    temp_df.to_csv("out_dp_" + the_filename + ".csv", index=False)
+    temp_df.to_csv(the_filename + ".csv", index=False)
 
 
 # === Main table: Work Type + Salary x Government Function x Race x Gender (all employees) ===
@@ -59,17 +58,17 @@ main_epsilon = 0.7
 space = (dp.atom_domain(T=int, nan=False), dp.absolute_distance(T=int))
 laplace_noise_main = dp.m.make_laplace(*space, scale=1.0 / main_epsilon)
 
-make_file(all_df, ['Work Type', 'Salary Range Groups', 'Government Function', 'Race', 'Gender'], laplace_noise_main, 'WFRG_all')
+make_file(all_df, ['Work Type', 'Salary Range Groups', 'Government Function', 'Race', 'Gender'], laplace_noise_main, 'WFRG_all_hires')
 
 # === Side tables ===
 side_epsilon = 0.3
 laplace_noise_side = dp.m.make_laplace(*space, scale=1.0 / side_epsilon)
 
 # Same dimensions as main, but for new hires only
-make_file(new_df, ['Work Type', 'Salary Range Groups', 'Government Function', 'Race', 'Gender'], laplace_noise_side, 'WFRG_new')
+make_file(new_df, ['Work Type', 'Salary Range Groups', 'Government Function', 'Race', 'Gender'], laplace_noise_side, 'WFRG_new_hires')
 
 # Job category x Race x Gender (all employees)
-make_file(all_df, ['Job Category', 'Race', 'Gender'], laplace_noise_side, 'JRG_all')
+make_file(all_df, ['Job Category', 'Race', 'Gender'], laplace_noise_side, 'JRG')
 
 
 ### NEW ADDITIONS ON 5/6/2026
