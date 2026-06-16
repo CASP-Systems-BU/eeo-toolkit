@@ -50,7 +50,7 @@ def make_file(the_df, the_combo, the_laplace, the_filename):
     """Aggregate, apply Laplace noise, and save noisy table."""
     temp_df = the_df.groupby(list(the_combo))['Count'].sum().reset_index()
     temp_df['Count'] = temp_df['Count'].apply(lambda x: the_laplace(x))
-    temp_df.to_csv(the_filename + ".csv", index=False)
+    temp_df.to_csv(os.path.join(input_dir, the_filename + ".csv"), index=False)
 
 
 # === Main table: Work Type + Salary x Government Function x Race x Gender (all employees) ===

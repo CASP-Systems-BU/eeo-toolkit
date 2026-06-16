@@ -1,48 +1,100 @@
-# OCR Pipeline for EEO PDF Files
+# OCR Pipeline for EEO PDF Forms
 
-The repository contains scripts that converts typed and scanned PDF documents into structured JSON data using OCR.
-
----
-
-## Folder Structure
-
-```
-├── ocr/
-│   ├── config/           # YAML for cell & checkbox layouts
-│   ├── pipeline/         # Cell extraction, OCR, JSON conversion
-│   ├── preprocess/       # Classification, deduplication, render scripts
-│   ├── postprocess/      # Data validation
-│   ├── visualization/    # GUI tools (coord extraction, JSON viewer)
-│   ├── utilities/        # Helper functions
-│   └── README.md         # This documentation
-└── ...
-```
+Converts typed EEO-1 and EEO-4 PDF forms into structured JSON using DocTR. Runs fully offline in an air-gapped environment.
 
 ---
 
-## Installation
-[Requirements](../README.md#31-requirements)
+## Directory Structure
+
+```
+ocr/
+├── run_pipeline.py        # Main entry point
+├── config/                # YAML cell & checkbox coordinate maps
+├── pipeline/              # Core OCR stages (split → cells → contents → checkboxes)
+├── preprocess/            # Optional cleaning before OCR (classify, dedup, re-render)
+├── postprocess/           # Per-form-type filters and JSON validation
+├── utilities/             # Shared helpers (config loading, table validation, logging)
+├── visualization/         # GUI tools (coordinate extraction, JSON viewer)
+└── logger/                # Custom logger (file + console output)
+```
+
+---
 
 ## How to Use
 
 > [!CAUTION]
-> The current version of the OCR pipeline only supports the official standard EEO forms. Any third-party and customized forms are not supported.
+> Only official standard EEO forms are supported. Third-party or customized form layouts require new YAML coordinate maps.
 
-### Configure the Pipeline
+### Step 1 — (Optional) Preprocess
 
-- The pipeline relies on coordinate maps for each cell and checkbox region. Make sure the following files are present under `OCR/config`:
-  - **EEO-1 Type1**:
-    - `eeo1_typed_type1.yaml` (cells)
-    - `eeo1_typed_type1_checkbox.yaml`
-  - **EEO-1 Type2**:
-    - `eeo1_typed_type2.yaml`
-    - `eeo1_typed_type2_checkbox.yaml`
-  - **EEO-5**:
-    - `eeo5_typed.yaml`
-    - `eeo5_typed_checkbox.yaml`
+Clean the input PDFs before OCR:
 
-**Cell layout YAML**:
+```bash
+python3 ocr/preprocess/classify.py       # Sort files by extension (remove non-PDFs)
+python3 ocr/preprocess/deduplicate.py    # Remove duplicate forms via SHA-256 hashing
+python3 ocr/preprocess/re_render_pdf.py  # Fix misaligned checkboxes/text via Firefox headless re-print
+```
 
+All three steps are optional. Run them in order if input quality is uncertain.
+
+### Step 2 — Run OCR
+
+```bash
+python3 ocr/run_pipeline.py <input_dir> [output_dir] <form_type> <form_config> <checkbox_config> [log_dir]
+```
+
+| Argument | Required | Description |
+|---|---|---|
+| `input_dir` | Yes | Directory containing input PDF forms |
+| `output_dir` | No | Output directory for JSON files (default: `input_dir/results/`) |
+| `form_type` | Yes | One of: `eeo1`, `eeo4_type1`, `eeo4_type2`, `eeo5` |
+| `form_config` | Yes | Path to cell coordinate YAML (see `config/`) |
+| `checkbox_config` | Yes | Path to checkbox coordinate YAML (see `config/`) |
+| `log_dir` | No | Log output directory (default: `../logs/`) |
+
+**Examples:**
+
+```bash
+# EEO-1
+python3 ocr/run_pipeline.py /data/eeo1_pdfs/ /data/eeo1_results/ \
+    eeo1 config/eeo1_typed_type1.yaml config/eeo1_typed_type1_checkbox.yaml
+
+# EEO-4 (government function forms with cover page)
+python3 ocr/run_pipeline.py /data/eeo4_pdfs/ /data/eeo4_results/ \
+    eeo4_type1 config/eeo4_typed_type1.yaml config/eeo4_typed_checkbox.yaml
+
+# EEO-4 (municipalities forms without cover page)
+python3 ocr/run_pipeline.py /data/eeo4_munis/ /data/eeo4_munis_results/ \
+    eeo4_type2 config/eeo4_typed_type2.yaml config/eeo4_typed_checkbox.yaml
+```
+
+**Outputs:** One `<formname>_result.json` per PDF in `output_dir/`. A temporary `tmp/` directory is created and cleaned up automatically per form.
+
+### Step 3 — Postprocess (Filter & Validate)
+
+After OCR, run the per-form-type filter scripts (located in `postprocess/`):
+
+```bash
+python3 ocr/postprocess/json_validator.py    # EEO-1: validate OCR confidence and table structure
+python3 ocr/postprocess/eeo1_filter.py       # EEO-1: filter to Massachusetts establishments
+python3 ocr/postprocess/eeo4_type1_filter.py # EEO-4: merge cover + group pages (gov function forms)
+python3 ocr/postprocess/eeo4_type2_filter.py # EEO-4: process munis forms (no cover page)
+```
+
+| Script | Form | Purpose |
+|---|---|---|
+| `json_validator.py` | EEO-1 | Confidence threshold check, table structure validation, city/state fuzzy correction |
+| `eeo1_filter.py` | EEO-1 | Filter to MA establishments, extract EIN/NAICS/employer metadata |
+| `eeo4_type1_filter.py` | EEO-4 | Attach cover-page metadata to each group file (one per government function) |
+| `eeo4_type2_filter.py` | EEO-4 | Same output format as type1 but for forms with metadata embedded on page 0 |
+
+---
+
+## Configuration
+
+Cell and checkbox coordinate maps live in `config/`. Each YAML maps named regions to `(x1, y1, x2, y2)` bounding boxes:
+
+**Cell layout:**
 ```yaml
 table:
   CELL_NAME: !!python/tuple
@@ -52,8 +104,7 @@ table:
     - bottom_left_y
 ```
 
-**Checkbox layout YAML**:
-
+**Checkbox layout:**
 ```yaml
 checkbox_field: !!python/tuple
   - upper_right_x
@@ -62,78 +113,46 @@ checkbox_field: !!python/tuple
   - bottom_left_y
 ```
 
+Available configs:
+
+| Form | Cells | Checkboxes |
+|---|---|---|
+| EEO-1 Type 1 | `eeo1_typed_type1.yaml` | `eeo1_typed_type1_checkbox.yaml` |
+| EEO-1 Type 2 | `eeo1_typed_type2.yaml` | `eeo1_typed_type2_checkbox.yaml` |
+| EEO-4 Type 1 | `eeo4_typed_type1.yaml` | `eeo4_typed_checkbox.yaml` |
+| EEO-4 Type 2 | `eeo4_typed_type2.yaml` | `eeo4_typed_checkbox.yaml` |
 
 > [!TIP]
-> To define new layouts, use the GUI utility and click on the corners of the cells to get their coordinates:
->
+> To define or update a coordinate map, use the GUI coordinate tool:
 > ```bash
 > python3 ocr/visualization/get_location.py
 > ```
->
-> and click cell corners to get the coordination.
+> Click on cell corners in the PDF viewer to read off coordinates.
 
 > [!NOTE]
-> Mention 
-> The coordination for EEO-1 forms are generated after the white-space-cutting.
-> The EEO-5 forms do not have scaling issues and do not require the white-space-cutting.
-> In case there are form alignment issues, you may want to trim white margins before fetching the coordinates.
-
-### Running the Pipeline
-
-#### 1. Pre-Processing (Optional)
-
-#### 1.1 Classification
-
-Use `ocr/preprocess/classify.py` to separate EEO-1 vs. EEO-5 PDFs.
-
-```bash
-python3 ocr/preprocess/classify.py
-```
-
-#### 1.2 Deduplication
-
-Identify and remove duplicate forms based on file hashes:
-
-```bash
-python3 ocr/preprocess/deduplicate.py
-```
-
-#### 1.3 Layer Rendering Fix
-
-Apply rendering corrections for PDF layers that misalign text and forms:
-
-```bash
-python3 ocr/preprocess/re_render_pdf.py
-```
-
-#### 2. Run OCR Tool
-
-Edit `run_pipeline.py` to set:
-
-- `input_dir`
-- `FORM_TYPE` (`eeo1` or `eeo5`)
-- Paths to YAML configs
-
-Then:
-
-```bash
-python3 ocr/run_pipeline.py
-```
-
-This generates `<formname>_result.json` files under `../files/results`.
+> EEO-1 coordinates are measured after whitespace cropping. Run the pipeline once to confirm crop boundaries before finalizing a new YAML.
 
 ---
 
+## Utilities
 
+| Script | Purpose |
+|---|---|
+| `utilities/table_validator.py` | Validate extracted table row/column sums |
+| `utilities/margin_check.py` | Standalone check: compare reported vs. computed totals |
+| `utilities/get_log_summary.py` | Parse run logs and summarize OCR errors and accuracy rate |
+| `visualization/visualize_data.py` | GUI JSON viewer: browse results with bounding boxes and table rendering |
+
+---
 
 ## Logging
 
-All pipeline logs are stored under `logs/` with filenames `<formname>.log`. Uses a prefixed timestamp format.
+Logs are written to `logs/` (or the `log_dir` argument) with one file per form. Run `utilities/get_log_summary.py` to produce a summary across all log files.
 
 ---
 
 ## Troubleshooting
 
-- **No OCR output?** Verify `det_arch` and `reco_arch` in `run_pipeline.py` match installed DocTR models.
-- **Invalid table sums?** Adjust `table_config.yaml` cell coordinates or increase `CONFIDENCE_THRESHOLD`.
-- **Missing files?** Make sure intermediate `tmp/` directory is cleared after each run by `run_pipeline.py`.
+- **No OCR output** — Verify `det_arch` and `reco_arch` in `run_pipeline.py` match the installed DocTR model files.
+- **Invalid table sums** — Adjust cell coordinates in the relevant YAML or raise `CONFIDENCE_THRESHOLD`.
+- **Stale `tmp/` directory** — Delete it manually; the pipeline cleans it automatically between runs but not on a hard crash.

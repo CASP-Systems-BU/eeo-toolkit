@@ -45,7 +45,7 @@ main_epsilon = 0.4
 space = (dp.atom_domain(T=int, nan=False), dp.absolute_distance(T=int))
 laplace_noise_main = dp.m.make_laplace(*space, scale=1.0 / main_epsilon)
 main_df['Count'] = main_df['Count'].apply(lambda x: laplace_noise_main(x))
-main_df.to_csv("main.csv", index=False)
+main_df.to_csv(os.path.join(input_dir, "main.csv"), index=False)
 
 # === Build and noise each 3-way side table ===
 # whoops, actually made 9 of them this year using this epsilon
@@ -54,6 +54,6 @@ laplace_noise_side = dp.m.make_laplace(*space, scale=1.0 / side_epsilon)
 
 for combo in three_combos:
     side_df = df_new.groupby(list(combo))['Count'].sum().reset_index()
-    filename = 'side_' + ''.join(field[0] for field in combo) + '.csv'
+    filename = os.path.join(input_dir, 'side_' + ''.join(field[0] for field in combo) + '.csv')
     side_df['Count'] = side_df['Count'].apply(lambda x: laplace_noise_side(x))
     side_df.to_csv(filename, index=False)

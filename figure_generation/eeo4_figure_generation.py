@@ -9,8 +9,8 @@ from figures import (
 
 def load_data():
     return {
-        "jrg_df": pd.read_csv(INPUT_DIR / "JRG_all_adj.csv"),
-        "wfrg_df": pd.read_csv(INPUT_DIR / "WFRG_all_and_new_adj.csv")
+        "jrg_df": pd.read_csv(INPUT_DIR / "JRG_adj.csv"),
+        "wfrg_df": pd.read_csv(INPUT_DIR / "WFRG_combo_adj.csv")
     }
 
 
