@@ -19,14 +19,19 @@ from openpyxl.utils import get_column_letter
 from openpyxl.worksheet.hyperlink import Hyperlink
 from openpyxl.worksheet.table import Table, TableStyleInfo
 
-# Directory containing main.csv and side_*.csv
-input_dir = "/home/node0/Documents/csv_output"
+# Directory containing the raw inputs: main.csv and side_*.csv
+input_dir = "/home/eolwd/data/eeo1_csv"
 
-# Directory for Excel workbook output
-output_dir = "/home/node0/Documents/csv_output"
+# Directory for all generated files: adjusted/structured CSVs and the published Excel workbooks
+output_dir = "/home/eolwd/data/eeo1_csv"
+os.makedirs(output_dir, exist_ok=True)
 
 # Per-cell change budget for the 4-way main table adjustment.
 MAX_CELL_CHANGE = 4
+
+# 3-way marginals excluded from the 4-way non-negativity constraint.
+# CNR is excluded here and handled by a dedicated 3-way optimizer pass instead.
+EXCLUDED_LIST = [{'JobCategory', 'NAICS_label', 'Race'}]
 
 # Column renames: DP script output names → publication-format names
 PUBLISH_RENAME = {
@@ -42,16 +47,20 @@ PUBLISH_RENAME = {
 # 4-way table adjustment helpers
 # =============================================================================
 
-def create_consistent_4way_table_integer(df_4way, count_col='Count', use_l1=True):
+def create_consistent_4way_table_integer(df_4way, count_col='Count', use_l1=True,
+                                          excluded_3way=None):
     """
     Correct a noisy 4-way DP contingency table to enforce non-negativity and
     integer values while minimizing L1 (or L2) error.
 
     Constraints:
-    - All 2-way and 3-way marginals >= 0
+    - All 2-way marginals >= 0
+    - All 3-way marginals >= 0 (except those in excluded_3way / EXCLUDED_LIST)
     - 1-way marginals == original (exact)
     - Per-cell change <= MAX_CELL_CHANGE
     """
+    if excluded_3way is None:
+        excluded_3way = EXCLUDED_LIST
     all_vars = [col for col in df_4way.columns if col != count_col]
 
     if len(all_vars) != 4:
@@ -86,7 +95,11 @@ def create_consistent_4way_table_integer(df_4way, count_col='Count', use_l1=True
     objective = (cp.Minimize(cp.sum(cp.abs(X_4way - Y_4way))) if use_l1
                  else cp.Minimize(cp.sum_squares(X_4way - Y_4way)))
 
-    constraints = []
+    constraints = [
+        X_4way >= Y_4way - MAX_CELL_CHANGE,
+        X_4way <= Y_4way + MAX_CELL_CHANGE,
+    ]
+    print(f"\nPer-cell change limit: |X - Y| <= {MAX_CELL_CHANGE}")
 
     marginal_2way_sets = list(combinations(all_vars, 2))
     for marginal_vars in marginal_2way_sets:
@@ -94,19 +107,22 @@ def create_consistent_4way_table_integer(df_4way, count_col='Count', use_l1=True
         constraints.append(cp.sum(X_4way, axis=axes_to_sum) >= 0)
 
     marginal_3way_sets = list(combinations(all_vars, 3))
+    n_enforced_3way, n_excluded_3way = 0, 0
     for marginal_vars in marginal_3way_sets:
+        if any(frozenset(marginal_vars) == frozenset(e) for e in excluded_3way):
+            print(f"  EXCLUDED  {set(marginal_vars)}: skipped (in EXCLUDED_LIST)")
+            n_excluded_3way += 1
+            continue
         axis_to_sum = next(i for i, v in enumerate(all_vars) if v not in marginal_vars)
         constraints.append(cp.sum(X_4way, axis=axis_to_sum) >= 0)
+        n_enforced_3way += 1
+    print(f"  → {n_enforced_3way} 3-way marginals enforced, {n_excluded_3way} excluded")
 
     for i, var in enumerate(all_vars):
         axes_to_sum = tuple(j for j in range(len(all_vars)) if j != i)
         X_1way = cp.sum(X_4way, axis=axes_to_sum)
         Y_1way = np.sum(Y_4way, axis=axes_to_sum)
         constraints.append(X_1way == Y_1way)
-
-    constraints.append(X_4way >= Y_4way - MAX_CELL_CHANGE)
-    constraints.append(X_4way <= Y_4way + MAX_CELL_CHANGE)
-    print(f"\nPer-cell change limit: |X - Y| <= {MAX_CELL_CHANGE}")
 
     problem = cp.Problem(objective, constraints)
     solved = False
@@ -510,22 +526,33 @@ df_corrected, marginals_2way, marginals_3way = create_consistent_4way_table_inte
 
 verify_results(df_corrected, main_df)
 
-df_corrected.to_csv(os.path.join(input_dir, "main_adj.csv"), index=False)
+df_corrected.to_csv(os.path.join(output_dir, "main_adj.csv"), index=False)
 print(f"\n→ saved to main_adj.csv")
 
 # Derive CNR (JobCategory x NAICS x Race) by marginalizing Gender from main_adj.
 # This costs no extra epsilon — it is pure post-processing of the adjusted table.
 cnr_df = df_corrected.groupby(['JobCategory', 'NAICS_label', 'Race'])['Count'].sum().reset_index()
-cnr_df.to_csv(os.path.join(input_dir, "side_CNR.csv"), index=False)
+cnr_df.to_csv(os.path.join(output_dir, "side_CNR.csv"), index=False)
 print(f"→ saved to side_CNR.csv")
+
+# CNR was excluded from the 4-way non-negativity constraint, so it may still have
+# negatives. Run a dedicated 3-way optimizer pass to fix it (matches notebook cell 20).
+adjust_3way_table(
+    csv_path=os.path.join(output_dir, "side_CNR.csv"),
+    count_col='Count',
+    use_l1=True,
+    max_cell_change=10,
+    max_1way_marginal_change=0,
+    max_2way_marginal_change=3,
+    output_csv=os.path.join(output_dir, "side_CNR_adj.csv"),
+)
 
 
 # =============================================================================
 # Step 2: Adjust each 3-way side table
 # =============================================================================
 
-# side_CNR.csv is excluded — it is derived from main_adj so non-negativity is
-# already guaranteed; no second cvxpy pass needed.
+# side_CNR is handled separately above (excluded from 4-way, then its own 3-way pass).
 SIDE_TABLE_CONFIGS = [
     {"files": ["side_GOR.csv", "side_JOG.csv", "side_NOG.csv"], "max_cell_change": 10, "max_1way": 0,   "max_2way": 30},
     {"files": ["side_JCG.csv"],                                  "max_cell_change": 10, "max_1way": 130, "max_2way": 110},
@@ -539,6 +566,7 @@ SIDE_TABLE_CONFIGS = [
 for config in SIDE_TABLE_CONFIGS:
     for filename in config["files"]:
         csv_path = os.path.join(input_dir, filename)
+        output_csv = os.path.join(output_dir, filename.replace(".csv", "_adj.csv"))
         adjust_3way_table(
             csv_path=csv_path,
             count_col='Count',
@@ -546,7 +574,7 @@ for config in SIDE_TABLE_CONFIGS:
             max_cell_change=config["max_cell_change"],
             max_1way_marginal_change=config["max_1way"],
             max_2way_marginal_change=config["max_2way"],
-            output_csv=csv_path.replace(".csv", "_adj.csv"),
+            output_csv=output_csv,
         )
 
 
@@ -558,8 +586,8 @@ for config in SIDE_TABLE_CONFIGS:
 # small totals are physically impossible (each org-size tier has a hard
 # minimum headcount that some industries can't reach).
 
-nog_df = pd.read_csv(os.path.join(input_dir, "side_NOG_adj.csv"))
-nor_df = pd.read_csv(os.path.join(input_dir, "side_NOR_adj.csv"))
+nog_df = pd.read_csv(os.path.join(output_dir, "side_NOG_adj.csv"))
+nor_df = pd.read_csv(os.path.join(output_dir, "side_NOR_adj.csv"))
 
 rename_dict = {'Organizational Size Binned': 'Organization_Size'}
 nog_df.rename(columns=rename_dict, inplace=True)
@@ -633,8 +661,8 @@ def redistribute_disallowed(df, D, target_n, target_o, other_col):
 nog_structured_df = redistribute_disallowed(nog_df, D, target_n, target_o, "Gender")
 nor_structured_df = redistribute_disallowed(nor_df, D, target_n, target_o, "Race")
 
-nog_structured_df.to_csv(os.path.join(input_dir, "side_NOG_adj_structured.csv"), index=False)
-nor_structured_df.to_csv(os.path.join(input_dir, "side_NOR_adj_structured.csv"), index=False)
+nog_structured_df.to_csv(os.path.join(output_dir, "side_NOG_adj_structured.csv"), index=False)
+nor_structured_df.to_csv(os.path.join(output_dir, "side_NOR_adj_structured.csv"), index=False)
 print("→ saved side_NOG_adj_structured.csv and side_NOR_adj_structured.csv")
 
 
@@ -645,18 +673,18 @@ print("→ saved side_NOG_adj_structured.csv and side_NOR_adj_structured.csv")
 # side_CNR.csv is loaded directly — it was derived from main_adj, no separate adjustment needed
 SIDE_FILENAMES = [
     "side_JCG_adj.csv", "side_JCR_adj.csv", "side_JOG_adj.csv", "side_JOR_adj.csv",
-    "side_NCG_adj.csv", "side_NCR_adj.csv", "side_GOR_adj.csv", "side_CNR.csv",
+    "side_NCG_adj.csv", "side_NCR_adj.csv", "side_GOR_adj.csv", "side_CNR_adj.csv",
     "side_NOG_adj_structured.csv", "side_NOR_adj_structured.csv",
 ]
 
 # --- Workbook A: remove ALL zero-count rows from every table ---
 
-main_df_pub = pd.read_csv(os.path.join(input_dir, "main_adj.csv"))
+main_df_pub = pd.read_csv(os.path.join(output_dir, "main_adj.csv"))
 main_df_pub.rename(columns=PUBLISH_RENAME, inplace=True)
 
 side_dfs_all = []
 for filename in SIDE_FILENAMES:
-    df = pd.read_csv(os.path.join(input_dir, filename))
+    df = pd.read_csv(os.path.join(output_dir, filename))
     df.rename(columns=PUBLISH_RENAME, inplace=True)
     side_dfs_all.append(df[df['Count'] != 0])
 
@@ -682,19 +710,19 @@ print(f"→ saved {out_all}")
 
 # --- Workbook B: remove only the structural-zeroes rows from NOG and NOR ---
 
-main_df_pub = pd.read_csv(os.path.join(input_dir, "main_adj.csv"))
+main_df_pub = pd.read_csv(os.path.join(output_dir, "main_adj.csv"))
 main_df_pub.rename(columns=PUBLISH_RENAME, inplace=True)
 
 # Structured tables first so index 0 and 1 are NOG and NOR (matching the D mask below)
 SIDE_FILENAMES_STRUCTURED = [
     "side_NOG_adj_structured.csv", "side_NOR_adj_structured.csv",
     "side_JCG_adj.csv", "side_JCR_adj.csv", "side_JOG_adj.csv", "side_JOR_adj.csv",
-    "side_NCG_adj.csv", "side_NCR_adj.csv", "side_GOR_adj.csv", "side_CNR.csv",
+    "side_NCG_adj.csv", "side_NCR_adj.csv", "side_GOR_adj.csv", "side_CNR_adj.csv",
 ]
 
 side_dfs_structured = []
 for filename in SIDE_FILENAMES_STRUCTURED:
-    df = pd.read_csv(os.path.join(input_dir, filename))
+    df = pd.read_csv(os.path.join(output_dir, filename))
     df.rename(columns=PUBLISH_RENAME, inplace=True)
     side_dfs_structured.append(df)
 
