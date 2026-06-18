@@ -24,6 +24,7 @@ input_dir = "/home/eolwd/data/eeo4_csv"
 
 # Directory for Excel workbook output
 output_dir = "/home/eolwd/data/eeo4_csv"
+os.makedirs(output_dir, exist_ok=True)
 
 # Column renames: DP script output names → publication-format names
 RENAME_DICT = {
@@ -560,6 +561,7 @@ THREE_WAY_CONFIGS = [
 
 for config in THREE_WAY_CONFIGS:
     csv_path = os.path.join(input_dir, config["file"])
+    out_name = config["file"].replace(".csv", "_adj.csv")
     adjust_3way_table(
         csv_path=csv_path,
         count_col='Count',
@@ -567,7 +569,7 @@ for config in THREE_WAY_CONFIGS:
         max_cell_change=config["max_cell"],
         max_1way_marginal_change=config["max_1way"],
         max_2way_marginal_change=config["max_2way"],
-        output_csv=csv_path.replace(".csv", "_adj.csv"),
+        output_csv=os.path.join(output_dir, out_name),
     )
 
 
@@ -586,10 +588,10 @@ wfrg_combo.rename(columns=RENAME_DICT, inplace=True)
 wfrg_combo['Work_Salary'] = wfrg_combo['Work_Type'] + '|' + wfrg_combo['Salary_Range']
 wfrg_4way = wfrg_combo[['Work_Salary', 'Government_Function', 'Race_Ethnicity', 'Sex', 'Count']].copy()
 wfrg_4way['Work_Salary'] = wfrg_4way['Work_Salary'].replace({'NEW HIRES|-': 'ZNEW HIRES|-'})
-wfrg_4way.to_csv(os.path.join(input_dir, "WFRG_combo_4way.csv"), index=False)
+wfrg_4way.to_csv(os.path.join(output_dir, "WFRG_combo_4way.csv"), index=False)
 
 adjust_4way_table(
-    csv_path=os.path.join(input_dir, "WFRG_combo_4way.csv"),
+    csv_path=os.path.join(output_dir, "WFRG_combo_4way.csv"),
     count_col='Count',
     use_l1=True,
     max_cell_change=3,
@@ -597,15 +599,15 @@ adjust_4way_table(
     max_2way_marginal_change=11,
     max_3way_marginal_change=27,
     max_0way_marginal_change=0,
-    output_csv=os.path.join(input_dir, "WFRG_combo_4way_adj.csv"),
+    output_csv=os.path.join(output_dir, "WFRG_combo_4way_adj.csv"),
 )
 
 # Expand the adjusted table back to 5 columns
-wfrg_adj = pd.read_csv(os.path.join(input_dir, "WFRG_combo_4way_adj.csv"))
+wfrg_adj = pd.read_csv(os.path.join(output_dir, "WFRG_combo_4way_adj.csv"))
 wfrg_adj['Work_Salary'] = wfrg_adj['Work_Salary'].replace({'ZNEW HIRES|-': 'NEW HIRES|-'})
 wfrg_adj[['Work_Type', 'Salary_Range']] = wfrg_adj['Work_Salary'].str.split('|', expand=True)
 wfrg_adj = wfrg_adj[['Work_Type', 'Salary_Range', 'Government_Function', 'Race_Ethnicity', 'Sex', 'Count']]
-wfrg_adj.to_csv(os.path.join(input_dir, "WFRG_combo_adj.csv"), index=False)
+wfrg_adj.to_csv(os.path.join(output_dir, "WFRG_combo_adj.csv"), index=False)
 print("→ saved WFRG_combo_adj.csv")
 
 
@@ -617,7 +619,7 @@ print("→ saved WFRG_combo_adj.csv")
 # WFRG_combo_adj already uses renamed columns → RENAME_DICT is a no-op for it.
 dfs_adj = []
 for filename in ["JRG_adj.csv", "TFG_adj.csv", "TFR_adj.csv", "WFRG_combo_adj.csv"]:
-    df = pd.read_csv(os.path.join(input_dir, filename))
+    df = pd.read_csv(os.path.join(output_dir, filename))
     df.rename(columns=RENAME_DICT, inplace=True)
     dfs_adj.append(df)
 
