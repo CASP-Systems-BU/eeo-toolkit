@@ -70,10 +70,6 @@ make_file(new_df, ['Work Type', 'Salary Range Groups', 'Government Function', 'R
 # Job category x Race x Gender (all employees)
 make_file(all_df, ['Job Category', 'Race', 'Gender'], laplace_noise_side, 'JRG')
 
-
-### NEW ADDITIONS ON 5/6/2026
-
-
 # Build a Government Type breakdown (State vs Local) across all non-new-hire employees
 temp_df = read_df.groupby(['Government Type', 'Work Type', 'Government Function', 'Race', 'Gender'])['Count'].sum().reset_index()
 
