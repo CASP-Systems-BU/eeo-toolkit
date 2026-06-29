@@ -27,3 +27,15 @@ from .figure_26 import figure_26
 from .figure_27 import figure_27
 from .figure_28 import figure_28
 from .figure_29 import figure_29
+from .figure_30 import figure_30
+from .figure_31 import figure_31
+from .figure_32 import figure_32
+from .figure_33 import figure_33
+from .figure_34 import figure_34
+from .figure_35 import figure_35
+from .figure_36 import figure_36
+from .figure_37 import figure_37
+from .figure_38 import figure_38
+from .figure_39 import figure_39
+from .figure_40 import figure_40
+from .figure_41 import figure_41
