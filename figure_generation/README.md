@@ -19,6 +19,7 @@ Configure the input and output paths in the relevant config file, then run:
 ```bash
 python eeo1_figure_generation.py   # Figures 1–13
 python eeo4_figure_generation.py   # Figures 14–29
+python eeo5_figure_generation.py   # Figures 30–41
 ```
 
 ---
@@ -28,7 +29,8 @@ python eeo4_figure_generation.py   # Figures 14–29
 | Script                        | Input files                                    |
 |-------------------------------|------------------------------------------------|
 | `eeo1_figure_generation.py`   | `main_adj.csv`, `side_JOG_adj.csv`, `side_JOR_adj.csv` |
-| `eeo4_figure_generation.py`   | `JRG_all_adj.csv`, `WFRG_all_and_new_adj.csv` |
+| `eeo4_figure_generation.py`   | `JRG_adj.csv`, `WFRG_combo_adj.csv` |
+| `eeo5_figure_generation.py`   | `JRG_adj.csv`, `WCRG_adj.csv`, `TWG_adj.csv`, `TWR_adj.csv` |
 
 Input paths are set in the config files (`INPUT_DIR`).
 
@@ -48,15 +50,17 @@ Each figure function writes:
 |--------------------------|----------------------------------------------------------------|
 | `eeo1_figure_config.py`  | Paths, color palette, display orders for EEO-1 figures        |
 | `eeo4_figure_config.py`  | Paths, color palette, display orders, salary labels for EEO-4  |
+| `eeo5_figure_config.py`  | Paths, 7-race color palette, work type / agent type orders for EEO-5 |
 | `eeo1_figure_generation.py` | Entry point — loads EEO-1 data and calls figure functions  |
 | `eeo4_figure_generation.py` | Entry point — loads EEO-4 data and calls figure functions  |
-| `figures/`               | One module per figure (`figure_1.py` … `figure_29.py`)        |
+| `eeo5_figure_generation.py` | Entry point — loads EEO-5 data and calls figure functions  |
+| `figures/`               | One module per figure (`figure_1.py` … `figure_41.py`)         |
 
 ---
 
 ## Configuration
 
-Edit `eeo1_figure_config.py` or `eeo4_figure_config.py` to change:
+Edit `eeo1_figure_config.py`, `eeo4_figure_config.py`, or `eeo5_figure_config.py` to change:
 
 - `INPUT_DIR` — where adjusted CSVs are read from
 - `OUTPUT_DIR` — where `.png` files are written

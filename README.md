@@ -2,7 +2,7 @@
 
 ## **1. Introduction**
 
-This is a library for processing scanned or digital EEO-1 and EEO-4 PDF reports as required by 141 of the Acts of 2024 (Massachusetts Salary Range Transparency Law).
+This is a library for processing scanned or digital EEO-1, EEO-4, and EEO-5 PDF reports as required by 141 of the Acts of 2024 (Massachusetts Salary Range Transparency Law).
 
 The repository also includes tools for post-processing, data aggregation and analysis of the extracted data.
 
@@ -14,7 +14,7 @@ The repository provides custom parsing logic for different form types (e.g., EEO
 
 <img src="ocr/architecture.png" alt="Pipeline Architecture" width="900"/>
 
-The pipeline processes EEO-1 and EEO-4 forms (PDF or images) in batches and includes the following stages:
+The pipeline processes EEO-1, EEO-4, and EEO-5 forms (PDF or images) in batches and includes the following stages:
 
 1. **Preprocessing** – Classifies, deduplicates, and re-renders input files for improved OCR performance.
 2. **Optical Character Recognition** – Extracts text and table contents using a deep learning-based OCR engine, outputting structured JSON.
@@ -46,14 +46,14 @@ Each component is built as an independent, reusable module, facilitating extensi
 
 The OCR postprocessing and data aggregation stages each have form-specific implementations. The table below shows coverage by form type.
 
-| Stage                | EEO-1                          | EEO-4                                          |
-|----------------------|--------------------------------|------------------------------------------------|
-| Filter               | `eeo1_filter.py`               | `eeo4_type1_filter.py`, `eeo4_type2_filter.py` |
-| Handler              | `eeo1_handler.py`              | `eeo4_handler.py`                              |
-| Melt                 | `eeo1_melt.py`                 | `eeo4_melt.py`                                 |
-| Differential Privacy | `eeo1_dp.py`                   | `eeo4_dp.py`                                   |
-| Sheet Generation     | `eeo1_sheet_generation.py`     | `eeo4_sheet_generation.py`                     |
-| Figure Generation    | `eeo1_figure_generation.py`    | `eeo4_figure_generation.py`                    |
+| Stage                | EEO-1                          | EEO-4                                          | EEO-5                                            |
+|----------------------|--------------------------------|------------------------------------------------|---------------------------------------------------|
+| Filter               | `eeo1_filter.py`               | `eeo4_type1_filter.py`, `eeo4_type2_filter.py` | `eeo5_filter.py`                                   |
+| Handler              | `eeo1_handler.py`              | `eeo4_handler.py`                              | `eeo5_handler.py`, `eeo5_handler_dedup.py`         |
+| Melt                 | `eeo1_melt.py`                 | `eeo4_melt.py`                                 | `eeo5_melt.py`, `eeo5_melt_dedup.py`               |
+| Differential Privacy | `eeo1_dp.py`                   | `eeo4_dp.py`                                   | `eeo5_dp.py`                                       |
+| Sheet Generation     | `eeo1_sheet_generation.py`     | `eeo4_sheet_generation.py`                     | `eeo5_sheet_generation.py`                         |
+| Figure Generation    | `eeo1_figure_generation.py`    | `eeo4_figure_generation.py`                    | `eeo5_figure_generation.py`                        |
 
 Filter scripts live under `ocr/postprocess/`. Handler, melt, DP, and sheet generation scripts live under `data_aggregation/`. Figure generation scripts live under `figure_generation/`.
 
