@@ -30,13 +30,11 @@ def json_to_df(path: str):
     json_file_paths = glob.glob(os.path.join(path, "**", "*.json"), recursive=True)
 
     for file_path in json_file_paths:
-        print(file_path)
         with open(file_path, "r") as f:
             record = json.load(f)
 
         # Extract the main table from JSON and convert it to a DataFrame
         df_table = pd.DataFrame(record["table"], columns=COLUMN_NAMES)
-        print(df_table)
 
         # Add job category labels to each row in the DataFrame
         df_table["JobCategory"] = JOB_CATEGORIES

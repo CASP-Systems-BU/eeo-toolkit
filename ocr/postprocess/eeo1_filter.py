@@ -16,14 +16,14 @@ Key Features:
 """
 
 import csv
-import glob
 import json
 import os
 import re
-from typing import List
 from rapidfuzz import fuzz
 
-# ===============> Const Starts <===============
+from eeo4_type1_filter import get_all_json_files
+
+# === Const Starts ===
 # Field indices based on expected JSON structure
 city_idx = 2
 employer_name_idx = 3
@@ -45,23 +45,7 @@ uscities_file_path = "../../public_data/uscities.csv"
 
 # Constants
 CONSOLIDATED_REPORT = "CONSOLIDATED REPORT"
-# ===============> Const Ends <===============
-
-def get_all_json_files(path: str) -> List[str]:
-    """
-    Recursively retrieve all JSON files under the specified directory.
-
-    :param path: Root directory in which to search for JSON files
-    :return: Sorted list of file paths to all found JSON files
-    """
-    dirs = [os.path.join(path, d) for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))]
-    dirs.append(path)
-    json_files = []
-    for d in dirs:
-        json_files.extend(glob.glob(os.path.join(d, "*.json")))
-    json_files.sort()
-    return json_files
-
+# === Const Ends ===
 
 def get_extracted_str(content):
     """
@@ -79,7 +63,7 @@ if __name__ == "__main__":
     # Input/output paths
     json_input_dir = input("Enter the input JSON directory: ")
     json_output_dir = input("Enter the output JSON directory: ")
-    
+
     # Lookup tables
     naics_map = {}
     ma_zip_set = set()
@@ -110,7 +94,11 @@ if __name__ == "__main__":
         json_output = {}
 
         with open(json_file, "r") as f:
-            json_data = json.load(f)
+            try:
+                json_data = json.load(f)
+            except json.JSONDecodeError as e:
+                print(f"Skipping {json_file}: {e}")
+                continue
 
             # Derive clean filename
             filename = json_file.split("/")[-1].split("_cropped")[0]

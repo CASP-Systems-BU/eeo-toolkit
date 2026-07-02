@@ -429,7 +429,7 @@ def figure4b():
 def figure4ab():
     data_path = "EEO1/combined_op_split/JobCategory_Race_Gender_conting-Table 1.csv"
     df = pd.read_csv(data_path)
-    
+
     shown_races_order = ["Black or African American", "White"]
     job_categories = sorted(df["JobCategory"].unique())
 

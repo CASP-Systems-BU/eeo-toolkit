@@ -1,29 +1,18 @@
 """
-This script generates differentially private contingency tables from EEO-1 data.
+This script reads and melts EEO-1 data into a long format (Race x Gender x Dimensions).
 It performs the following steps:
-1. Reads and melts EEO-1 data into a long format (Race x Gender x Dimensions).
-2. Aggregates counts for all 3-way combinations of key fields.
-3. Applies Laplace noise to ensure differential privacy.
-4. Derives 2-way tables from the noisy 3-way tables using median aggregation.
-5. Further collapses to 1-way tables for basic feature distributions.
-The output includes differentially private one-way, two-way, and three-way tables,
-saved as individual CSV files for each combination.
+1. Loads raw EEO-1 data and filters out summary job categories.
+2. Melts wide Race/Gender columns into long format.
+3. Materializes the full Cartesian product of dimension values (missing combos → 0).
+The output is melted_data.csv, consumed by eeo1_dp.py for differential privacy.
 """
 
 import pandas as pd
 import os
-import numpy as np
-from itertools import combinations
-from collections import defaultdict
 from const import RACE_GENDER_COLUMNS
-
-# Laplace noise scale
-epsilon = 1 / 21
 
 # Input/output paths
 input_dir = "/home/node0/Documents/csv_output"
-output_dir = f"{input_dir}/eeo1_contingency_tables"
-output_dir_dp = f"{input_dir}/eeo1_contingency_tables_dp"
 
 # Define fields for analysis
 all_fields = ['JobCategory', 'NAICS_label', 'Organizational Size Binned', 'County Name', 'Race', 'Gender']
@@ -46,68 +35,12 @@ df_melted = df_melted.drop(columns=['Race_Gender'])
 
 # Aggregate identical records
 df_melted = df_melted.groupby(all_fields)['Count'].sum().reset_index()
+
+# Materialize the full Cartesian product so every combination exists; missing combinations fill with 0
+# to ensure downstream contingency tables have aligned indices
+full_index = pd.MultiIndex.from_product([df_melted[f].unique() for f in all_fields], names=all_fields)
+df_melted = df_melted.set_index(all_fields).reindex(full_index, fill_value=0).reset_index()
+
 df_melted.to_csv(os.path.join(input_dir, "melted_data.csv"), index=False)
 
-# Reload for safety
-df_melted = pd.read_csv(os.path.join(input_dir, "melted_data.csv"))
-
-# === Generate all 3-way combinations ===
-three_combos = list(combinations(all_fields, 3))
-two_combos = list(combinations(all_fields, 2))
-noisy_three_way_tables = []
-
-# Add Laplace noise and save each 3-way contingency table
-for combo in three_combos:
-    grouped = df_melted.groupby(list(combo))['Count'].sum().reset_index()
-    grouped['Count'] = grouped['Count'] + np.random.laplace(loc=0, scale=1 / epsilon, size=len(grouped))
-    filename = '_'.join(combo).replace(' ', '_') + '_contingency.csv'
-    noisy_three_way_tables.append(grouped.copy())
-    grouped.to_csv(os.path.join(output_dir_dp, "three_way", filename), index=False)
-    print(f"Saved: {filename}")
-
-# === Derive 2-way tables from 3-way tables by marginalizing ===
-two_way_table_dict = defaultdict(list)
-
-# For each 3-way table, collapse along all 2-way pairs
-for table in noisy_three_way_tables:
-    features = [col for col in table.columns if col != 'Count']
-    for i in range(3):
-        for j in range(i + 1, 3):
-            A, B = features[i], features[j]
-            collapsed = table.groupby([A, B])['Count'].sum().reset_index()
-            collapsed.set_index([A, B], inplace=True)
-            two_way_table_dict[frozenset([A, B])].append(collapsed)
-
-# Combine 2-way tables using median across all derived versions
-final_two_way_tables = {}
-
-for pair, tables in two_way_table_dict.items():
-    combined = pd.concat(tables, axis=1)
-    median_series = combined.median(axis=1)
-    median_series.index.names = list(next(iter(tables)).index.names)
-    median_table = median_series.reset_index(name='Count')
-    filename = '_'.join(pair).replace(' ', '_') + '_contingency.csv'
-    median_table.to_csv(os.path.join(output_dir_dp, "two_way", filename), index=False)
-    final_two_way_tables[pair] = median_table
-
-# === Derive 1-way tables from 2-way tables ===
-one_way_table_dict = defaultdict(list)
-
-for pair, table in final_two_way_tables.items():
-    A, B = list(pair)
-    for feature in [A, B]:
-        collapsed = table.groupby(feature)['Count'].sum().reset_index()
-        collapsed.set_index(feature, inplace=True)
-        one_way_table_dict[feature].append(collapsed)
-
-# Combine 1-way tables using median
-final_one_way_tables = {}
-
-for feature, tables in one_way_table_dict.items():
-    combined = pd.concat(tables, axis=1)
-    median_series = combined.median(axis=1)
-    median_series.index.names = list(next(iter(tables)).index.names)
-    median_table = median_series.reset_index(name='Count')
-    filename = f"Employee_Distribution_by_{feature}.csv"
-    median_table.to_csv(os.path.join(output_dir_dp, filename), index=False)
-    final_one_way_tables[feature] = median_table
+print(f"\nMelted data saved with {len(df_melted)} rows")

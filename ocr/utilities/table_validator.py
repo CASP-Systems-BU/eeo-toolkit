@@ -49,23 +49,25 @@ def column_validator(form_type: str, data: List[List[int]]) -> List[bool]:
         List[bool]: Validity of each column.
     """
     df = pd.DataFrame(data)
-    isValid = [False for _ in range(len(df.columns))]
+    is_valid = [False for _ in range(len(df.columns))]
     h, w = len(data), len(data[0])
 
     for col in df.columns:
         if form_type == "eeo1":
+            # EEO-1: penultimate row (h-2) is the total row; last row (h-1) is prior-year total, excluded from sum
             total = df.loc[0 : h - 3, col].sum()
             target = df.loc[h - 2, col]
         elif form_type == "eeo5":
+            # EEO-5: last row (h-1) is the total row
             total = df.loc[0 : h - 2, col].sum()
             target = df.loc[h - 1, col]
         else:
             continue
 
         if total == target:
-            isValid[int(col)] = True
+            is_valid[int(col)] = True
 
-    return isValid
+    return is_valid
 
 
 def row_validator_with_correction(
@@ -73,6 +75,7 @@ def row_validator_with_correction(
 ) -> List[bool]:
     """
     Validate that each row sum matches the reported total, with correction if one low-confidence cell is off.
+    Mutates data in place when a correction is applied.
 
     Args:
         form_type (str): 'eeo1' or 'eeo5'.
@@ -83,7 +86,7 @@ def row_validator_with_correction(
         List[bool]: Row validity list.
     """
     df = pd.DataFrame(data)
-    isValid = [False for _ in range(len(df.index))]
+    is_valid = [False for _ in range(len(df.index))]
     h, w = len(data), len(data[0])
 
     for row_index in df.index:
@@ -91,7 +94,7 @@ def row_validator_with_correction(
         target = df.loc[row_index, w - 1]
 
         if total == target:
-            isValid[int(row_index)] = True
+            is_valid[int(row_index)] = True
         else:
             conf_row = confidence_table[row_index]
             low_conf_indices = [i for i, conf in enumerate(conf_row) if conf < 0.7]
@@ -109,14 +112,14 @@ def row_validator_with_correction(
                 else:
                     data[row_index][low_conf_index] = sum(data[row_index][:-1])
 
-                isValid[int(row_index)] = True
+                is_valid[int(row_index)] = True
 
-    return isValid
+    return is_valid
 
 
 def row_validator(data: List[List[int]]) -> List[bool]:
     """
-    Validate rows without correction logic.
+    Validate rows without correction logic. EEO-1 specific: assumes 14 data columns with the total at index 14.
 
     Args:
         data (List[List[int]]): Table content.
@@ -125,15 +128,15 @@ def row_validator(data: List[List[int]]) -> List[bool]:
         List[bool]: Row validity.
     """
     df = pd.DataFrame(data)
-    isValid = [False for _ in range(len(df.index))]
+    is_valid = [False for _ in range(len(df.index))]
 
     for row_index in df.index:
-        total = df.loc[row_index, 0:13].sum()
+        total = df.loc[row_index, 0:13].sum()  # Columns 0-13 are data; column 14 is the row total
         target = df.loc[row_index, 14]
         if total == target:
-            isValid[int(row_index)] = True
+            is_valid[int(row_index)] = True
 
-    return isValid
+    return is_valid
 
 
 def update_total(data: List[List[int]]) -> bool:

@@ -14,14 +14,14 @@ Key Features:
 - Writes filtered and normalized metadata to a new directory
 """
 
-import glob
 import json
 import os
 import re
-from typing import List
+
+from eeo4_type1_filter import get_all_json_files
 
 
-# ===============> Const Starts <===============
+# === Const Starts ===
 # Field indices based on EEO-5 JSON structure
 zip_idx = 5
 state_idx = 4
@@ -32,23 +32,7 @@ table_b_idx = 11
 table_c_idx = 12
 reporting_year_idx = 13
 checkbox_idx = 14
-# ===============> Const Ends <===============
-
-def get_all_json_files(path: str) -> List[str]:
-    """
-    Recursively retrieve all JSON files under the specified directory.
-
-    :param path: Root directory in which to search for JSON files
-    :return: Sorted list of file paths to all found JSON files
-    """
-    dirs = [os.path.join(path, d) for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))]
-    dirs.append(path)
-    json_files = []
-    for d in dirs:
-        json_files.extend(glob.glob(os.path.join(d, "*.json")))
-    json_files.sort()
-    return json_files
-
+# === Const Ends ===
 
 def get_extracted_str(content):
     """
@@ -74,7 +58,11 @@ if __name__ == "__main__":
         json_output = {}
 
         with open(json_file, "r") as f:
-            json_data = json.load(f)
+            try:
+                json_data = json.load(f)
+            except json.JSONDecodeError as e:
+                print(f"Skipping {json_file}: {e}")
+                continue
 
             # Derive file name from original path
             filename = json_file.split("/")[-1].split("_cropped")[0]

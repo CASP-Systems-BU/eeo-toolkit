@@ -1,0 +1,38 @@
+#Multiply cropped coordinates by 3 for typed checkboxes.
+a:
+  TYPE_OF_GOVERNMENT:
+    State: !!python/tuple
+      - 96
+      - 483
+      - 114
+      - 498
+
+    County: !!python/tuple
+      - 360
+      - 483
+      - 381
+      - 498
+
+    City: !!python/tuple
+      - 681
+      - 483
+      - 699
+      - 498
+
+    Township: !!python/tuple
+      - 951
+      - 483
+      - 969
+      - 498
+
+    Special District: !!python/tuple
+      - 1218
+      - 483
+      - 1236
+      - 498
+
+    Other: !!python/tuple
+      - 96
+      - 540
+      - 114
+      - 555

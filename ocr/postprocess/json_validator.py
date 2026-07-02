@@ -26,10 +26,10 @@ Warning:
 import csv
 import os
 import json
-import glob
 import re
 from rapidfuzz import process, fuzz
 from ..utilities.table_validator import column_validator, row_validator_with_correction
+from ..utilities.dir_helper import get_all_json_files
 from typing import Dict, Tuple, List
 
 
@@ -56,9 +56,9 @@ def validate_text(data: Dict, threshold: float = 0.5) -> Tuple[bool, str]:
     :param data: Dictionary containing a "confidence" list
     :param threshold: Minimum acceptable confidence score (default: 0.5)
     :return: Tuple where
-    
+
         - first element is True if valid, False otherwise
-        
+
         - second element is a status string: "empty_content", "low_confidence", or ""
     """
     confidences = data["confidence"]
@@ -79,14 +79,14 @@ def validate_table(data: Dict) -> Tuple[bool, bool]:
       2. Validate rows using row_validator_with_correction.
 
     :param data: Dictionary containing:
-    
+
         - "content": 2D list of cell values
-        
+
         - "confidence": 2D list of confidence scores
     :return: Tuple where
-    
+
         - first element is True if all columns and rows are valid
-        
+
         - second element is True if all columns are valid and all but the last row are valid
     """
     table: List[List[int]] = data["content"]
@@ -138,9 +138,9 @@ def create_search_sets(city_state_list):
 
     :param city_state_list: List of (city, state_id) tuples
     :return: Tuple where
-    
+
         - first element is a list of unique cities
-        
+
         - second element is a list of unique state IDs
     """
     all_cities = list(set(city for city, _ in city_state_list))
@@ -173,31 +173,9 @@ def correct_city_state(ocr_city, ocr_state_id, city_state_list, city_list, state
     return ocr_city, ocr_state_id
 
 
-def get_all_json_files(path: str) -> List[str]:
-    """
-    Recursively retrieve all JSON files under the specified directory.
-
-    Steps:
-      1. Collect immediate subdirectories of the given path.
-      2. For each directory (and the root), glob for "*.json" files.
-      3. Sort and return the combined list of file paths.
-
-    :param path: Root directory to search for JSON files
-    :return: Sorted list of JSON file paths
-    """
-    dirs = [os.path.join(path, d) for d in os.listdir(path) if os.path.isdir(os.path.join(path, d))]
-    dirs.append(path)
-    json_files = []
-    for d in dirs:
-        json_files.extend(glob.glob(os.path.join(d, "*.json")))
-    json_files.sort()
-    return json_files
-
-
-
 if __name__ == "__main__":
     json_input_dir = input("Input directory of JSON outputs:")  # MODIFY ME: Input directory for JSON files
-    
+
     # Setup and load data
     json_files = get_all_json_files(json_input_dir)
     city_state_csv = "../../config/uscities.csv"  # DON'T MODIFY
@@ -234,6 +212,7 @@ if __name__ == "__main__":
                     year = get_current_year(item)
                     year_map[year] = year_map.get(year, 0) + 1
                 if item_id == "b-CITY_TOWN":
+                    # The state field is always 3 positions after the city field in the EEO-1 JSON structure
                     if len(item["content"]) >= 2 and len(json_data[index + 3]["content"]) >= 2:
                         ocr_city = item["content"][1]
                         ocr_state_id = json_data[index + 3]["content"][1]

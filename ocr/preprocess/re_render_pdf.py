@@ -42,26 +42,16 @@ def wait_for_file(file_path, timeout=1000):
 # Threshold to restart the Firefox driver to avoid memory leaks or crashes
 restart_threshold = 50
 
-# ==========> Customize script params STARTs here <==========
+# === Customize script params Starts ===
 input_folder = "../../files/offset/"
 output_folder = "../../files/offset/output/"
 log_file = "re_render_pdf_logs.log"
-# ==========> Customize script params ENDs here <==========
-
-# Set up logging
-logging.basicConfig(
-    filename=log_file,
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
-)
-logging.info("=== Script started ===")
-
-# Ensure the output directory exists
-os.makedirs(output_folder, exist_ok=True)
+# === Customize script params Ends ===
 
 # Paths for Firefox and its profile
 geckodriver_path = "/usr/local/bin/geckodriver"
 firefox_profile_path = "/home/node0/snap/firefox/common/.mozilla/firefox/rznn2zjo.default"
+
 
 def start_firefox():
     """
@@ -90,80 +80,92 @@ def start_firefox():
     service = Service(geckodriver_path)
     return webdriver.Firefox(service=service, options=firefox_options)
 
-# Retrieve and sort PDF files to process
-pdf_files = sorted(f for f in os.listdir(input_folder) if f.endswith(".pdf"))
-logging.info(f"Found {len(pdf_files)} PDF files for processing.")
+if __name__ == "__main__":
+    # Set up logging
+    logging.basicConfig(
+        filename=log_file,
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s"
+    )
+    logging.info("=== Script started ===")
 
-processed_cnt = 0
-skipped_cnt = 0
-driver = start_firefox()
+    # Ensure the output directory exists
+    os.makedirs(output_folder, exist_ok=True)
 
-# Main loop to process each PDF file
-for filename in pdf_files:
-    input_path = f"file://{os.path.abspath(os.path.join(input_folder, filename))}"
-    output_path = os.path.join(output_folder, filename)
+    # Retrieve and sort PDF files to process
+    pdf_files = sorted(f for f in os.listdir(input_folder) if f.endswith(".pdf"))
+    logging.info(f"Found {len(pdf_files)} PDF files for processing.")
 
-    # Skip already rendered PDFs
-    if os.path.exists(output_path):
-        logging.info(f"Skipping {filename} (already processed)")
-        skipped_cnt += 1
-        continue
+    processed_cnt = 0
+    skipped_cnt = 0
+    driver = start_firefox()
 
-    temp_output_path = "/home/node0/Downloads/output.pdf"
-    print(f"Processing: {filename}")
-    logging.info(f"Processing: {filename}")
-    print(f"File size: {os.path.getsize(os.path.join(input_folder, filename)) / 1024} KB")
-    logging.info(f"File size: {os.path.getsize(os.path.join(input_folder, filename)) / 1024} KB")
+    # Main loop to process each PDF file
+    for filename in pdf_files:
+        input_path = f"file://{os.path.abspath(os.path.join(input_folder, filename))}"
+        output_path = os.path.join(output_folder, filename)
 
-    try:
-        driver.get(input_path)
-        time.sleep(5)  # Wait for the page to fully load
+        # Skip already rendered PDFs
+        if os.path.exists(output_path):
+            logging.info(f"Skipping {filename} (already processed)")
+            skipped_cnt += 1
+            continue
 
-        # Trigger print to PDF
-        print("Triggering print command...")
-        logging.info("Triggering print command...")
-        driver.execute_script("window.print();")
-        time.sleep(3)
+        temp_output_path = "/home/node0/Downloads/output.pdf"
+        print(f"Processing: {filename}")
+        logging.info(f"Processing: {filename}")
+        print(f"File size: {os.path.getsize(os.path.join(input_folder, filename)) / 1024} KB")
+        logging.info(f"File size: {os.path.getsize(os.path.join(input_folder, filename)) / 1024} KB")
 
-        processed_cnt += 1
+        try:
+            driver.get(input_path)
+            time.sleep(5)  # Wait for the page to fully load
 
-        # Wait for and save the output file
-        if wait_for_file(temp_output_path):
-            os.rename(temp_output_path, output_path)
-            print(f"Saved printed PDF: {output_path}")
-            logging.info(f"Saved printed PDF: {output_path}")
-            print(f"{processed_cnt} files have been processed, {skipped_cnt} files have been skipped, {len(pdf_files) - processed_cnt - skipped_cnt} files remained.")
-            logging.info(f"{processed_cnt} files have been processed, {skipped_cnt} files have been skipped, {len(pdf_files) - processed_cnt - skipped_cnt} files remained.")
-        else:
-            print(f"Failed to save: {filename}")
-            logging.warning(f"Failed to save: {filename}")
+            # Trigger print to PDF
+            print("Triggering print command...")
+            logging.info("Triggering print command...")
+            driver.execute_script("window.print();")
+            time.sleep(3)
 
-    except Exception as e:
-        # Catch and log any error, restart Firefox
-        processed_cnt += 1
-        logging.error(f"Error processing {filename}: {str(e)}")
-        logging.info("Firefox crashed. Restarting WebDriver...")
-        driver.quit()
-        time.sleep(5)
-        driver = start_firefox()
-        continue
+            processed_cnt += 1
 
-    # Restart browser after a threshold to prevent memory issues
-    if processed_cnt % restart_threshold == 0:
-        logging.info("Restarting Firefox to prevent crashes...")
-        driver.quit()
-        time.sleep(5)
-        driver = start_firefox()
+            # Wait for and save the output file
+            if wait_for_file(temp_output_path):
+                os.rename(temp_output_path, output_path)
+                print(f"Saved printed PDF: {output_path}")
+                logging.info(f"Saved printed PDF: {output_path}")
+                print(f"{processed_cnt} files have been processed, {skipped_cnt} files have been skipped, {len(pdf_files) - processed_cnt - skipped_cnt} files remained.")
+                logging.info(f"{processed_cnt} files have been processed, {skipped_cnt} files have been skipped, {len(pdf_files) - processed_cnt - skipped_cnt} files remained.")
+            else:
+                print(f"Failed to save: {filename}")
+                logging.warning(f"Failed to save: {filename}")
 
-# Final log summary
-print("Batch processing complete!")
-logging.info(f"Total files processed: {processed_cnt}")
-logging.info(f"Total files skipped: {skipped_cnt}")
-logging.info(f"Total files found: {len(pdf_files)}")
-logging.info("=== Script finished ===")
+        except Exception as e:
+            # Catch and log any error, restart Firefox
+            processed_cnt += 1
+            logging.error(f"Error processing {filename}: {str(e)}")
+            logging.info("Firefox crashed. Restarting WebDriver...")
+            driver.quit()
+            time.sleep(5)
+            driver = start_firefox()
+            continue
 
-# Cleanly shut down WebDriver
-driver.quit()
+        # Restart browser after a threshold to prevent memory issues
+        if processed_cnt % restart_threshold == 0:
+            logging.info("Restarting Firefox to prevent crashes...")
+            driver.quit()
+            time.sleep(5)
+            driver = start_firefox()
 
-# Optionally shut down the system after 1 minute
-os.system("shutdown -h +1")
+    # Final log summary
+    print("Batch processing complete!")
+    logging.info(f"Total files processed: {processed_cnt}")
+    logging.info(f"Total files skipped: {skipped_cnt}")
+    logging.info(f"Total files found: {len(pdf_files)}")
+    logging.info("=== Script finished ===")
+
+    # Cleanly shut down WebDriver
+    driver.quit()
+
+    # Optionally shut down the system after 1 minute
+    os.system("shutdown -h +1")

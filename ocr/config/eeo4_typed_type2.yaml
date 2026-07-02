@@ -1,0 +1,353 @@
+title:
+  CONTROL_NUMBER_YEAR: !!python/tuple
+  - 151
+  - 206
+  - 290
+  - 243
+
+a:
+  TYPE_OF_GOVERNMENT: !!python/tuple
+  - 0
+  - 217
+  - 60
+  - 225
+
+b:
+  NAME: !!python/tuple
+  - 145
+  - 200
+  - 290
+  - 206
+  ADDRESS: !!python/tuple
+  - 0
+  - 228
+  - 136
+  - 240
+  CITY: !!python/tuple
+  - 0
+  - 228
+  - 136
+  - 240
+  COUNTY: !!python/tuple
+  - 0
+  - 228
+  - 136
+  - 240
+  STATE: !!python/tuple
+  - 0
+  - 228
+  - 136
+  - 240
+  ZIPCODE: !!python/tuple
+  - 0
+  - 228
+  - 136
+  - 240
+
+c:
+  FUNCTIONS_OTHER: !!python/tuple
+  - 0
+  - 0
+  - 1
+  - 1
+
+# Page 1: full-time rows 1-40 (8 rows per block)
+table1:
+  a1_hisp: !!python/tuple   # rows 1-8 hispanic male+female
+  - 92
+  - 285
+  - 134
+  - 330
+  a1_male: !!python/tuple   # rows 1-8 non-hispanic male
+  - 140
+  - 285
+  - 276
+  - 330
+  a1_female: !!python/tuple # rows 1-8 non-hispanic female
+  - 283
+  - 285
+  - 419
+  - 330
+  a1_total: !!python/tuple  # rows 1-8 total
+  - 429
+  - 285
+  - 451
+  - 330
+  a2_hisp: !!python/tuple   # rows 9-16 hispanic male+female
+  - 92
+  - 336
+  - 134
+  - 381
+  a2_male: !!python/tuple   # rows 9-16 non-hispanic male
+  - 140
+  - 336
+  - 276
+  - 381
+  a2_female: !!python/tuple # rows 9-16 non-hispanic female
+  - 283
+  - 336
+  - 419
+  - 381
+  a2_total: !!python/tuple  # rows 9-16 total
+  - 429
+  - 336
+  - 451
+  - 381
+  a3_hisp: !!python/tuple   # rows 17-24 hispanic male+female
+  - 92
+  - 387
+  - 134
+  - 432
+  a3_male: !!python/tuple   # rows 17-24 non-hispanic male
+  - 140
+  - 387
+  - 276
+  - 432
+  a3_female: !!python/tuple # rows 17-24 non-hispanic female
+  - 283
+  - 387
+  - 419
+  - 432
+  a3_total: !!python/tuple  # rows 17-24 total
+  - 429
+  - 387
+  - 451
+  - 432
+  a4_hisp: !!python/tuple   # rows 25-32 hispanic male+female
+  - 92
+  - 438
+  - 134
+  - 483
+  a4_male: !!python/tuple   # rows 25-32 non-hispanic male
+  - 140
+  - 438
+  - 276
+  - 483
+  a4_female: !!python/tuple # rows 25-32 non-hispanic female
+  - 283
+  - 438
+  - 419
+  - 483
+  a4_total: !!python/tuple  # rows 25-32 total
+  - 429
+  - 438
+  - 451
+  - 483
+  a5_hisp: !!python/tuple   # rows 33-40 hispanic male+female
+  - 92
+  - 489
+  - 134
+  - 534
+  a5_male: !!python/tuple   # rows 33-40 non-hispanic male
+  - 140
+  - 489
+  - 276
+  - 534
+  a5_female: !!python/tuple # rows 33-40 non-hispanic female
+  - 283
+  - 489
+  - 419
+  - 534
+  a5_total: !!python/tuple  # rows 33-40 total
+  - 429
+  - 489
+  - 451
+  - 534
+
+# Page 2: function name
+function:
+  FUNCTION: !!python/tuple
+  - 0
+  - 285
+  - 185
+  - 291
+
+# Page 2: full-time rows 41-65 (8 rows per block + total row)
+table2:
+  a6_hisp: !!python/tuple   # rows 41-48 hispanic male+female
+  - 92
+  - 331
+  - 134
+  - 376
+  a6_male: !!python/tuple   # rows 41-48 non-hispanic male
+  - 140
+  - 331
+  - 276
+  - 376
+  a6_female: !!python/tuple # rows 41-48 non-hispanic female
+  - 283
+  - 331
+  - 419
+  - 376
+  a6_total: !!python/tuple  # rows 41-48 total
+  - 429
+  - 331
+  - 451
+  - 376
+  a7_hisp: !!python/tuple   # rows 49-56 hispanic male+female
+  - 92
+  - 382
+  - 134
+  - 427
+  a7_male: !!python/tuple   # rows 49-56 non-hispanic male
+  - 140
+  - 382
+  - 276
+  - 427
+  a7_female: !!python/tuple # rows 49-56 non-hispanic female
+  - 283
+  - 382
+  - 419
+  - 427
+  a7_total: !!python/tuple  # rows 49-56 total
+  - 429
+  - 382
+  - 451
+  - 427
+  a8_hisp: !!python/tuple   # rows 57-64 hispanic male+female
+  - 92
+  - 433
+  - 134
+  - 478
+  a8_male: !!python/tuple   # rows 57-64 non-hispanic male
+  - 140
+  - 433
+  - 276
+  - 478
+  a8_female: !!python/tuple # rows 57-64 non-hispanic female
+  - 283
+  - 433
+  - 419
+  - 478
+  a8_total: !!python/tuple  # rows 57-64 total
+  - 429
+  - 433
+  - 451
+  - 478
+  atotal_hisp: !!python/tuple   # row 65 hispanic male+female
+  - 92
+  - 482
+  - 134
+  - 496
+  atotal_male: !!python/tuple   # row 65 non-hispanic male
+  - 140
+  - 482
+  - 276
+  - 496
+  atotal_female: !!python/tuple # row 65 non-hispanic female
+  - 283
+  - 482
+  - 419
+  - 496
+  atotal_total: !!python/tuple  # row 65 total
+  - 429
+  - 482
+  - 451
+  - 496
+
+# Page 3: part-time rows 66-74
+table3:
+  b_hisp: !!python/tuple    # rows 66-73 hispanic male+female
+  - 92
+  - 378
+  - 134
+  - 424
+  b_male: !!python/tuple    # rows 66-73 non-hispanic male
+  - 140
+  - 378
+  - 276
+  - 424
+  b_female: !!python/tuple  # rows 66-73 non-hispanic female
+  - 283
+  - 378
+  - 419
+  - 424
+  b_total: !!python/tuple   # rows 66-73 total
+  - 429
+  - 378
+  - 451
+  - 424
+  btotal_hisp: !!python/tuple   # row 74 hispanic male+female
+  - 92
+  - 430
+  - 134
+  - 442
+  btotal_male: !!python/tuple   # row 74 non-hispanic male
+  - 140
+  - 430
+  - 276
+  - 442
+  btotal_female: !!python/tuple # row 74 non-hispanic female
+  - 283
+  - 430
+  - 419
+  - 442
+  btotal_total: !!python/tuple  # row 74 total
+  - 429
+  - 430
+  - 451
+  - 442
+
+# Page 4: new hire rows 75-83
+table4:
+  c_hisp: !!python/tuple    # rows 75-82 hispanic male+female
+  - 92
+  - 378
+  - 134
+  - 424
+  c_male: !!python/tuple    # rows 75-82 non-hispanic male
+  - 140
+  - 378
+  - 276
+  - 424
+  c_female: !!python/tuple  # rows 75-82 non-hispanic female
+  - 283
+  - 378
+  - 419
+  - 424
+  c_total: !!python/tuple   # rows 75-82 total
+  - 429
+  - 378
+  - 451
+  - 424
+  ctotal_hisp: !!python/tuple   # row 83 hispanic male+female
+  - 92
+  - 430
+  - 134
+  - 442
+  ctotal_male: !!python/tuple   # row 83 non-hispanic male
+  - 140
+  - 430
+  - 276
+  - 442
+  ctotal_female: !!python/tuple # row 83 non-hispanic female
+  - 283
+  - 430
+  - 419
+  - 442
+  ctotal_total: !!python/tuple  # row 83 total
+  - 429
+  - 430
+  - 451
+  - 442
+
+e:
+  DEPARTMENTS_AGENCIES_INCLUDED: !!python/tuple
+  - 0
+  - 0
+  - 1
+  - 1
+
+f:
+  DEPARTMENTS_AGENCIES_NOT_INCLUDED: !!python/tuple
+  - 0
+  - 0
+  - 1
+  - 1
+
+g:
+  REMARKS: !!python/tuple
+  - 0
+  - 0
+  - 1
+  - 1

@@ -1,9 +1,8 @@
 """
 Module: pdf_to_cells.py
 
-Splits PDF forms into individual cell PDFs based on predefined coordinates,
-applies padding around each cell, and logs processing steps. Includes utilities
-for file discovery and existence checks.
+Splits PDF forms into individual cell PDFs based on predefined coordinates
+and applies padding around each cell. Logs processing steps.
 """
 
 import os
@@ -14,32 +13,11 @@ from utilities.load_config import load_cell_coordination_config
 from utilities.dir_helper import create_dir_if_not_exists
 from logger.logger import Logger
 
-
-def get_files_in_directory(directory: str, extension: str = ".pdf"):
-    """
-
-    :param directory: file directory
-    :param data: Raw doctr JSON
-
-    :return: a list of files in 'directory' matching the given 'extension'.
-
-    :raise FileNotFoundError: If the specified directory does not exist.
-    """
-    if not os.path.exists(directory):
-        raise FileNotFoundError(f"The directory {directory} does not exist.")
-    files = [f for f in os.listdir(directory) if f.lower().endswith(extension)]
-    files.sort()
-    return files
-
-
-def file_exists(path: str) -> bool:
-    """
-    Check whether a file exists at the given path.
-
-    :param path: Path to the file
-    :return: True if the file exists, False otherwise
-    """
-    return os.path.exists(path)
+# Initialize a default logger; will be reconfigured per file in pdf_to_cells()
+file_logger = Logger(
+    log_file_path="pdf_to_cells.log",
+    prefix="PDF_TO_CELLS",
+)
 
 
 def gen_cell(
@@ -161,11 +139,11 @@ def pdf_to_cells(
         file_logger.error("Empty config")
         return
 
-    if not file_exists(pdf_path):
+    if not os.path.exists(pdf_path):
         file_logger.error(f"File {pdf_path} does not exist.")
         return
 
-    # PRASE 1: Split PDF into sections
+    # PHASE 1: Split PDF into sections
     out_dir = os.path.join(file_dir, "cells")
     os.makedirs(out_dir, exist_ok=True)
     doc = fitz.open(pdf_path)
